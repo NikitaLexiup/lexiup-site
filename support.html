@@ -5,23 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Support — LexiUp</title>
 <style>
+@font-face {
+    font-family: "PressStart2P";
+    src: url("assets/PressStart2P-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+
 :root {
-    --bg: #faf7f2;
+    /* Straight from PixelKit.swift */
+    --bg: #f7f4ec;
     --card: #ffffff;
-    --text: #1a1a1a;
-    --muted: #6b6b6b;
-    --accent: #3d8bfd;
-    --outline: #1a1a1a;
+    --outline: #2b2b29;
+    --shadow: rgba(43, 43, 41, 0.22);
+    --text: #1a1a19;
+    --muted: #6b6b66;
+    --accent: #4ca6e8;
+    --mint: #9ee0cc;
+    --success: #70bf45;
+    --celebrate: #f0b529;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg: #121212;
-        --card: #1c1c1e;
-        --text: #f2f2f2;
-        --muted: #9a9a9a;
-        --accent: #5aa0ff;
-        --outline: #3a3a3c;
+        --bg: #171714;
+        --card: #262624;
+        --outline: #70706b;
+        --shadow: rgba(112, 112, 107, 0.22);
+        --text: #f2f0ea;
+        --muted: #9a9a92;
     }
 }
 
@@ -29,65 +40,178 @@
 
 body {
     margin: 0;
-    padding: 0 20px 64px;
+    padding: 0 20px 72px;
     background: var(--bg);
     color: var(--text);
-    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-text-size-adjust: 100%;
 }
 
 .wrap { max-width: 720px; margin: 0 auto; }
 
+/* ---- header: mascot + wordmark ---- */
+
 header {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 32px 0 24px;
+    gap: 16px;
+    padding: 40px 0 26px;
 }
 
-header img { width: 52px; height: 52px; border-radius: 12px; }
+header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--outline);
+    background: var(--card);
+    box-shadow: 4px 4px 0 var(--shadow);
+    image-rendering: pixelated;
+}
 
-header .name { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
-header .tag { color: var(--muted); font-size: 15px; }
+.name {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 19px;
+    letter-spacing: -0.5px;
+    line-height: 1.3;
+}
+
+.tag { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+/* ---- nav: pixel chips ---- */
 
 nav {
     display: flex;
-    gap: 18px;
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--outline);
-    margin-bottom: 32px;
+    gap: 10px;
     flex-wrap: wrap;
+    margin-bottom: 36px;
 }
 
-nav a { color: var(--accent); text-decoration: none; font-size: 15px; font-weight: 500; }
-nav a:hover { text-decoration: underline; }
+nav a {
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--card);
+    border: 2px solid var(--outline);
+    border-radius: 6px;
+    padding: 8px 14px;
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition: transform .08s ease-out, box-shadow .08s ease-out;
+}
 
-h1 { font-size: 30px; line-height: 1.25; letter-spacing: -0.02em; margin: 0 0 8px; }
-h2 { font-size: 20px; margin: 36px 0 12px; letter-spacing: -0.01em; }
-h3 { font-size: 17px; margin: 24px 0 8px; }
+nav a:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--shadow); }
+nav a.current { background: var(--accent); color: #fff; border-color: var(--outline); }
 
-.updated { color: var(--muted); font-size: 15px; margin-bottom: 32px; }
+/* ---- type ---- */
+
+h1 {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 22px;
+    line-height: 1.5;
+    margin: 0 0 14px;
+}
+
+h2 {
+    font-size: 19px;
+    margin: 40px 0 12px;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent);
+}
+
+h3 { font-size: 17px; margin: 26px 0 8px; }
+
+.updated {
+    display: inline-block;
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 9px;
+    color: var(--muted);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 6px 9px;
+    margin-bottom: 30px;
+}
 
 p { margin: 0 0 16px; }
 ul { margin: 0 0 16px; padding-left: 22px; }
-li { margin-bottom: 8px; }
-
+li { margin-bottom: 9px; }
 a { color: var(--accent); }
+
+/* ---- sticker card ---- */
 
 .card {
     background: var(--card);
-    border: 1px solid var(--outline);
+    border: 1.5px solid var(--outline);
     border-radius: 14px;
-    padding: 20px 22px;
+    padding: 22px 24px;
+    margin: 26px 0;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.card p:last-child, .card ul:last-child, .card .feature:last-child { margin-bottom: 0; }
+
+/* ---- feature rows with pixel checkmarks ---- */
+
+.feature {
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.feature:last-child { margin-bottom: 0; }
+
+.tick {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    background: var(--success);
+    position: relative;
+}
+
+/* the check itself, drawn as two blocks - no icon font, no SVG */
+.tick::before, .tick::after {
+    content: "";
+    position: absolute;
+    background: #fff;
+}
+.tick::before { width: 3px; height: 7px;  left: 5px;  top: 7px;  }
+.tick::after  { width: 3px; height: 11px; left: 11px; top: 3px; }
+
+/* ---- language pills ---- */
+
+.langs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+
+.lang {
+    font-size: 13px;
+    font-weight: 600;
+    border: 2px solid var(--outline);
+    border-radius: 6px;
+    padding: 6px 11px;
+    background: var(--mint);
+    color: #1a1a19;
+}
+
+/* ---- callout ---- */
+
+.note {
+    border-left: 4px solid var(--celebrate);
+    background: var(--card);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
     margin: 24px 0;
 }
 
-.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+.note p:last-child { margin-bottom: 0; }
+
+/* ---- footer ---- */
 
 footer {
-    margin-top: 56px;
-    padding-top: 24px;
-    border-top: 1px solid var(--outline);
+    margin-top: 64px;
+    padding-top: 26px;
+    border-top: 2px dashed var(--outline);
     color: var(--muted);
     font-size: 14px;
 }
@@ -102,12 +226,19 @@ code {
     border-radius: 5px;
     padding: 1px 6px;
 }
+
+@media (max-width: 480px) {
+    .name { font-size: 15px; }
+    h1 { font-size: 17px; line-height: 1.6; }
+    header img { width: 50px; height: 50px; }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header>
+    <img src="assets/LU_Avatar.png" alt="LU, the LexiUp mascot">
     <div>
         <div class="name">LexiUp</div>
         <div class="tag">Vocabulary that finds you</div>
@@ -117,11 +248,11 @@ code {
 <nav>
     <a href="index.html">Home</a>
     <a href="privacy.html">Privacy Policy</a>
-    <a href="support.html">Support</a>
+    <a href="support.html" class="current">Support</a>
 </nav>
 
 <h1>Support</h1>
-<p class="updated">We usually reply within two business days.</p>
+<div class="updated">WE REPLY WITHIN TWO BUSINESS DAYS</div>
 
 <div class="card">
     <p>Write to us at <a href="mailto:inikita86@ukr.net">inikita86@ukr.net</a>. To help us answer faster, please include your device model, iOS version and, if it is about your progress, the email address you signed in with.</p>
@@ -130,28 +261,31 @@ code {
 <h2>Frequently asked</h2>
 
 <h3>How does LexiUp work?</h3>
-<p>You pick a course, and LexiUp delivers a small set of words through notifications and the widget across your day. In the evening a short test checks what stuck. You do not have to sit in the app — the learning happens in the background while you go about your day.</p>
+<p>You pick a course, and LexiUp delivers a small set of words through notifications and the widget across your day. In the evening a short test checks what stuck. You do not have to sit in the app &mdash; the learning happens in the background while you go about your day.</p>
 
 <h3>I am not receiving notifications</h3>
-<p>Open the iOS Settings app → LexiUp → Notifications, and make sure they are allowed. Also check that Focus or Do Not Disturb is not filtering them out. All reminders are scheduled on your device, so they work without an internet connection.</p>
+<p>Open the iOS Settings app &rarr; LexiUp &rarr; Notifications, and make sure they are allowed. Also check that Focus or Do Not Disturb is not filtering them out. All reminders are scheduled on your device, so they work without an internet connection.</p>
 
 <h3>My progress disappeared after reinstalling</h3>
 <p>Sign in with the same account you used before. Your progress is restored from the backup automatically the first time you sign in.</p>
 
 <h3>How do I restore my Premium purchase?</h3>
-<p>Open the app, go to Profile → LexiUp Premium and tap “Restore purchases”. Make sure you are signed in to the App Store with the same Apple Account used for the original purchase.</p>
+<p>Open the app, go to Profile &rarr; LexiUp Premium and tap &ldquo;Restore purchases&rdquo;. Make sure you are signed in to the App Store with the same Apple Account used for the original purchase.</p>
 
 <h3>How do I remove ads?</h3>
-<p>LexiUp Premium is a one-time purchase that removes all ads, unlocks unlimited review sessions and works fully offline. You can find it in Profile → LexiUp Premium.</p>
+<p>LexiUp Premium is a one-time purchase that removes all ads, unlocks unlimited review sessions and works fully offline. You can find it in Profile &rarr; LexiUp Premium.</p>
 
 <h3>How do I delete my account?</h3>
-<p>Open the app and go to Profile → Delete account. This removes your account and all associated data. The action cannot be undone.</p>
+<p>Open the app and go to Profile &rarr; Delete account. This removes your account and all associated data. The action cannot be undone.</p>
 
 <h3>Can I change how many words I learn per day?</h3>
-<p>Yes — Profile → Schedule. You can also choose when during the day the words arrive, and set a different window for each weekday.</p>
+<p>Yes &mdash; Profile &rarr; Schedule. You can also choose when during the day the words arrive, and set a different window for each weekday.</p>
 
 <footer>
-    © 2026 LexiUp · <a href="index.html">Home</a> · <a href="privacy.html">Privacy Policy</a>
+    &copy; 2026 LexiUp &middot; <a href="index.html">Home</a> &middot;
+    <a href="privacy.html">Privacy Policy</a> &middot;
+    <a href="support.html">Support</a> &middot;
+    <a href="mailto:inikita86@ukr.net">Contact</a>
 </footer>
 
 </div>
