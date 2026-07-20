@@ -503,7 +503,11 @@ code {
     transition: width .18s ease-out, height .18s ease-out;
 }
 
-.who-name { font-size: 17px; font-weight: 700; line-height: 1.2; }
+.who-name {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 15px;
+    line-height: 1.3;
+}
 .who-goal { font-size: 13px; color: var(--muted); margin-top: 3px; }
 
 .appstats { margin-left: auto; display: flex; flex-direction: column; gap: 9px; }
@@ -528,7 +532,7 @@ code {
 .scrolled .appstats { flex-direction: row; gap: 16px; align-items: center; }
 
 @media (max-width: 560px) {
-    .who-name { font-size: 15px; }
+    .who-name { font-size: 12px; }
     .who-goal { font-size: 12px; }
     .srow .cap { font-size: 11px; }
     .srow .num { font-size: 13px; }
@@ -630,10 +634,9 @@ body { padding-bottom: 90px; }
 
 <div class="stickyhead" id="head">
     <div class="appcard">
-        <img class="ava" src="/assets/LU_Avatar.png" alt="LU, the LexiUp mascot">
         <div>
-            <div class="who-name">LU</div>
-            <div class="who-goal">Goal: 7 days</div>
+            <div class="who-name">LexiUp</div>
+            <div class="who-goal">Vocabulary that finds you</div>
         </div>
         <div class="appstats">
             <div>
