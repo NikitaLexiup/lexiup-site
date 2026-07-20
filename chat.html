@@ -810,6 +810,7 @@ body { padding-bottom: 90px; }
 
     var ticking = false;
     var collapsed = false;
+    var lastY = window.scrollY;
 
     function paint() {
         ticking = false;
@@ -821,11 +822,20 @@ body { padding-bottom: 90px; }
         segs.forEach(function (s, i) {
             s.classList.toggle('on', p * segs.length > i);
         });
-        // Hysteresis: one threshold makes the header flap open and shut
-        // while you scroll slowly past it, which reads as a hang.
+        // Collapse on the way down, expand as soon as you head back up -
+        // waiting for the very top made it feel stuck. The 8px dead zone
+        // keeps a trembling finger from flipping the state.
         var y = window.scrollY;
-        if (!collapsed && y > 90) { collapsed = true; head.classList.add('scrolled'); }
-        else if (collapsed && y < 30) { collapsed = false; head.classList.remove('scrolled'); }
+        var dy = y - lastY;
+        if (y < 30) {
+            collapsed = false;
+        } else if (dy > 4 && y > 90) {
+            collapsed = true;
+        } else if (dy < -8) {
+            collapsed = false;
+        }
+        lastY = y;
+        head.classList.toggle('scrolled', collapsed);
     }
 
     window.addEventListener('scroll', function () {
