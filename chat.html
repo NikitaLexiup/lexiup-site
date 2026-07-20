@@ -284,13 +284,13 @@ a { color: var(--accent); }
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--muted);
     margin-bottom: 7px;
 }
 
 .push .head b { color: var(--text); font-size: 13px; }
-.push .word { font-size: 19px; font-weight: 700; }
+.push .word { font-size: 18px; font-weight: 700; }
 .push .tr { color: var(--muted); font-size: 16px; }
 
 .chip {
@@ -338,13 +338,13 @@ a { color: var(--accent); }
 
 .plan .ptitle {
     font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 12px;
+    font-size: 10px;
     margin-bottom: 12px;
 }
 
-.plan .price { font-size: 27px; font-weight: 800; margin-bottom: 4px; }
-.plan .per { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
-.plan .feature { font-size: 15px; margin-bottom: 11px; }
+.plan .price { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+.plan .per { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+.plan .feature { font-size: 16px; margin-bottom: 11px; }
 .plan .gtick { margin-top: 2px; }
 
 /* ---- languages ---- */
@@ -359,71 +359,6 @@ a { color: var(--accent); }
     padding: 6px 11px;
     background: var(--mint);
     color: #1a1a19;
-}
-
-/* ---- full-bleed narrative band ---- */
-
-.band {
-    margin: 46px calc(50% - 50vw) 40px;
-    padding: 54px calc(50vw - 50% + 20px);
-    background: var(--accent);
-    color: #fff;
-    border-top: 3px solid var(--outline);
-    border-bottom: 3px solid var(--outline);
-}
-
-.band.dark { background: var(--outline); }
-.band.sun { background: var(--celebrate); color: #1a1a19; }
-
-.band h2 {
-    font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 17px;
-    line-height: 1.7;
-    border: 0;
-    padding: 0;
-    margin: 0 0 26px;
-    color: inherit;
-}
-
-.band .big {
-    font-size: 34px;
-    font-weight: 800;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-    margin: 0;
-}
-
-.whens { display: grid; gap: 14px; margin-top: 26px; }
-
-.when {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-size: 25px;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.when .ic {
-    flex: none;
-    width: 54px;
-    height: 54px;
-    display: grid;
-    place-items: center;
-    font-size: 27px;
-    background: rgba(255,255,255,.16);
-    border: 2px solid currentColor;
-    border-radius: 12px;
-}
-
-.band.sun .when .ic { background: rgba(0,0,0,.08); }
-
-@media (max-width: 560px) {
-    .band { padding: 38px calc(50vw - 50% + 20px); margin-top: 34px; }
-    .band h2 { font-size: 13px; line-height: 1.8; }
-    .band .big { font-size: 25px; }
-    .when { font-size: 19px; gap: 11px; }
-    .when .ic { width: 44px; height: 44px; font-size: 22px; }
 }
 
 /* ---- callout ---- */
@@ -637,7 +572,7 @@ body { padding-bottom: 90px; }
 
 .who {
     font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 9px;
+    font-size: 10px;
     color: var(--muted);
     margin-bottom: 6px;
 }
@@ -652,20 +587,21 @@ body { padding-bottom: 90px; }
 .plan { box-shadow: none; }
 .getwrap { margin: 6px 0 0; }
 
-.bubble.shout { background: var(--celebrate); border-color: var(--outline); border-width: 2px; }
+/* Same bubble as everything else, just louder text and an accent edge - a
+   slab of the brightest colour on the page read as a different site. */
+.bubble.shout { border-left: 5px solid var(--celebrate); }
 
 .shout-lead {
     font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 11px;
-    color: #1a1a19;
+    font-size: 10px;
+    color: var(--muted);
     margin: 0 0 14px !important;
 }
 
 .shout-big {
-    font-size: 21px;
-    font-weight: 800;
-    line-height: 1.3;
-    color: #1a1a19;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.4;
     margin: 0 !important;
 }
 
@@ -676,9 +612,8 @@ body { padding-bottom: 90px; }
     align-items: center;
     gap: 11px;
     font-size: 17px;
-    font-weight: 700;
-    color: #1a1a19;
-    line-height: 1.2;
+    font-weight: 600;
+    line-height: 1.25;
 }
 
 .lang { position: relative; }
@@ -714,14 +649,14 @@ body { padding-bottom: 90px; }
 
 .bubble.shout .when .ic {
     flex: none;
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     display: grid;
     place-items: center;
-    font-size: 20px;
-    background: rgba(0,0,0,.08);
-    border: 2px solid #1a1a19;
-    border-radius: 9px;
+    font-size: 18px;
+    background: var(--bg);
+    border: 1.5px solid var(--outline);
+    border-radius: 8px;
 }
 
 /* ---- home screen widget, same layout as the onboarding mock ---- */
@@ -735,12 +670,12 @@ body { padding-bottom: 90px; }
     margin: 4px 0 2px;
 }
 
-.widget .cd-cap { font-size: 12px; color: var(--muted); }
-.widget .cd { font-family: "PressStart2P", ui-monospace, monospace; font-size: 17px; margin: 5px 0 10px; }
-.widget .nx { font-size: 12px; color: var(--muted); margin-bottom: 7px; }
+.widget .cd-cap { font-size: 13px; color: var(--muted); }
+.widget .cd { font-family: "PressStart2P", ui-monospace, monospace; font-size: 16px; margin: 5px 0 10px; }
+.widget .nx { font-size: 13px; color: var(--muted); margin-bottom: 7px; }
 .wcols { display: flex; gap: 20px; }
 .wcol { display: flex; flex-direction: column; gap: 5px; }
-.wword { font-size: 15px; }
+.wword { font-size: 16px; }
 .wword .art { font-weight: 700; margin-right: 5px; }
 .wword .art.der { color: var(--der); }
 .wword .art.die { color: var(--die); }
