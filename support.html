@@ -313,24 +313,15 @@ a { color: var(--accent); }
 .feature { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 15px; }
 .feature:last-child { margin-bottom: 0; }
 
-.tick {
+/* The app's own glyphs - PixelGlyph.check and .cross - rather than a shape
+   faked with pseudo-elements, which distorted at smaller sizes. */
+.gtick {
     flex: none;
-    width: 22px;
-    height: 22px;
-    margin-top: 2px;
-    border: 2px solid var(--outline);
-    border-radius: 5px;
-    background: var(--success);
-    position: relative;
+    display: block;
+    margin-top: 3px;
+    border: 1.5px solid var(--outline);
+    border-radius: 4px;
 }
-
-.tick::before, .tick::after { content: ""; position: absolute; background: #fff; }
-.tick::before { width: 3px; height: 7px;  left: 5px;  top: 7px;  }
-.tick::after  { width: 3px; height: 11px; left: 11px; top: 3px; }
-
-.tick.no { background: var(--muted); }
-.tick.no::before { width: 12px; height: 3px; left: 3px; top: 7px; }
-.tick.no::after { display: none; }
 
 /* ---- pricing ---- */
 
@@ -355,10 +346,7 @@ a { color: var(--accent); }
 .plan .price { font-size: 27px; font-weight: 800; margin-bottom: 4px; }
 .plan .per { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
 .plan .feature { font-size: 15px; margin-bottom: 11px; }
-.plan .tick { width: 19px; height: 19px; }
-.plan .tick::before { width: 3px; height: 6px; left: 4px; top: 6px; }
-.plan .tick::after { width: 3px; height: 9px; left: 9px; top: 3px; }
-.plan .tick.no::before { width: 10px; height: 3px; left: 3px; top: 6px; }
+.plan .gtick { margin-top: 2px; }
 
 /* ---- languages ---- */
 
