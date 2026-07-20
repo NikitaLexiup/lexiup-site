@@ -479,8 +479,13 @@ code {
     top: 0;
     z-index: 40;
     background: var(--bg);
-    padding: 10px 0 12px;
+    padding: 10px 0 0;
 }
+
+/* The nav rides inside the pinned block, otherwise it slides under the card
+   and shows as a row of half-cut buttons. */
+.stickyhead .bar { margin-bottom: 0; padding: 10px 0; }
+.scrolled .bar { display: none; }
 
 .appcard {
     display: flex;
@@ -549,6 +554,7 @@ code {
 <body>
 <div class="wrap">
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="gcheck" viewBox="0 0 20 20"><rect x="0" y="0" width="20" height="2" fill="#BFDE96"/><rect x="0" y="2" width="20" height="2" fill="#BFDE96"/><rect x="0" y="4" width="14" height="2" fill="#BFDE96"/><rect x="14" y="4" width="4" height="2" fill="#3B6E12"/><rect x="18" y="4" width="2" height="2" fill="#BFDE96"/><rect x="0" y="6" width="12" height="2" fill="#BFDE96"/><rect x="12" y="6" width="4" height="2" fill="#3B6E12"/><rect x="16" y="6" width="4" height="2" fill="#BFDE96"/><rect x="0" y="8" width="10" height="2" fill="#BFDE96"/><rect x="10" y="8" width="4" height="2" fill="#3B6E12"/><rect x="14" y="8" width="6" height="2" fill="#BFDE96"/><rect x="0" y="10" width="2" height="2" fill="#BFDE96"/><rect x="2" y="10" width="2" height="2" fill="#3B6E12"/><rect x="4" y="10" width="4" height="2" fill="#BFDE96"/><rect x="8" y="10" width="4" height="2" fill="#3B6E12"/><rect x="12" y="10" width="8" height="2" fill="#BFDE96"/><rect x="0" y="12" width="2" height="2" fill="#BFDE96"/><rect x="2" y="12" width="8" height="2" fill="#3B6E12"/><rect x="10" y="12" width="10" height="2" fill="#BFDE96"/><rect x="0" y="14" width="4" height="2" fill="#BFDE96"/><rect x="4" y="14" width="4" height="2" fill="#3B6E12"/><rect x="8" y="14" width="12" height="2" fill="#BFDE96"/><rect x="0" y="16" width="20" height="2" fill="#BFDE96"/><rect x="0" y="18" width="20" height="2" fill="#BFDE96"/></symbol><symbol id="gcross" viewBox="0 0 20 20"><rect x="0" y="0" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="2" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="4" y="4" width="4" height="2" fill="#A32E2E"/><rect x="8" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="12" y="4" width="4" height="2" fill="#A32E2E"/><rect x="16" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="0" y="6" width="6" height="2" fill="#F7C2C2"/><rect x="6" y="6" width="8" height="2" fill="#A32E2E"/><rect x="14" y="6" width="6" height="2" fill="#F7C2C2"/><rect x="0" y="8" width="8" height="2" fill="#F7C2C2"/><rect x="8" y="8" width="4" height="2" fill="#A32E2E"/><rect x="12" y="8" width="8" height="2" fill="#F7C2C2"/><rect x="0" y="10" width="6" height="2" fill="#F7C2C2"/><rect x="6" y="10" width="8" height="2" fill="#A32E2E"/><rect x="14" y="10" width="6" height="2" fill="#F7C2C2"/><rect x="0" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="4" y="12" width="4" height="2" fill="#A32E2E"/><rect x="8" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="12" y="12" width="4" height="2" fill="#A32E2E"/><rect x="16" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="0" y="14" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="16" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="18" width="20" height="2" fill="#F7C2C2"/></symbol></svg>
 <div class="stickyhead" id="head">
     <div class="appcard">
         <div>
@@ -571,15 +577,14 @@ code {
             </div>
         </div>
     </div>
-</div>
-
-<div class="bar">
+    <div class="bar">
     <nav>
         <a href="/ua/index.html">Головна</a>
     <a href="/ua/privacy.html" class="current">Приватність</a>
     <a href="/ua/support.html">Підтримка</a>
     </nav>
     <div class="langswitch"><a href="/privacy.html">EN</a><a class="on" href="/ua/privacy.html">UK</a></div>
+</div>
 </div>
 
 <h1>Політика конфіденційності</h1>
@@ -690,6 +695,7 @@ code {
     if (!head || !learned) return;
 
     var ticking = false;
+    var collapsed = false;
 
     function paint() {
         ticking = false;
@@ -701,7 +707,11 @@ code {
         segs.forEach(function (s, i) {
             s.classList.toggle('on', p * segs.length > i);
         });
-        head.classList.toggle('scrolled', window.scrollY > 40);
+        // Hysteresis: one threshold makes the header flap open and shut
+        // while you scroll slowly past it, which reads as a hang.
+        var y = window.scrollY;
+        if (!collapsed && y > 90) { collapsed = true; head.classList.add('scrolled'); }
+        else if (collapsed && y < 30) { collapsed = false; head.classList.remove('scrolled'); }
     }
 
     window.addEventListener('scroll', function () {
