@@ -82,6 +82,30 @@ body {
 
 .tag { color: var(--muted); font-size: 14px; margin-top: 6px; }
 
+/* ---- app-style progress chips (a mock of the app header, sample numbers) ---- */
+
+.stats { margin-left: auto; display: flex; gap: 10px; }
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--card);
+    border: 2px solid var(--outline);
+    border-radius: 8px;
+    padding: 8px 11px;
+    box-shadow: 3px 3px 0 var(--shadow);
+}
+
+.stat .num {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.stat .cap { font-size: 10px; color: var(--muted); line-height: 1.2; }
+.stat .glyph { width: 16px; height: 16px; }
+
 .bar {
     position: sticky;
     top: 0;
