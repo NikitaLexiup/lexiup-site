@@ -481,21 +481,59 @@ code {
     padding: 10px 0 0;
 }
 
-/* The nav rides inside the pinned block, otherwise it slides under the card
-   and shows as a row of half-cut buttons. */
-.stickyhead .bar { margin-bottom: 0; padding: 10px 0; }
+/* The nav is the header's bottom section, the way the cheat sheets are in
+   the app: a divider, then one flat row - not a second deck of buttons. */
+.appcard .bar {
+    margin: 11px 0 0;
+    padding: 11px 0 0;
+    border-top: 1.5px solid var(--outline);
+    border-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.appcard nav { gap: 16px; }
+
+.appcard nav a {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.appcard nav a:hover { transform: none; box-shadow: none; color: var(--text); }
+.appcard nav a.current { background: none; color: var(--accent); }
+
+.appcard .langswitch { gap: 4px; }
+
+.appcard .langswitch a {
+    background: none;
+    border: 1.5px solid var(--outline);
+    opacity: .5;
+    padding: 4px 6px;
+    font-size: 8px;
+}
+
+.appcard .langswitch a.on { background: var(--accent); border-color: var(--accent); color: #fff; opacity: 1; }
+
 .scrolled .bar { display: none; }
 
 .appcard {
     display: flex;
-    align-items: center;
-    gap: 14px;
+    flex-direction: column;
+    gap: 0;
     background: var(--card);
     border: 2px solid var(--outline);
     border-radius: 22px;
-    padding: 14px 16px;
+    padding: 13px 16px;
     box-shadow: 5px 5px 0 var(--shadow);
 }
+
+.cardtop { display: flex; align-items: center; gap: 14px; }
 
 .appcard .ava {
     flex: none;
@@ -706,6 +744,7 @@ body { padding-bottom: 90px; }
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="gcheck" viewBox="0 0 20 20"><rect x="0" y="0" width="20" height="2" fill="#BFDE96"/><rect x="0" y="2" width="20" height="2" fill="#BFDE96"/><rect x="0" y="4" width="14" height="2" fill="#BFDE96"/><rect x="14" y="4" width="4" height="2" fill="#3B6E12"/><rect x="18" y="4" width="2" height="2" fill="#BFDE96"/><rect x="0" y="6" width="12" height="2" fill="#BFDE96"/><rect x="12" y="6" width="4" height="2" fill="#3B6E12"/><rect x="16" y="6" width="4" height="2" fill="#BFDE96"/><rect x="0" y="8" width="10" height="2" fill="#BFDE96"/><rect x="10" y="8" width="4" height="2" fill="#3B6E12"/><rect x="14" y="8" width="6" height="2" fill="#BFDE96"/><rect x="0" y="10" width="2" height="2" fill="#BFDE96"/><rect x="2" y="10" width="2" height="2" fill="#3B6E12"/><rect x="4" y="10" width="4" height="2" fill="#BFDE96"/><rect x="8" y="10" width="4" height="2" fill="#3B6E12"/><rect x="12" y="10" width="8" height="2" fill="#BFDE96"/><rect x="0" y="12" width="2" height="2" fill="#BFDE96"/><rect x="2" y="12" width="8" height="2" fill="#3B6E12"/><rect x="10" y="12" width="10" height="2" fill="#BFDE96"/><rect x="0" y="14" width="4" height="2" fill="#BFDE96"/><rect x="4" y="14" width="4" height="2" fill="#3B6E12"/><rect x="8" y="14" width="12" height="2" fill="#BFDE96"/><rect x="0" y="16" width="20" height="2" fill="#BFDE96"/><rect x="0" y="18" width="20" height="2" fill="#BFDE96"/></symbol><symbol id="gcross" viewBox="0 0 20 20"><rect x="0" y="0" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="2" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="4" y="4" width="4" height="2" fill="#A32E2E"/><rect x="8" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="12" y="4" width="4" height="2" fill="#A32E2E"/><rect x="16" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="0" y="6" width="6" height="2" fill="#F7C2C2"/><rect x="6" y="6" width="8" height="2" fill="#A32E2E"/><rect x="14" y="6" width="6" height="2" fill="#F7C2C2"/><rect x="0" y="8" width="8" height="2" fill="#F7C2C2"/><rect x="8" y="8" width="4" height="2" fill="#A32E2E"/><rect x="12" y="8" width="8" height="2" fill="#F7C2C2"/><rect x="0" y="10" width="6" height="2" fill="#F7C2C2"/><rect x="6" y="10" width="8" height="2" fill="#A32E2E"/><rect x="14" y="10" width="6" height="2" fill="#F7C2C2"/><rect x="0" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="4" y="12" width="4" height="2" fill="#A32E2E"/><rect x="8" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="12" y="12" width="4" height="2" fill="#A32E2E"/><rect x="16" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="0" y="14" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="16" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="18" width="20" height="2" fill="#F7C2C2"/></symbol></svg>
 <div class="stickyhead" id="head">
     <div class="appcard">
+      <div class="cardtop">
         <div>
             <div class="who-name">LexiUp</div>
             <div class="who-goal">Vocabulary that finds you</div>
@@ -725,8 +764,8 @@ body { padding-bottom: 90px; }
                 <span class="cap">words learned</span>
             </div>
         </div>
-    </div>
-    <div class="bar">
+      </div>
+      <div class="bar">
     <nav>
         <a href="/index.html">Home</a>
         <a href="/privacy.html">Privacy</a>
@@ -734,6 +773,7 @@ body { padding-bottom: 90px; }
     </nav>
     <div class="langswitch"><a class="on" href="/chat.html">EN</a><a href="/ua/chat.html">UK</a></div>
 </div>
+    </div>
 </div>
 
 <div class="thread">
