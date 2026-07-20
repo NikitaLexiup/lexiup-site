@@ -445,23 +445,23 @@ code {
 .srow .cap { max-height: 24px; max-width: 220px; opacity: 1; }
 .segs { max-height: 16px; opacity: 1; }
 
-.collapsed .appcard { padding-top: 10px; padding-bottom: 10px; }
-.collapsed .bar { max-height: 0; opacity: 0; margin-top: 0; padding-top: 0; border-top-width: 0; }
-.collapsed .who-goal { max-height: 0; opacity: 0; margin-top: 0; }
+#head.collapsed .appcard { padding-top: 10px; padding-bottom: 10px; }
+#head.collapsed .bar { max-height: 0; opacity: 0; margin-top: 0; padding-top: 0; border-top-width: 0; }
+#head.collapsed .who-goal { max-height: 0; opacity: 0; margin-top: 0; }
 /* The app passes caption: nil in compact - the label does not exist, so it
    takes no width either. Collapsing only the height left the row stretched
    with a gap on the right. */
-.collapsed .srow .cap { max-height: 0; max-width: 0; opacity: 0; margin: 0; }
-.collapsed .segs { max-height: 0; opacity: 0; margin-top: 0; }
+#head.collapsed .srow .cap { max-height: 0; max-width: 0; opacity: 0; margin: 0; }
+#head.collapsed .segs { max-height: 0; opacity: 0; margin-top: 0; }
 
 /* The two stats sit side by side once their captions are gone, otherwise
    the card stays as tall as it was and the collapse buys nothing. */
 .appstats { transition: gap .24s ease; }
-.collapsed .appstats { flex-direction: row; align-items: center; gap: 12px; }
-.collapsed .srow { gap: 7px; }
-.collapsed .who-name { font-size: 13px; }
-.collapsed .appcard { padding-top: 9px; padding-bottom: 9px; }
-.collapsed .cardtop { gap: 12px; }
+#head.collapsed .appstats { flex-direction: row; align-items: center; gap: 12px; }
+#head.collapsed .srow { gap: 7px; }
+#head.collapsed .who-name { font-size: 13px; }
+#head.collapsed .appcard { padding-top: 9px; padding-bottom: 9px; }
+#head.collapsed .cardtop { gap: 12px; }
 
 /* The nav is the header's bottom section, the way the cheat sheets are in
    the app: a divider, then one flat row - not a second deck of buttons. */
@@ -595,6 +595,10 @@ body { padding-bottom: 90px; }
     padding: 16px 18px;
     box-shadow: 4px 4px 0 var(--shadow);
 }
+
+/* Consecutive messages from the same sender: indented to the bubble column,
+   no repeated avatar or name. */
+.lu.same { padding-left: 50px; }
 
 .lu .bubble p { margin-bottom: 12px; }
 .lu .bubble p:last-child { margin-bottom: 0; }
@@ -778,12 +782,8 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn">
-    <div class="lu">
-        <img src="/assets/LU_Avatar.png" alt="">
-        <div>
-            <div class="who">LU</div>
-            <div class="bubble shout"><p class="shout-lead">Вчись, коли:</p><div class="whens"><div class="when"><span class="ic">&#127970;</span>працюєш</div><div class="when"><span class="ic">&#127796;</span>відпочиваєш</div><div class="when"><span class="ic">&#128104;&#8205;&#127859;</span>займаєшся улюбленою справою</div></div></div>
-        </div>
+    <div class="lu same">
+        <div class="bubble shout"><p class="shout-lead">Вчись, коли:</p><div class="whens"><div class="when"><span class="ic">&#127970;</span>працюєш</div><div class="when"><span class="ic">&#127796;</span>відпочиваєш</div><div class="when"><span class="ic">&#128104;&#8205;&#127859;</span>займаєшся улюбленою справою</div></div></div>
     </div>
 </div>
 <div class="turn">
@@ -817,12 +817,8 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn">
-    <div class="lu">
-        <img src="/assets/LU_Avatar.png" alt="">
-        <div>
-            <div class="who">LU</div>
-            <div class="bubble shout"><p class="shout-big">Щоб учитися, не треба відриватися від щоденних справ.</p></div>
-        </div>
+    <div class="lu same">
+        <div class="bubble shout"><p class="shout-big">Щоб учитися, не треба відриватися від щоденних справ.</p></div>
     </div>
 </div>
 <div class="turn">
@@ -866,12 +862,8 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn">
-    <div class="lu">
-        <img src="/assets/LU_Avatar.png" alt="">
-        <div>
-            <div class="who">LU</div>
-            <div class="bubble shout"><p class="shout-big">Зручно. Просто. Як тобі подобається.</p></div>
-        </div>
+    <div class="lu same">
+        <div class="bubble shout"><p class="shout-big">Зручно. Просто. Як тобі подобається.</p></div>
     </div>
 </div>
 <div class="turn">
