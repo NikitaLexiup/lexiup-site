@@ -374,6 +374,71 @@ a { color: var(--accent); }
     color: #1a1a19;
 }
 
+/* ---- full-bleed narrative band ---- */
+
+.band {
+    margin: 46px calc(50% - 50vw) 40px;
+    padding: 54px calc(50vw - 50% + 20px);
+    background: var(--accent);
+    color: #fff;
+    border-top: 3px solid var(--outline);
+    border-bottom: 3px solid var(--outline);
+}
+
+.band.dark { background: var(--outline); }
+.band.sun { background: var(--celebrate); color: #1a1a19; }
+
+.band h2 {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 17px;
+    line-height: 1.7;
+    border: 0;
+    padding: 0;
+    margin: 0 0 26px;
+    color: inherit;
+}
+
+.band .big {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.whens { display: grid; gap: 14px; margin-top: 26px; }
+
+.when {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.when .ic {
+    flex: none;
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    font-size: 27px;
+    background: rgba(255,255,255,.16);
+    border: 2px solid currentColor;
+    border-radius: 12px;
+}
+
+.band.sun .when .ic { background: rgba(0,0,0,.08); }
+
+@media (max-width: 560px) {
+    .band { padding: 38px calc(50vw - 50% + 20px); margin-top: 34px; }
+    .band h2 { font-size: 13px; line-height: 1.8; }
+    .band .big { font-size: 25px; }
+    .when { font-size: 19px; gap: 11px; }
+    .when .ic { width: 44px; height: 44px; font-size: 22px; }
+}
+
 /* ---- callout ---- */
 
 .note {

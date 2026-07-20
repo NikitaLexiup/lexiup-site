@@ -374,6 +374,71 @@ a { color: var(--accent); }
     color: #1a1a19;
 }
 
+/* ---- full-bleed narrative band ---- */
+
+.band {
+    margin: 46px calc(50% - 50vw) 40px;
+    padding: 54px calc(50vw - 50% + 20px);
+    background: var(--accent);
+    color: #fff;
+    border-top: 3px solid var(--outline);
+    border-bottom: 3px solid var(--outline);
+}
+
+.band.dark { background: var(--outline); }
+.band.sun { background: var(--celebrate); color: #1a1a19; }
+
+.band h2 {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 17px;
+    line-height: 1.7;
+    border: 0;
+    padding: 0;
+    margin: 0 0 26px;
+    color: inherit;
+}
+
+.band .big {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.whens { display: grid; gap: 14px; margin-top: 26px; }
+
+.when {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.when .ic {
+    flex: none;
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    font-size: 27px;
+    background: rgba(255,255,255,.16);
+    border: 2px solid currentColor;
+    border-radius: 12px;
+}
+
+.band.sun .when .ic { background: rgba(0,0,0,.08); }
+
+@media (max-width: 560px) {
+    .band { padding: 38px calc(50vw - 50% + 20px); margin-top: 34px; }
+    .band h2 { font-size: 13px; line-height: 1.8; }
+    .band .big { font-size: 25px; }
+    .when { font-size: 19px; gap: 11px; }
+    .when .ic { width: 44px; height: 44px; font-size: 22px; }
+}
+
 /* ---- callout ---- */
 
 .note {
@@ -536,6 +601,19 @@ code {
     <p class="getnote">LexiUp is being finished right now. The button goes live on release day.</p>
 </div>
 
+<div class="band">
+    <h2>LEARN WHILE:</h2>
+    <div class="whens">
+        <div class="when"><span class="ic">&#127970;</span>you work</div>
+        <div class="when"><span class="ic">&#127796;</span>you rest</div>
+        <div class="when"><span class="ic">&#128104;&#8205;&#127859;</span>you do what you love</div>
+    </div>
+</div>
+
+<div class="band dark">
+    <p class="big">Learning should not require<br>stepping away from your day.</p>
+</div>
+
 <h2>Why another vocabulary app?</h2>
 
 <p>It isn&rsquo;t one. You probably already have a course, a teacher, or a city that speaks German at you every day. What you are missing is <strong>words</strong> - and the last thing you need is one more app demanding thirty minutes you don&rsquo;t have.</p>
@@ -668,6 +746,10 @@ code {
     <span class="lang">Polski</span>
 </div>
 <p style="margin-top:14px">Learn German through the language you actually think in.</p>
+
+<div class="band sun">
+    <p class="big">Convenient. Simple.<br>On your terms.</p>
+</div>
 
 <div class="getwrap">
     <a class="get" href="#" aria-disabled="true"><svg class="apple" viewBox="0 0 24 26" width="24" height="26" fill="#fff" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="0" width="2" height="2"/><rect x="14" y="0" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="10" y="4" width="2" height="2"/><rect x="4" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="8" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="12" y="6" width="2" height="2"/><rect x="14" y="6" width="2" height="2"/><rect x="16" y="6" width="2" height="2"/><rect x="2" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="6" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="10" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/><rect x="16" y="8" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="0" y="10" width="2" height="2"/><rect x="2" y="10" width="2" height="2"/><rect x="4" y="10" width="2" height="2"/><rect x="6" y="10" width="2" height="2"/><rect x="8" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="12" y="10" width="2" height="2"/><rect x="14" y="10" width="2" height="2"/><rect x="16" y="10" width="2" height="2"/><rect x="18" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="0" y="12" width="2" height="2"/><rect x="2" y="12" width="2" height="2"/><rect x="4" y="12" width="2" height="2"/><rect x="6" y="12" width="2" height="2"/><rect x="8" y="12" width="2" height="2"/><rect x="10" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/><rect x="14" y="12" width="2" height="2"/><rect x="16" y="12" width="2" height="2"/><rect x="18" y="12" width="2" height="2"/><rect x="20" y="12" width="2" height="2"/><rect x="0" y="14" width="2" height="2"/><rect x="2" y="14" width="2" height="2"/><rect x="4" y="14" width="2" height="2"/><rect x="6" y="14" width="2" height="2"/><rect x="8" y="14" width="2" height="2"/><rect x="10" y="14" width="2" height="2"/><rect x="12" y="14" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/><rect x="16" y="14" width="2" height="2"/><rect x="18" y="14" width="2" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="0" y="16" width="2" height="2"/><rect x="2" y="16" width="2" height="2"/><rect x="4" y="16" width="2" height="2"/><rect x="6" y="16" width="2" height="2"/><rect x="8" y="16" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="12" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/><rect x="16" y="16" width="2" height="2"/><rect x="18" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/><rect x="0" y="18" width="2" height="2"/><rect x="2" y="18" width="2" height="2"/><rect x="4" y="18" width="2" height="2"/><rect x="6" y="18" width="2" height="2"/><rect x="8" y="18" width="2" height="2"/><rect x="10" y="18" width="2" height="2"/><rect x="12" y="18" width="2" height="2"/><rect x="14" y="18" width="2" height="2"/><rect x="16" y="18" width="2" height="2"/><rect x="18" y="18" width="2" height="2"/><rect x="20" y="18" width="2" height="2"/><rect x="2" y="20" width="2" height="2"/><rect x="4" y="20" width="2" height="2"/><rect x="6" y="20" width="2" height="2"/><rect x="8" y="20" width="2" height="2"/><rect x="10" y="20" width="2" height="2"/><rect x="12" y="20" width="2" height="2"/><rect x="14" y="20" width="2" height="2"/><rect x="16" y="20" width="2" height="2"/><rect x="18" y="20" width="2" height="2"/><rect x="2" y="22" width="2" height="2"/><rect x="4" y="22" width="2" height="2"/><rect x="6" y="22" width="2" height="2"/><rect x="14" y="22" width="2" height="2"/><rect x="16" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="2"/><rect x="20" y="22" width="2" height="2"/><rect x="4" y="24" width="2" height="2"/><rect x="6" y="24" width="2" height="2"/><rect x="16" y="24" width="2" height="2"/><rect x="18" y="24" width="2" height="2"/></svg><span><span class="small">Coming soon to the</span><span class="big">App Store</span></span></a><span class="soon">In development</span>
