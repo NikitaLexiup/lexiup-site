@@ -436,25 +436,28 @@ code {
 .srow .cap,
 .segs {
     overflow: hidden;
-    transition: max-height .24s ease, opacity .18s ease,
+    transition: max-height .24s ease, max-width .24s ease, opacity .18s ease,
                 margin .24s ease, padding .24s ease, border-width .24s ease;
 }
 
 .appcard .bar { max-height: 70px; opacity: 1; }
 .who-goal { max-height: 30px; opacity: 1; }
-.srow .cap { max-height: 24px; opacity: 1; }
+.srow .cap { max-height: 24px; max-width: 220px; opacity: 1; }
 .segs { max-height: 16px; opacity: 1; }
 
 .collapsed .appcard { padding-top: 10px; padding-bottom: 10px; }
 .collapsed .bar { max-height: 0; opacity: 0; margin-top: 0; padding-top: 0; border-top-width: 0; }
 .collapsed .who-goal { max-height: 0; opacity: 0; margin-top: 0; }
-.collapsed .srow .cap { max-height: 0; opacity: 0; }
+/* The app passes caption: nil in compact - the label does not exist, so it
+   takes no width either. Collapsing only the height left the row stretched
+   with a gap on the right. */
+.collapsed .srow .cap { max-height: 0; max-width: 0; opacity: 0; margin: 0; }
 .collapsed .segs { max-height: 0; opacity: 0; margin-top: 0; }
 
 /* The two stats sit side by side once their captions are gone, otherwise
    the card stays as tall as it was and the collapse buys nothing. */
 .appstats { transition: gap .24s ease; }
-.collapsed .appstats { flex-direction: row; align-items: center; gap: 18px; }
+.collapsed .appstats { flex-direction: row; align-items: center; gap: 12px; }
 .collapsed .srow { gap: 7px; }
 .collapsed .who-name { font-size: 13px; }
 .collapsed .appcard { padding-top: 9px; padding-bottom: 9px; }
@@ -982,10 +985,17 @@ body { padding-bottom: 90px; }
 // simply visible from the start instead of stuck invisible.
 document.body.classList.add('js');
 var io = new IntersectionObserver(function (entries) {
+    // Several bubbles usually cross the line in the same frame; without a
+    // stagger they pop in as one block instead of a conversation arriving.
+    var step = 0;
     entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); }
+        if (!e.isIntersecting) return;
+        e.target.style.transitionDelay = (step * 110) + 'ms';
+        step += 1;
+        e.target.classList.add('seen');
+        io.unobserve(e.target);
     });
-}, { rootMargin: '0px 0px -12% 0px' });
+}, { rootMargin: '0px 0px -10% 0px' });
 document.querySelectorAll('.turn').forEach(function (t) { io.observe(t); });
 </script>
 </body>
