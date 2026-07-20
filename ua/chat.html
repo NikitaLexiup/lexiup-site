@@ -520,7 +520,6 @@ code {
 
 .appcard .langswitch a.on { background: var(--accent); border-color: var(--accent); color: #fff; opacity: 1; }
 
-.scrolled .bar { display: none; }
 
 .appcard {
     display: flex;
@@ -557,7 +556,6 @@ code {
 
 .srow { display: flex; align-items: center; gap: 9px; }
 .srow .g { flex: none; display: block; }
-.scrolled .srow .g { transform: scale(.85); transform-origin: left center; }
 .srow .num { font-family: "PressStart2P", ui-monospace, monospace; font-size: 15px; line-height: 1; }
 .srow .cap { font-size: 13px; color: var(--muted); white-space: nowrap; }
 
@@ -565,14 +563,6 @@ code {
 .segs { display: flex; gap: 3px; margin-top: 5px; }
 .seg { width: 9px; height: 5px; background: var(--outline); opacity: .18; }
 .seg.on { background: var(--celebrate); opacity: 1; }
-
-/* collapsed state while scrolling - the app does the same */
-.scrolled .appcard { padding: 9px 14px; }
-.scrolled .ava { width: 34px; height: 34px; }
-.scrolled .who-goal,
-.scrolled .srow .cap,
-.scrolled .segs { display: none; }
-.scrolled .appstats { flex-direction: row; gap: 16px; align-items: center; }
 
 @media (max-width: 560px) {
     .who-name { font-size: 12px; }
@@ -932,6 +922,10 @@ body { padding-bottom: 90px; }
 </div>
 
 <script>
+// Only the counters follow scroll. The header deliberately never changes
+// height: it sits in the flow, so shrinking it changed the page height,
+// which moved the scroll position, which fired another scroll event - a
+// feedback loop that made it shiver on its own.
 // The counters follow scroll progress: 0 to 50 words, and the streak ticks
 // over from 0/7 to 1/7 once the bar fills. Decorative, and deliberately
 // driven by the reader rather than by a timer.
@@ -943,8 +937,6 @@ body { padding-bottom: 90px; }
     if (!head || !learned) return;
 
     var ticking = false;
-    var collapsed = false;
-    var lastY = window.scrollY;
 
     function paint() {
         ticking = false;
@@ -956,20 +948,6 @@ body { padding-bottom: 90px; }
         segs.forEach(function (s, i) {
             s.classList.toggle('on', p * segs.length > i);
         });
-        // Collapse on the way down, expand as soon as you head back up -
-        // waiting for the very top made it feel stuck. The 8px dead zone
-        // keeps a trembling finger from flipping the state.
-        var y = window.scrollY;
-        var dy = y - lastY;
-        if (y < 30) {
-            collapsed = false;
-        } else if (dy > 4 && y > 90) {
-            collapsed = true;
-        } else if (dy < -8) {
-            collapsed = false;
-        }
-        lastY = y;
-        head.classList.toggle('scrolled', collapsed);
     }
 
     window.addEventListener('scroll', function () {
