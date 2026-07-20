@@ -473,13 +473,31 @@ code {
 
 /* ---- the app's header card ---- */
 
+/* Fixed, not sticky: out of the document flow, so shrinking it cannot
+   change the page height and cannot move the scroll position. That is the
+   whole reason the collapse is safe now. */
 .stickyhead {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 40;
+    left: 0;
+    right: 0;
+    z-index: 100;
     background: var(--bg);
-    padding: 10px 0 0;
+    padding: 10px 20px 0;
 }
+
+.stickyhead > .appcard { max-width: 760px; margin: 0 auto; }
+
+/* Space is reserved once, for the EXPANDED height, and never changes. The
+   collapsed header simply leaves a band of page background behind it, which
+   is invisible because it is the same colour. */
+.appcard { transition: padding .16s ease-out; }
+.collapsed .bar { display: none; }
+.collapsed .who-goal { display: none; }
+.collapsed .srow .cap { display: none; }
+.collapsed .segs { display: none; }
+.collapsed .appstats { flex-direction: row; gap: 16px; align-items: center; }
+.collapsed .cardtop { gap: 12px; }
 
 /* The nav is the header's bottom section, the way the cheat sheets are in
    the app: a divider, then one flat row - not a second deck of buttons. */
@@ -937,6 +955,14 @@ body { padding-bottom: 90px; }
     if (!head || !learned) return;
 
     var ticking = false;
+    var collapsed = false;
+
+    // Reserve room for the header at its tallest, once. Re-measured only
+    // while expanded, so a collapsed header never shrinks the reserve.
+    function reserve() {
+        if (collapsed) return;
+        document.body.style.paddingTop = head.offsetHeight + 'px';
+    }
 
     function paint() {
         ticking = false;
@@ -948,11 +974,18 @@ body { padding-bottom: 90px; }
         segs.forEach(function (s, i) {
             s.classList.toggle('on', p * segs.length > i);
         });
+
+        // Plain thresholds are enough now that collapsing moves nothing.
+        var y = window.scrollY;
+        if (!collapsed && y > 120) { collapsed = true; head.classList.add('collapsed'); }
+        else if (collapsed && y < 60) { collapsed = false; head.classList.remove('collapsed'); }
     }
 
     window.addEventListener('scroll', function () {
         if (!ticking) { ticking = true; requestAnimationFrame(paint); }
     }, { passive: true });
+    window.addEventListener('resize', reserve);
+    reserve();
     paint();
 })();
 </script>
