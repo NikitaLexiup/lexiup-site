@@ -562,6 +562,10 @@ code {
 body { padding-bottom: 90px; }
 
 .thread { display: flex; flex-direction: column; gap: 22px; margin-top: 26px; }
+
+/* A question sits close to the answer it belongs to, not evenly spaced
+   between neighbours. */
+.turn.q { margin-bottom: -12px; }
 .turn { display: flex; flex-direction: column; gap: 10px; }
 
 .me { align-self: flex-end; max-width: 82%; }
@@ -761,8 +765,10 @@ body { padding-bottom: 90px; }
 </div>
 
 <div class="thread">
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">What is LexiUp?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -771,8 +777,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">I already use another app for German.</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -786,8 +794,10 @@ body { padding-bottom: 90px; }
         <div class="bubble shout"><p class="shout-lead">Learn while:</p><div class="whens"><div class="when"><span class="ic">&#127970;</span>you work</div><div class="when"><span class="ic">&#127796;</span>you rest</div><div class="when"><span class="ic">&#128104;&#8205;&#127859;</span>you do what you love</div></div></div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">How many words a day?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -796,8 +806,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">So you just spam me with notifications?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -806,8 +818,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">What happens in the evening?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -821,8 +835,10 @@ body { padding-bottom: 90px; }
         <div class="bubble shout"><p class="shout-big">Learning should not require stepping away from your day.</p></div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">What can I actually learn?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -831,8 +847,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">What does it cost?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -841,8 +859,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Do I need internet for this?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -851,8 +871,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Which languages do you speak?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -866,8 +888,10 @@ body { padding-bottom: 90px; }
         <div class="bubble shout"><p class="shout-big">Convenient. Simple. On your terms.</p></div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">And where do the words actually live?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -876,8 +900,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Where do I get it?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -982,7 +1008,7 @@ var io = new IntersectionObserver(function (entries) {
     var step = 0;
     entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        e.target.style.transitionDelay = (step * 110) + 'ms';
+        e.target.style.transitionDelay = (step * 130) + 'ms';
         step += 1;
         e.target.classList.add('seen');
         io.unobserve(e.target);

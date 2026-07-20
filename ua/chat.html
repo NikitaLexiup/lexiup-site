@@ -562,6 +562,10 @@ code {
 body { padding-bottom: 90px; }
 
 .thread { display: flex; flex-direction: column; gap: 22px; margin-top: 26px; }
+
+/* A question sits close to the answer it belongs to, not evenly spaced
+   between neighbours. */
+.turn.q { margin-bottom: -12px; }
 .turn { display: flex; flex-direction: column; gap: 10px; }
 
 .me { align-self: flex-end; max-width: 82%; }
@@ -761,8 +765,10 @@ body { padding-bottom: 90px; }
 </div>
 
 <div class="thread">
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Що таке LexiUp?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -771,8 +777,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Я вже користуюся іншим застосунком.</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -786,8 +794,10 @@ body { padding-bottom: 90px; }
         <div class="bubble shout"><p class="shout-lead">Вчись, коли:</p><div class="whens"><div class="when"><span class="ic">&#127970;</span>працюєш</div><div class="when"><span class="ic">&#127796;</span>відпочиваєш</div><div class="when"><span class="ic">&#128104;&#8205;&#127859;</span>займаєшся улюбленою справою</div></div></div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Скільки слів на день?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -796,8 +806,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Тобто ти просто засипаєш мене сповіщеннями?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -806,8 +818,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">А що ввечері?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -821,8 +835,10 @@ body { padding-bottom: 90px; }
         <div class="bubble shout"><p class="shout-big">Щоб учитися, не треба відриватися від щоденних справ.</p></div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Що саме я вивчу?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -831,8 +847,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Скільки це коштує?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -841,8 +859,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">А інтернет для цього потрібен?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -851,8 +871,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Якими мовами ти говориш?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -866,8 +888,10 @@ body { padding-bottom: 90px; }
         <div class="bubble shout"><p class="shout-big">Зручно. Просто. Як тобі подобається.</p></div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">А де ці слова живуть?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -876,8 +900,10 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
-<div class="turn">
+<div class="turn q">
     <div class="me"><div class="bubble">Де тебе завантажити?</div></div>
+</div>
+<div class="turn a">
     <div class="lu">
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
@@ -982,7 +1008,7 @@ var io = new IntersectionObserver(function (entries) {
     var step = 0;
     entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        e.target.style.transitionDelay = (step * 110) + 'ms';
+        e.target.style.transitionDelay = (step * 130) + 'ms';
         step += 1;
         e.target.classList.add('seen');
         io.unobserve(e.target);
