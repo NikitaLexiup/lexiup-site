@@ -451,6 +451,15 @@ code {
 .collapsed .srow .cap { max-height: 0; opacity: 0; }
 .collapsed .segs { max-height: 0; opacity: 0; margin-top: 0; }
 
+/* The two stats sit side by side once their captions are gone, otherwise
+   the card stays as tall as it was and the collapse buys nothing. */
+.appstats { transition: gap .24s ease; }
+.collapsed .appstats { flex-direction: row; align-items: center; gap: 18px; }
+.collapsed .srow { gap: 7px; }
+.collapsed .who-name { font-size: 13px; }
+.collapsed .appcard { padding-top: 9px; padding-bottom: 9px; }
+.collapsed .cardtop { gap: 12px; }
+
 /* The nav is the header's bottom section, the way the cheat sheets are in
    the app: a divider, then one flat row - not a second deck of buttons. */
 .appcard .bar {
