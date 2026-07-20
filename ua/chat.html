@@ -426,13 +426,30 @@ code {
 /* Space is reserved once, for the EXPANDED height, and never changes. The
    collapsed header simply leaves a band of page background behind it, which
    is invisible because it is the same colour. */
-.appcard { transition: padding .16s ease-out; }
-.collapsed .bar { display: none; }
-.collapsed .who-goal { display: none; }
-.collapsed .srow .cap { display: none; }
-.collapsed .segs { display: none; }
-.collapsed .appstats { flex-direction: row; gap: 16px; align-items: center; }
-.collapsed .cardtop { gap: 12px; }
+/* display:none cannot be animated, so everything that disappears collapses
+   through max-height and opacity instead. The header is fixed, so none of
+   this moves the page. */
+.appcard { transition: padding .22s ease; }
+
+.appcard .bar,
+.who-goal,
+.srow .cap,
+.segs {
+    overflow: hidden;
+    transition: max-height .24s ease, opacity .18s ease,
+                margin .24s ease, padding .24s ease, border-width .24s ease;
+}
+
+.appcard .bar { max-height: 70px; opacity: 1; }
+.who-goal { max-height: 30px; opacity: 1; }
+.srow .cap { max-height: 24px; opacity: 1; }
+.segs { max-height: 16px; opacity: 1; }
+
+.collapsed .appcard { padding-top: 10px; padding-bottom: 10px; }
+.collapsed .bar { max-height: 0; opacity: 0; margin-top: 0; padding-top: 0; border-top-width: 0; }
+.collapsed .who-goal { max-height: 0; opacity: 0; margin-top: 0; }
+.collapsed .srow .cap { max-height: 0; opacity: 0; }
+.collapsed .segs { max-height: 0; opacity: 0; margin-top: 0; }
 
 /* The nav is the header's bottom section, the way the cheat sheets are in
    the app: a divider, then one flat row - not a second deck of buttons. */
@@ -587,21 +604,22 @@ body { padding-bottom: 90px; }
 .plan { box-shadow: none; }
 .getwrap { margin: 6px 0 0; }
 
-/* Same bubble as everything else, just louder text and an accent edge - a
-   slab of the brightest colour on the page read as a different site. */
-.bubble.shout { border-left: 5px solid var(--celebrate); }
+.bubble.shout { background: var(--celebrate); border-width: 2px; }
 
 .shout-lead {
     font-family: "PressStart2P", ui-monospace, monospace;
     font-size: 10px;
-    color: var(--muted);
+    color: rgba(26,26,25,.62);
     margin: 0 0 14px !important;
 }
 
+/* Same size and leading as any other message: the yellow already carries
+   the emphasis, a second signal in the type only made the page louder. */
 .shout-big {
-    font-size: 19px;
+    font-size: 17px;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.65;
+    color: #1a1a19;
     margin: 0 !important;
 }
 
@@ -613,7 +631,8 @@ body { padding-bottom: 90px; }
     gap: 11px;
     font-size: 17px;
     font-weight: 600;
-    line-height: 1.25;
+    line-height: 1.35;
+    color: #1a1a19;
 }
 
 .lang { position: relative; }
@@ -654,8 +673,8 @@ body { padding-bottom: 90px; }
     display: grid;
     place-items: center;
     font-size: 18px;
-    background: var(--bg);
-    border: 1.5px solid var(--outline);
+    background: rgba(255,255,255,.55);
+    border: 1.5px solid rgba(26,26,25,.45);
     border-radius: 8px;
 }
 
@@ -891,6 +910,7 @@ body { padding-bottom: 90px; }
 
     var ticking = false;
     var collapsed = false;
+    var lastY = window.scrollY;
 
     // Reserve room for the header at its tallest, once. Re-measured only
     // while expanded, so a collapsed header never shrinks the reserve.
@@ -910,10 +930,16 @@ body { padding-bottom: 90px; }
             s.classList.toggle('on', p * segs.length > i);
         });
 
-        // Plain thresholds are enough now that collapsing moves nothing.
+        // Direction, not just depth: scrolling back up should open it
+        // immediately instead of waiting for the very top. Safe here because
+        // a fixed header changes no layout when it resizes.
         var y = window.scrollY;
-        if (!collapsed && y > 120) { collapsed = true; head.classList.add('collapsed'); }
-        else if (collapsed && y < 60) { collapsed = false; head.classList.remove('collapsed'); }
+        var dy = y - lastY;
+        if (y < 40) { collapsed = false; }
+        else if (dy > 3 && y > 120) { collapsed = true; }
+        else if (dy < -3) { collapsed = false; }
+        lastY = y;
+        head.classList.toggle('collapsed', collapsed);
     }
 
     window.addEventListener('scroll', function () {
