@@ -675,13 +675,19 @@ body { padding-bottom: 90px; }
 
 .lang { position: relative; }
 
+/* Pinned to the corner rather than stacked under the name, which made the
+   chip taller than its neighbours. */
+.lang.beta { padding-right: 32px; }
+
 .lang i {
-    display: block;
+    position: absolute;
+    top: 3px;
+    right: 5px;
     font-style: normal;
     font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 7px;
-    opacity: .65;
-    margin-top: 3px;
+    font-size: 6px;
+    opacity: .6;
+    letter-spacing: -0.5px;
 }
 
 .more { margin-top: 12px; }
@@ -881,7 +887,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
-            <div class="bubble"><div class="langs"><span class="lang">Українська</span><span class="lang">English</span><span class="lang">Français<i>beta</i></span><span class="lang">Polski<i>beta</i></span></div><details class="more"><summary>ще</summary><div class="langs"><span class="lang">Русский</span></div></details><p>Вчи німецьку тією мовою, якою справді думаєш.</p></div>
+            <div class="bubble"><div class="langs"><span class="lang">Українська</span><span class="lang">English</span><span class="lang beta">Français<i>beta</i></span><span class="lang beta">Polski<i>beta</i></span></div><details class="more"><summary>ще</summary><div class="langs"><span class="lang">Русский</span></div></details><p>Вчи німецьку тією мовою, якою справді думаєш.</p></div>
         </div>
     </div>
 </div>
