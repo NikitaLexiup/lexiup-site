@@ -82,6 +82,20 @@ body {
 
 .tag { color: var(--muted); font-size: 14px; margin-top: 6px; }
 
+.bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: var(--bg);
+    padding: 12px 0;
+    margin-bottom: 34px;
+    border-bottom: 2px solid var(--outline);
+}
+
 .langswitch { margin-left: auto; display: flex; gap: 6px; }
 
 .langswitch a {
@@ -97,7 +111,7 @@ body {
 
 .langswitch a.on { background: var(--accent); color: #fff; }
 
-nav { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+nav { display: flex; gap: 10px; flex-wrap: wrap; }
 
 nav a {
     font-size: 13px;
@@ -380,7 +394,9 @@ code {
     .lede { font-size: 17px; }
     .plans { grid-template-columns: 1fr; }
     .topbar img { width: 48px; height: 48px; }
-    .langswitch { margin-left: 0; width: 100%; }
+    .topbar { padding: 26px 0 16px; }
+    nav a { font-size: 12px; padding: 7px 11px; }
+    .langswitch a { padding: 6px 7px; }
 }
 </style>
 </head>
@@ -393,14 +409,16 @@ code {
         <div class="name">LexiUp</div>
         <div class="tag">Vocabulary that finds you</div>
     </div>
-    <div class="langswitch"><a class="on" href="/index.html">EN</a><a href="/ua/index.html">UK</a></div>
 </div>
 
-<nav>
-    <a href="/index.html" class="current">Home</a>
+<div class="bar">
+    <nav>
+        <a href="/index.html" class="current">Home</a>
     <a href="/privacy.html">Privacy</a>
     <a href="/support.html">Support</a>
-</nav>
+    </nav>
+    <div class="langswitch"><a class="on" href="/index.html">EN</a><a href="/ua/index.html">UK</a></div>
+</div>
 
 
 <h1>Your German vocabulary,<br>built in the background</h1>
