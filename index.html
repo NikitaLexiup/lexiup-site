@@ -3,11 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LexiUp — vocabulary that finds you</title>
+<title>LexiUp — German vocabulary that finds you</title>
+<link rel="alternate" hreflang="en" href="https://lexiup.space/index.html">
+<link rel="alternate" hreflang="uk" href="https://lexiup.space/ua/index.html">
 <style>
 @font-face {
     font-family: "PressStart2P";
-    src: url("assets/PressStart2P-Regular.ttf") format("truetype");
+    src: url("/assets/PressStart2P-Regular.ttf") format("truetype");
     font-display: swap;
 }
 
@@ -23,6 +25,9 @@
     --mint: #9ee0cc;
     --success: #70bf45;
     --celebrate: #f0b529;
+    --der: #3385e6;
+    --die: #e64f8c;
+    --das: #4ca854;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,20 +52,21 @@ body {
     -webkit-text-size-adjust: 100%;
 }
 
-.wrap { max-width: 720px; margin: 0 auto; }
+.wrap { max-width: 760px; margin: 0 auto; }
 
-/* ---- header: mascot + wordmark ---- */
+/* ---- header ---- */
 
-header {
+.topbar {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 40px 0 26px;
+    padding: 34px 0 22px;
+    flex-wrap: wrap;
 }
 
-header img {
-    width: 60px;
-    height: 60px;
+.topbar img {
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     border: 2px solid var(--outline);
     background: var(--card);
@@ -70,21 +76,28 @@ header img {
 
 .name {
     font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 19px;
-    letter-spacing: -0.5px;
+    font-size: 18px;
     line-height: 1.3;
 }
 
 .tag { color: var(--muted); font-size: 14px; margin-top: 6px; }
 
-/* ---- nav: pixel chips ---- */
+.langswitch { margin-left: auto; display: flex; gap: 6px; }
 
-nav {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 36px;
+.langswitch a {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 9px;
+    text-decoration: none;
+    color: var(--text);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 7px 8px;
+    background: var(--card);
 }
+
+.langswitch a.on { background: var(--accent); color: #fff; }
+
+nav { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
 
 nav a {
     font-size: 13px;
@@ -100,25 +113,27 @@ nav a {
 }
 
 nav a:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--shadow); }
-nav a.current { background: var(--accent); color: #fff; border-color: var(--outline); }
+nav a.current { background: var(--accent); color: #fff; }
 
 /* ---- type ---- */
 
 h1 {
     font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 22px;
-    line-height: 1.5;
-    margin: 0 0 14px;
+    font-size: 23px;
+    line-height: 1.55;
+    margin: 0 0 18px;
 }
 
 h2 {
-    font-size: 19px;
-    margin: 40px 0 12px;
+    font-size: 21px;
+    margin: 52px 0 14px;
     padding-left: 12px;
     border-left: 4px solid var(--accent);
 }
 
 h3 { font-size: 17px; margin: 26px 0 8px; }
+
+.lede { font-size: 19px; line-height: 1.6; color: var(--text); margin-bottom: 26px; }
 
 .updated {
     display: inline-block;
@@ -136,6 +151,44 @@ ul { margin: 0 0 16px; padding-left: 22px; }
 li { margin-bottom: 9px; }
 a { color: var(--accent); }
 
+/* ---- App Store button ---- */
+
+.getwrap { margin: 30px 0 8px; }
+
+.get {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    background: var(--accent);
+    color: #fff;
+    border: 2px solid var(--outline);
+    border-radius: 8px;
+    padding: 14px 22px;
+    box-shadow: 5px 5px 0 var(--outline);
+    transition: transform .08s ease-out, box-shadow .08s ease-out;
+}
+
+.get:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--outline); }
+.get .apple { display: block; }
+.get .small { font-size: 11px; opacity: .9; line-height: 1.2; }
+.get .big { font-family: "PressStart2P", ui-monospace, monospace; font-size: 12px; margin-top: 5px; }
+
+.soon {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--celebrate);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 4px 9px;
+    margin-left: 12px;
+    vertical-align: middle;
+}
+
+.getnote { color: var(--muted); font-size: 14px; margin-top: 14px; }
+
 /* ---- sticker card ---- */
 
 .card {
@@ -148,16 +201,82 @@ a { color: var(--accent); }
 }
 
 .card p:last-child, .card ul:last-child, .card .feature:last-child { margin-bottom: 0; }
+.card h3:first-child { margin-top: 0; }
 
-/* ---- feature rows with pixel checkmarks ---- */
+/* ---- numbered steps ---- */
 
-.feature {
+.steps { display: grid; gap: 16px; margin: 26px 0; }
+
+.step {
     display: flex;
-    gap: 13px;
+    gap: 16px;
     align-items: flex-start;
-    margin-bottom: 15px;
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 4px 4px 0 var(--shadow);
 }
 
+.step .n {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 13px;
+    color: #fff;
+    background: var(--accent);
+    border: 2px solid var(--outline);
+    border-radius: 7px;
+}
+
+.step h3 { margin: 2px 0 6px; font-size: 17px; }
+.step p { margin: 0; color: var(--muted); font-size: 16px; }
+
+/* ---- phone mock: a push and the widget ---- */
+
+.mock { display: grid; gap: 14px; margin: 26px 0; }
+
+.push {
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.push .head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.push .head b { color: var(--text); font-size: 13px; }
+.push .word { font-size: 19px; font-weight: 700; }
+.push .tr { color: var(--muted); font-size: 16px; }
+
+.chip {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-right: 7px;
+}
+
+.chip.der { background: var(--der); }
+.chip.die { background: var(--die); }
+.chip.das { background: var(--das); }
+
+/* ---- feature ticks ---- */
+
+.feature { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 15px; }
 .feature:last-child { margin-bottom: 0; }
 
 .tick {
@@ -171,18 +290,45 @@ a { color: var(--accent); }
     position: relative;
 }
 
-/* the check itself, drawn as two blocks - no icon font, no SVG */
-.tick::before, .tick::after {
-    content: "";
-    position: absolute;
-    background: #fff;
-}
+.tick::before, .tick::after { content: ""; position: absolute; background: #fff; }
 .tick::before { width: 3px; height: 7px;  left: 5px;  top: 7px;  }
 .tick::after  { width: 3px; height: 11px; left: 11px; top: 3px; }
 
-/* ---- language pills ---- */
+.tick.no { background: var(--muted); }
+.tick.no::before { width: 12px; height: 3px; left: 3px; top: 7px; }
+.tick.no::after { display: none; }
 
-.langs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+/* ---- pricing ---- */
+
+.plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 26px 0; }
+
+.plan {
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.plan.best { border: 2.5px solid var(--accent); }
+
+.plan .ptitle {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.plan .price { font-size: 27px; font-weight: 800; margin-bottom: 4px; }
+.plan .per { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+.plan .feature { font-size: 15px; margin-bottom: 11px; }
+.plan .tick { width: 19px; height: 19px; }
+.plan .tick::before { width: 3px; height: 6px; left: 4px; top: 6px; }
+.plan .tick::after { width: 3px; height: 9px; left: 9px; top: 3px; }
+.plan .tick.no::before { width: 10px; height: 3px; left: 3px; top: 6px; }
+
+/* ---- languages ---- */
+
+.langs { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .lang {
     font-size: 13px;
@@ -209,7 +355,7 @@ a { color: var(--accent); }
 /* ---- footer ---- */
 
 footer {
-    margin-top: 64px;
+    margin-top: 68px;
     padding-top: 26px;
     border-top: 2px dashed var(--outline);
     color: var(--muted);
@@ -227,40 +373,143 @@ code {
     padding: 1px 6px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 560px) {
     .name { font-size: 15px; }
     h1 { font-size: 17px; line-height: 1.6; }
-    header img { width: 50px; height: 50px; }
+    h2 { font-size: 19px; }
+    .lede { font-size: 17px; }
+    .plans { grid-template-columns: 1fr; }
+    .topbar img { width: 48px; height: 48px; }
+    .langswitch { margin-left: 0; width: 100%; }
 }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header>
-    <img src="assets/LU_Avatar.png" alt="LU, the LexiUp mascot">
+<div class="topbar">
+    <img src="/assets/LU_Avatar.png" alt="LU, the LexiUp mascot">
     <div>
         <div class="name">LexiUp</div>
         <div class="tag">Vocabulary that finds you</div>
     </div>
-</header>
+    <div class="langswitch"><a class="on" href="/index.html">EN</a><a href="/ua/index.html">UK</a></div>
+</div>
 
 <nav>
-    <a href="index.html" class="current">Home</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="support.html">Support</a>
+    <a href="/index.html" class="current">Home</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/support.html">Support</a>
 </nav>
 
-<h1>Learn words without<br>sitting in an app</h1>
 
-<p>LexiUp is a vocabulary builder for German. It is not another course that demands your evening &mdash; it works in the background while you learn the language wherever you already learn it.</p>
+<h1>Your German vocabulary,<br>built in the background</h1>
+
+<p class="lede">A few words a day arrive as notifications and sit on your home screen widget. In the evening a short test checks what actually stuck. That is the whole routine &mdash; no daily half hour, no streak guilt.</p>
+
+<div class="getwrap">
+    <a class="get" href="#" aria-disabled="true"><svg class="apple" viewBox="0 0 24 26" width="24" height="26" fill="#fff" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="0" width="2" height="2"/><rect x="14" y="0" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="10" y="4" width="2" height="2"/><rect x="4" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="8" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="12" y="6" width="2" height="2"/><rect x="14" y="6" width="2" height="2"/><rect x="16" y="6" width="2" height="2"/><rect x="2" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="6" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="10" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/><rect x="16" y="8" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="0" y="10" width="2" height="2"/><rect x="2" y="10" width="2" height="2"/><rect x="4" y="10" width="2" height="2"/><rect x="6" y="10" width="2" height="2"/><rect x="8" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="12" y="10" width="2" height="2"/><rect x="14" y="10" width="2" height="2"/><rect x="16" y="10" width="2" height="2"/><rect x="18" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="0" y="12" width="2" height="2"/><rect x="2" y="12" width="2" height="2"/><rect x="4" y="12" width="2" height="2"/><rect x="6" y="12" width="2" height="2"/><rect x="8" y="12" width="2" height="2"/><rect x="10" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/><rect x="14" y="12" width="2" height="2"/><rect x="16" y="12" width="2" height="2"/><rect x="18" y="12" width="2" height="2"/><rect x="20" y="12" width="2" height="2"/><rect x="0" y="14" width="2" height="2"/><rect x="2" y="14" width="2" height="2"/><rect x="4" y="14" width="2" height="2"/><rect x="6" y="14" width="2" height="2"/><rect x="8" y="14" width="2" height="2"/><rect x="10" y="14" width="2" height="2"/><rect x="12" y="14" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/><rect x="16" y="14" width="2" height="2"/><rect x="18" y="14" width="2" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="0" y="16" width="2" height="2"/><rect x="2" y="16" width="2" height="2"/><rect x="4" y="16" width="2" height="2"/><rect x="6" y="16" width="2" height="2"/><rect x="8" y="16" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="12" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/><rect x="16" y="16" width="2" height="2"/><rect x="18" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/><rect x="0" y="18" width="2" height="2"/><rect x="2" y="18" width="2" height="2"/><rect x="4" y="18" width="2" height="2"/><rect x="6" y="18" width="2" height="2"/><rect x="8" y="18" width="2" height="2"/><rect x="10" y="18" width="2" height="2"/><rect x="12" y="18" width="2" height="2"/><rect x="14" y="18" width="2" height="2"/><rect x="16" y="18" width="2" height="2"/><rect x="18" y="18" width="2" height="2"/><rect x="20" y="18" width="2" height="2"/><rect x="2" y="20" width="2" height="2"/><rect x="4" y="20" width="2" height="2"/><rect x="6" y="20" width="2" height="2"/><rect x="8" y="20" width="2" height="2"/><rect x="10" y="20" width="2" height="2"/><rect x="12" y="20" width="2" height="2"/><rect x="14" y="20" width="2" height="2"/><rect x="16" y="20" width="2" height="2"/><rect x="18" y="20" width="2" height="2"/><rect x="2" y="22" width="2" height="2"/><rect x="4" y="22" width="2" height="2"/><rect x="6" y="22" width="2" height="2"/><rect x="14" y="22" width="2" height="2"/><rect x="16" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="2"/><rect x="20" y="22" width="2" height="2"/><rect x="4" y="24" width="2" height="2"/><rect x="6" y="24" width="2" height="2"/><rect x="16" y="24" width="2" height="2"/><rect x="18" y="24" width="2" height="2"/></svg><span><span class="small">Coming soon to the</span><span class="big">App Store</span></span></a><span class="soon">In development</span>
+    <p class="getnote">LexiUp is being finished right now. The button goes live on release day.</p>
+</div>
+
+<h2>Why another vocabulary app?</h2>
+
+<p>It isn&rsquo;t one. You probably already have a course, a teacher, or a city that speaks German at you every day. What you are missing is <strong>words</strong> &mdash; and the last thing you need is one more app demanding thirty minutes you don&rsquo;t have.</p>
+
+<p>LexiUp takes the opposite bet: <strong>you never have to open it</strong>. The words come to you, in the gaps you already spend looking at your phone.</p>
+
+<h2>How it works</h2>
+
+<div class="steps">
+    <div class="step">
+        <div class="n">1</div>
+        <div>
+            <h3>You pick a pace</h3>
+            <p>Six, nine or twelve words a day &mdash; and the hours when they may reach you. Different windows for different weekdays, if your week is uneven.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="n">2</div>
+        <div>
+            <h3>Words find you all day</h3>
+            <p>Each word arrives as a notification and stays on the widget, with its article, translation and an example sentence. You meet it a few times without doing anything.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="n">3</div>
+        <div>
+            <h3>An evening test, two minutes</h3>
+            <p>It checks what stuck. What you know moves on; what slipped comes back later. Then tomorrow&rsquo;s set is scheduled and you close the app.</p>
+        </div>
+    </div>
+</div>
+
+<h2>What it looks like</h2>
+
+<div class="mock">
+    <div class="push">
+        <div class="head"><b>LexiUp</b><span>&middot; now</span></div>
+        <div class="word"><span class="chip die">die</span>Erfahrung</div>
+        <div class="tr">experience &middot; <em>Das war eine gute Erfahrung.</em></div>
+    </div>
+    <div class="push">
+        <div class="head"><b>LexiUp</b><span>&middot; 2 h ago</span></div>
+        <div class="word"><span class="chip der">der</span>Vorschlag</div>
+        <div class="tr">suggestion &middot; <em>Ich habe einen Vorschlag.</em></div>
+    </div>
+</div>
+
+<p>Nouns always carry their article, colour-coded the way learners are taught it &mdash; <span class="chip der">der</span> <span class="chip die">die</span> <span class="chip das">das</span> &mdash; so the gender sticks together with the word instead of being learned twice.</p>
+
+<h2>What you learn</h2>
 
 <div class="card">
-    <div class="feature"><span class="tick"></span><div><strong>A few words a day.</strong> Six, nine or twelve &mdash; you choose the pace.</div></div>
-    <div class="feature"><span class="tick"></span><div><strong>Delivered, not searched for.</strong> Words arrive as notifications and live on your home screen widget throughout the day.</div></div>
-    <div class="feature"><span class="tick"></span><div><strong>A short test in the evening.</strong> It checks what actually stuck, then the next set begins.</div></div>
-    <div class="feature"><span class="tick"></span><div><strong>Grammar where it helps.</strong> Short rule lessons for the alphabet, articles, pronouns, numbers and telling the time.</div></div>
-    <div class="feature"><span class="tick"></span><div><strong>Works offline.</strong> Everything lives on your device; the cloud is only a backup.</div></div>
+    <h3>Basics</h3>
+    <p>The alphabet and its reading traps, <strong>der/die/das</strong>, personal pronouns across three cases, prepositions, numbers, telling the time, days and months. Short rule lessons, then the words that use them.</p>
+</div>
+
+<div class="card">
+    <h3>A1 &middot; A2 &middot; B1</h3>
+    <p>Level courses built on the most frequent German words, with verbs split by how often they actually appear rather than by textbook order. Grammar lessons on the way: <em>ein/kein</em>, and articles in the accusative and dative.</p>
+</div>
+
+<div class="card">
+    <h3>Review that respects your time</h3>
+    <p>Learned words come back for a short review when they are due. A mistake is not a punishment &mdash; the word simply returns sooner.</p>
+</div>
+
+<h2>Price</h2>
+
+<div class="plans">
+    <div class="plan">
+        <div class="ptitle">FREE</div>
+        <div class="price">$0</div>
+        <div class="per">forever</div>
+        <div class="feature"><span class="tick"></span><div>Every course and lesson</div></div>
+        <div class="feature"><span class="tick"></span><div>Notifications and widget</div></div>
+        <div class="feature"><span class="tick"></span><div>One review session a day</div></div>
+        <div class="feature"><span class="tick no"></span><div>A short ad before the test</div></div>
+    </div>
+    <div class="plan best">
+        <div class="ptitle">LIFETIME</div>
+        <div class="price">$9.99</div>
+        <div class="per">once, not a subscription</div>
+        <div class="feature"><span class="tick"></span><div>Everything in Free</div></div>
+        <div class="feature"><span class="tick"></span><div>No ads at all</div></div>
+        <div class="feature"><span class="tick"></span><div>Unlimited reviews</div></div>
+        <div class="feature"><span class="tick"></span><div>You support an indie developer</div></div>
+    </div>
+</div>
+
+<p>The whole course is free because ads pay for it. If ads are not your thing, one payment removes them for good &mdash; there is no monthly plan and no trial that quietly renews.</p>
+
+<h2>Small print worth reading</h2>
+
+<div class="card">
+    <div class="feature"><span class="tick"></span><div><strong>It works offline.</strong> Your progress lives on the device. The cloud holds a backup so a new phone doesn&rsquo;t cost you your history.</div></div>
+    <div class="feature"><span class="tick"></span><div><strong>No tracking.</strong> No analytics SDK, no profiling across other apps, no selling anything to anyone.</div></div>
+    <div class="feature"><span class="tick"></span><div><strong>Notifications are local.</strong> They are scheduled on your phone, so we never even learn when you study.</div></div>
+    <div class="feature"><span class="tick"></span><div><strong>Delete everything in one tap.</strong> Profile &rarr; Delete account, and it is gone.</div></div>
 </div>
 
 <h2>Interface languages</h2>
@@ -272,16 +521,18 @@ code {
     <span class="lang">Français</span>
     <span class="lang">Polski</span>
 </div>
+<p style="margin-top:14px">Learn German through the language you actually think in.</p>
 
-<h2>Premium</h2>
-<div class="note">
-    <p>LexiUp is free to use. A one-time <strong>LexiUp Premium</strong> purchase removes ads, unlocks unlimited review sessions and lets you learn completely offline. No subscription.</p>
+<div class="getwrap">
+    <a class="get" href="#" aria-disabled="true"><svg class="apple" viewBox="0 0 24 26" width="24" height="26" fill="#fff" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="0" width="2" height="2"/><rect x="14" y="0" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="10" y="4" width="2" height="2"/><rect x="4" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="8" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="12" y="6" width="2" height="2"/><rect x="14" y="6" width="2" height="2"/><rect x="16" y="6" width="2" height="2"/><rect x="2" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="6" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="10" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/><rect x="16" y="8" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="0" y="10" width="2" height="2"/><rect x="2" y="10" width="2" height="2"/><rect x="4" y="10" width="2" height="2"/><rect x="6" y="10" width="2" height="2"/><rect x="8" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="12" y="10" width="2" height="2"/><rect x="14" y="10" width="2" height="2"/><rect x="16" y="10" width="2" height="2"/><rect x="18" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="0" y="12" width="2" height="2"/><rect x="2" y="12" width="2" height="2"/><rect x="4" y="12" width="2" height="2"/><rect x="6" y="12" width="2" height="2"/><rect x="8" y="12" width="2" height="2"/><rect x="10" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/><rect x="14" y="12" width="2" height="2"/><rect x="16" y="12" width="2" height="2"/><rect x="18" y="12" width="2" height="2"/><rect x="20" y="12" width="2" height="2"/><rect x="0" y="14" width="2" height="2"/><rect x="2" y="14" width="2" height="2"/><rect x="4" y="14" width="2" height="2"/><rect x="6" y="14" width="2" height="2"/><rect x="8" y="14" width="2" height="2"/><rect x="10" y="14" width="2" height="2"/><rect x="12" y="14" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/><rect x="16" y="14" width="2" height="2"/><rect x="18" y="14" width="2" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="0" y="16" width="2" height="2"/><rect x="2" y="16" width="2" height="2"/><rect x="4" y="16" width="2" height="2"/><rect x="6" y="16" width="2" height="2"/><rect x="8" y="16" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="12" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/><rect x="16" y="16" width="2" height="2"/><rect x="18" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/><rect x="0" y="18" width="2" height="2"/><rect x="2" y="18" width="2" height="2"/><rect x="4" y="18" width="2" height="2"/><rect x="6" y="18" width="2" height="2"/><rect x="8" y="18" width="2" height="2"/><rect x="10" y="18" width="2" height="2"/><rect x="12" y="18" width="2" height="2"/><rect x="14" y="18" width="2" height="2"/><rect x="16" y="18" width="2" height="2"/><rect x="18" y="18" width="2" height="2"/><rect x="20" y="18" width="2" height="2"/><rect x="2" y="20" width="2" height="2"/><rect x="4" y="20" width="2" height="2"/><rect x="6" y="20" width="2" height="2"/><rect x="8" y="20" width="2" height="2"/><rect x="10" y="20" width="2" height="2"/><rect x="12" y="20" width="2" height="2"/><rect x="14" y="20" width="2" height="2"/><rect x="16" y="20" width="2" height="2"/><rect x="18" y="20" width="2" height="2"/><rect x="2" y="22" width="2" height="2"/><rect x="4" y="22" width="2" height="2"/><rect x="6" y="22" width="2" height="2"/><rect x="14" y="22" width="2" height="2"/><rect x="16" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="2"/><rect x="20" y="22" width="2" height="2"/><rect x="4" y="24" width="2" height="2"/><rect x="6" y="24" width="2" height="2"/><rect x="16" y="24" width="2" height="2"/><rect x="18" y="24" width="2" height="2"/></svg><span><span class="small">Coming soon to the</span><span class="big">App Store</span></span></a><span class="soon">In development</span>
+    <p class="getnote">LexiUp is being finished right now. The button goes live on release day.</p>
 </div>
 
+
 <footer>
-    &copy; 2026 LexiUp &middot; <a href="index.html">Home</a> &middot;
-    <a href="privacy.html">Privacy Policy</a> &middot;
-    <a href="support.html">Support</a> &middot;
+    &copy; 2026 LexiUp &middot;
+    <a href="/privacy.html">Privacy</a> &middot;
+    <a href="/support.html">Support</a> &middot;
     <a href="mailto:inikita86@ukr.net">Contact</a>
 </footer>
 

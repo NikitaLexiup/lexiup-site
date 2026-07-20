@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Політика конфіденційності — LexiUp</title>
+<link rel="alternate" hreflang="uk" href="https://lexiup.space/ua/privacy.html">
+<link rel="alternate" hreflang="en" href="https://lexiup.space/privacy.html">
+<style>
+@font-face {
+    font-family: "PressStart2P";
+    src: url("/assets/PressStart2P-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+
+:root {
+    /* Straight from PixelKit.swift */
+    --bg: #f7f4ec;
+    --card: #ffffff;
+    --outline: #2b2b29;
+    --shadow: rgba(43, 43, 41, 0.22);
+    --text: #1a1a19;
+    --muted: #6b6b66;
+    --accent: #4ca6e8;
+    --mint: #9ee0cc;
+    --success: #70bf45;
+    --celebrate: #f0b529;
+    --der: #3385e6;
+    --die: #e64f8c;
+    --das: #4ca854;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #171714;
+        --card: #262624;
+        --outline: #70706b;
+        --shadow: rgba(112, 112, 107, 0.22);
+        --text: #f2f0ea;
+        --muted: #9a9a92;
+    }
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0 20px 72px;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-text-size-adjust: 100%;
+}
+
+.wrap { max-width: 760px; margin: 0 auto; }
+
+/* ---- header ---- */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 34px 0 22px;
+    flex-wrap: wrap;
+}
+
+.topbar img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--outline);
+    background: var(--card);
+    box-shadow: 4px 4px 0 var(--shadow);
+    image-rendering: pixelated;
+}
+
+.name {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 18px;
+    line-height: 1.3;
+}
+
+.tag { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+.langswitch { margin-left: auto; display: flex; gap: 6px; }
+
+.langswitch a {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 9px;
+    text-decoration: none;
+    color: var(--text);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 7px 8px;
+    background: var(--card);
+}
+
+.langswitch a.on { background: var(--accent); color: #fff; }
+
+nav { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+
+nav a {
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--card);
+    border: 2px solid var(--outline);
+    border-radius: 6px;
+    padding: 8px 14px;
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition: transform .08s ease-out, box-shadow .08s ease-out;
+}
+
+nav a:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--shadow); }
+nav a.current { background: var(--accent); color: #fff; }
+
+/* ---- type ---- */
+
+h1 {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 23px;
+    line-height: 1.55;
+    margin: 0 0 18px;
+}
+
+h2 {
+    font-size: 21px;
+    margin: 52px 0 14px;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent);
+}
+
+h3 { font-size: 17px; margin: 26px 0 8px; }
+
+.lede { font-size: 19px; line-height: 1.6; color: var(--text); margin-bottom: 26px; }
+
+.updated {
+    display: inline-block;
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 9px;
+    color: var(--muted);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 6px 9px;
+    margin-bottom: 30px;
+}
+
+p { margin: 0 0 16px; }
+ul { margin: 0 0 16px; padding-left: 22px; }
+li { margin-bottom: 9px; }
+a { color: var(--accent); }
+
+/* ---- App Store button ---- */
+
+.getwrap { margin: 30px 0 8px; }
+
+.get {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    background: var(--accent);
+    color: #fff;
+    border: 2px solid var(--outline);
+    border-radius: 8px;
+    padding: 14px 22px;
+    box-shadow: 5px 5px 0 var(--outline);
+    transition: transform .08s ease-out, box-shadow .08s ease-out;
+}
+
+.get:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--outline); }
+.get .apple { display: block; }
+.get .small { font-size: 11px; opacity: .9; line-height: 1.2; }
+.get .big { font-family: "PressStart2P", ui-monospace, monospace; font-size: 12px; margin-top: 5px; }
+
+.soon {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--celebrate);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 4px 9px;
+    margin-left: 12px;
+    vertical-align: middle;
+}
+
+.getnote { color: var(--muted); font-size: 14px; margin-top: 14px; }
+
+/* ---- sticker card ---- */
+
+.card {
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin: 26px 0;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.card p:last-child, .card ul:last-child, .card .feature:last-child { margin-bottom: 0; }
+.card h3:first-child { margin-top: 0; }
+
+/* ---- numbered steps ---- */
+
+.steps { display: grid; gap: 16px; margin: 26px 0; }
+
+.step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.step .n {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 13px;
+    color: #fff;
+    background: var(--accent);
+    border: 2px solid var(--outline);
+    border-radius: 7px;
+}
+
+.step h3 { margin: 2px 0 6px; font-size: 17px; }
+.step p { margin: 0; color: var(--muted); font-size: 16px; }
+
+/* ---- phone mock: a push and the widget ---- */
+
+.mock { display: grid; gap: 14px; margin: 26px 0; }
+
+.push {
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.push .head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.push .head b { color: var(--text); font-size: 13px; }
+.push .word { font-size: 19px; font-weight: 700; }
+.push .tr { color: var(--muted); font-size: 16px; }
+
+.chip {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-right: 7px;
+}
+
+.chip.der { background: var(--der); }
+.chip.die { background: var(--die); }
+.chip.das { background: var(--das); }
+
+/* ---- feature ticks ---- */
+
+.feature { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 15px; }
+.feature:last-child { margin-bottom: 0; }
+
+.tick {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    background: var(--success);
+    position: relative;
+}
+
+.tick::before, .tick::after { content: ""; position: absolute; background: #fff; }
+.tick::before { width: 3px; height: 7px;  left: 5px;  top: 7px;  }
+.tick::after  { width: 3px; height: 11px; left: 11px; top: 3px; }
+
+.tick.no { background: var(--muted); }
+.tick.no::before { width: 12px; height: 3px; left: 3px; top: 7px; }
+.tick.no::after { display: none; }
+
+/* ---- pricing ---- */
+
+.plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 26px 0; }
+
+.plan {
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.plan.best { border: 2.5px solid var(--accent); }
+
+.plan .ptitle {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.plan .price { font-size: 27px; font-weight: 800; margin-bottom: 4px; }
+.plan .per { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+.plan .feature { font-size: 15px; margin-bottom: 11px; }
+.plan .tick { width: 19px; height: 19px; }
+.plan .tick::before { width: 3px; height: 6px; left: 4px; top: 6px; }
+.plan .tick::after { width: 3px; height: 9px; left: 9px; top: 3px; }
+.plan .tick.no::before { width: 10px; height: 3px; left: 3px; top: 6px; }
+
+/* ---- languages ---- */
+
+.langs { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.lang {
+    font-size: 13px;
+    font-weight: 600;
+    border: 2px solid var(--outline);
+    border-radius: 6px;
+    padding: 6px 11px;
+    background: var(--mint);
+    color: #1a1a19;
+}
+
+/* ---- callout ---- */
+
+.note {
+    border-left: 4px solid var(--celebrate);
+    background: var(--card);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    margin: 24px 0;
+}
+
+.note p:last-child { margin-bottom: 0; }
+
+/* ---- footer ---- */
+
+footer {
+    margin-top: 68px;
+    padding-top: 26px;
+    border-top: 2px dashed var(--outline);
+    color: var(--muted);
+    font-size: 14px;
+}
+
+footer a { color: var(--muted); }
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 15px;
+    background: var(--card);
+    border: 1px solid var(--outline);
+    border-radius: 5px;
+    padding: 1px 6px;
+}
+
+@media (max-width: 560px) {
+    .name { font-size: 15px; }
+    h1 { font-size: 17px; line-height: 1.6; }
+    h2 { font-size: 19px; }
+    .lede { font-size: 17px; }
+    .plans { grid-template-columns: 1fr; }
+    .topbar img { width: 48px; height: 48px; }
+    .langswitch { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+    <img src="/assets/LU_Avatar.png" alt="LU, the LexiUp mascot">
+    <div>
+        <div class="name">LexiUp</div>
+        <div class="tag">Слова, які знаходять тебе</div>
+    </div>
+    <div class="langswitch"><a class="on" href="/ua/privacy.html">UK</a><a href="/privacy.html">EN</a></div>
+</div>
+
+<nav>
+    <a href="/ua/index.html">Головна</a>
+    <a href="/ua/privacy.html" class="current">Приватність</a>
+    <a href="/ua/support.html">Підтримка</a>
+</nav>
+
+<h1>Політика конфіденційності</h1>
+<div class="updated">ОНОВЛЕНО: 21 ЛИПНЯ 2026</div>
+
+<p>LexiUp («ми», «наш» або «нас») дбає про захист вашої приватності. Ця Політика конфіденційності пояснює, яку інформацію ми збираємо, як її використовуємо та кому передаємо, коли ви користуєтеся нашим мобільним застосунком і вебсайтом (разом &mdash; «Сервіс»).</p>
+
+<div class="card">
+    <p>LexiUp &mdash; застосунок для вивчення лексики. Ваш прогрес зберігається <strong>на вашому пристрої</strong>; копія в хмарі існує лише для того, щоб ви могли відновити його після перевстановлення застосунку або входу на іншому пристрої.</p>
+</div>
+
+<h2>1. Яку інформацію ми збираємо</h2>
+<ul>
+    <li><strong>Дані акаунта:</strong> під час реєстрації ми отримуємо вашу електронну адресу, а якщо ви входите через Google або Apple &mdash; також ім&rsquo;я та фото профілю.</li>
+    <li><strong>Дані профілю:</strong> відображуване ім&rsquo;я та необов&rsquo;язкове зображення аватара, яке ви обираєте з фотогалереї.</li>
+    <li><strong>Навчальні дані:</strong> ваш прогрес &mdash; вивчені або позначені як відомі слова, результати тестів і повторень, щоденні серії та цілі, обрані курси й рівні, слова в обраному, а також особисті нотатки, які ви пишете під картками у стрічці.</li>
+    <li><strong>Налаштування:</strong> мова інтерфейсу та мова вивчення, проміжок для сповіщень, темп слів на день і часовий пояс.</li>
+    <li><strong>Статус покупки:</strong> чи придбано вбудовану покупку LexiUp Premium. Платежі обробляє Apple; ми ніколи не отримуємо та не зберігаємо ваших платіжних даних.</li>
+    <li><strong>Рекламні дані:</strong> коли користувачам безкоштовної версії показується реклама, рекламний SDK Google може отримувати доступ до ідентифікаторів пристрою та даних про взаємодію з оголошеннями. Див. розділ 3.</li>
+</ul>
+<p>Ми <strong>не</strong> використовуємо жодних SDK аналітики й <strong>не</strong> відстежуємо вашу активність в інших застосунках чи на сайтах.</p>
+
+<h2>2. Як ми використовуємо інформацію</h2>
+<ul>
+    <li>Забезпечуємо навчання: добираємо слова дня, плануємо нагадування та формуємо стрічку прогресу</li>
+    <li>Відновлюємо ваш прогрес після перевстановлення, на новому пристрої або після повторного входу</li>
+    <li>Підтверджуємо вашу особу та захищаємо акаунт</li>
+    <li>Показуємо рекламу користувачам безкоштовної версії та прибираємо її для власників Premium</li>
+    <li>Відповідаємо на ваші звернення до підтримки</li>
+</ul>
+<p><strong>Сповіщення плануються локально на вашому пристрої.</strong> Ми не маємо push-сервера й не збираємо токен сповіщень.</p>
+
+<h2>3. Реклама</h2>
+<p>Безкоштовна версія LexiUp показує рекламу від <strong>Google AdMob</strong>. Оголошення з&rsquo;являються лише перед вечірнім тестом і при розблокуванні додаткових повторень &mdash; ніколи між уроками чи всередині стрічки. Покупка LexiUp Premium прибирає рекламу повністю.</p>
+<p>Google може використовувати ідентифікатори пристрою та дані про взаємодію з оголошеннями для показу й вимірювання реклами. Ознайомитися з практиками Google можна за посиланням <a href="https://policies.google.com/technologies/partner-sites">policies.google.com/technologies/partner-sites</a>.</p>
+<p>Якщо ви перебуваєте в Європейському економічному просторі, Великій Британії або Швейцарії, ми запитуємо вашу згоду перед персоналізацією реклами через Google User Messaging Platform. Змінити або відкликати цей вибір можна будь-коли в налаштуваннях приватності в застосунку.</p>
+
+<h2>4. Передавання інформації</h2>
+<p>Ми не продаємо ваші персональні дані. Ми передаємо інформацію лише в таких випадках:</p>
+<ul>
+    <li><strong>Постачальники послуг:</strong> ми використовуємо Firebase (Google) для автентифікації, резервного копіювання бази даних, зберігання файлів і захисту від зловживань, а також Google AdMob для реклами. Ці постачальники мають власні політики конфіденційності.</li>
+    <li><strong>Apple:</strong> вбудовані покупки обробляє Apple згідно з власною політикою конфіденційності.</li>
+    <li><strong>Вимоги законодавства:</strong> ми можемо розкрити інформацію, якщо цього вимагає закон або якщо це потрібно для захисту наших прав.</li>
+</ul>
+<p>Ваші навчальні дані ніколи не передаються іншим користувачам. У LexiUp немає соціальних функцій, публічних профілів і поширення вашого прогресу третім особам.</p>
+
+<h2>5. Зберігання та безпека даних</h2>
+<p>Ваш навчальний прогрес зберігається на пристрої. Резервна копія надійно зберігається в інфраструктурі Google Firebase, щоб її можна було відновити пізніше. Ми вживаємо належних технічних заходів для захисту вашої інформації від несанкціонованого доступу, зміни або знищення.</p>
+<p>Ми зберігаємо ваші дані, доки існує ваш акаунт. Коли ви видаляєте акаунт, дані вилучаються.</p>
+
+<h2>6. Ваші права</h2>
+<ul>
+    <li>Отримати доступ до персональних даних, які ми зберігаємо про вас</li>
+    <li>Вимагати виправлення неточної інформації</li>
+    <li><strong>Видалити акаунт і всі пов&rsquo;язані дані просто в застосунку</strong> (Профіль &rarr; Видалити акаунт)</li>
+    <li>Будь-коли відмовитися від сповіщень у налаштуваннях пристрою</li>
+    <li>Змінити або відкликати згоду на рекламу в налаштуваннях приватності застосунку</li>
+    <li>Запросити копію своїх даних</li>
+</ul>
+<p>Якщо ви перебуваєте в Європейському економічному просторі або Великій Британії, ви також маєте право подати скаргу до місцевого органу із захисту даних.</p>
+<p>Щоб скористатися будь-яким із цих прав, зверніться за адресою з розділу 9.</p>
+
+<h2>7. Приватність дітей</h2>
+<p>LexiUp має віковий рейтинг 4+, оскільки не містить неприйнятного контенту, проте Сервіс <strong>не адресований дітям</strong>. Ми свідомо не збираємо персональних даних дітей віком до 13 років (або до 16 років у Європейському економічному просторі). Якщо ви вважаєте, що дитина надала нам персональні дані, зв&rsquo;яжіться з нами &mdash; ми їх видалимо.</p>
+
+<h2>8. Сторонні сервіси</h2>
+<ul>
+    <li><strong>Firebase Authentication (Google)</strong> &mdash; вхід і безпека акаунта</li>
+    <li><strong>Cloud Firestore (Google)</strong> &mdash; резервна копія прогресу</li>
+    <li><strong>Firebase Storage (Google)</strong> &mdash; зображення аватарів</li>
+    <li><strong>Firebase App Check (Google)</strong> &mdash; захист від зловживань</li>
+    <li><strong>Google AdMob</strong> &mdash; реклама в безкоштовній версії</li>
+    <li><strong>Google User Messaging Platform</strong> &mdash; згода на рекламу в ЄЕЗ, Великій Британії та Швейцарії</li>
+    <li><strong>Google Sign-In</strong> &mdash; необов&rsquo;язковий спосіб входу</li>
+    <li><strong>Apple Sign-In</strong> &mdash; необов&rsquo;язковий спосіб входу</li>
+    <li><strong>Apple In-App Purchase</strong> &mdash; обробка покупки Premium</li>
+</ul>
+<p>Сам цей сайт не завантажує жодних сторонніх ресурсів: шрифт і зображення віддаються з цього ж домену, і тут немає ані аналітики, ані файлів cookie, ані трекерів.</p>
+
+<h2>9. Зв&rsquo;язок із нами</h2>
+<p>Якщо у вас є запитання щодо цієї Політики конфіденційності або ви хочете скористатися своїми правами, напишіть нам на <a href="mailto:inikita86@ukr.net">inikita86@ukr.net</a>.</p>
+<p>Власник і контролер даних: Mykyta Ivanov, Німеччина.</p>
+
+<h2>10. Зміни до цієї Політики</h2>
+<p>Ми можемо час від часу оновлювати цю Політику конфіденційності. Про суттєві зміни ми повідомимо, оновивши дату вгорі цієї сторінки. Подальше користування Сервісом після змін означає прийняття оновленої політики.</p>
+
+<div class="note">
+    <p>Юридично обов&rsquo;язковою версією цієї політики є <a href="/privacy.html">англомовна</a>. Український переклад наведено для зручності.</p>
+</div>
+
+<footer>
+    &copy; 2026 LexiUp &middot;
+    <a href="/ua/privacy.html">Приватність</a> &middot;
+    <a href="/ua/support.html">Підтримка</a> &middot;
+    <a href="mailto:inikita86@ukr.net">Написати нам</a>
+</footer>
+
+</div>
+</body>
+</html>

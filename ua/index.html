@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LexiUp — німецькі слова, які знаходять тебе</title>
+<link rel="alternate" hreflang="uk" href="https://lexiup.space/ua/index.html">
+<link rel="alternate" hreflang="en" href="https://lexiup.space/index.html">
+<style>
+@font-face {
+    font-family: "PressStart2P";
+    src: url("/assets/PressStart2P-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+
+:root {
+    /* Straight from PixelKit.swift */
+    --bg: #f7f4ec;
+    --card: #ffffff;
+    --outline: #2b2b29;
+    --shadow: rgba(43, 43, 41, 0.22);
+    --text: #1a1a19;
+    --muted: #6b6b66;
+    --accent: #4ca6e8;
+    --mint: #9ee0cc;
+    --success: #70bf45;
+    --celebrate: #f0b529;
+    --der: #3385e6;
+    --die: #e64f8c;
+    --das: #4ca854;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #171714;
+        --card: #262624;
+        --outline: #70706b;
+        --shadow: rgba(112, 112, 107, 0.22);
+        --text: #f2f0ea;
+        --muted: #9a9a92;
+    }
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0 20px 72px;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-text-size-adjust: 100%;
+}
+
+.wrap { max-width: 760px; margin: 0 auto; }
+
+/* ---- header ---- */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 34px 0 22px;
+    flex-wrap: wrap;
+}
+
+.topbar img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--outline);
+    background: var(--card);
+    box-shadow: 4px 4px 0 var(--shadow);
+    image-rendering: pixelated;
+}
+
+.name {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 18px;
+    line-height: 1.3;
+}
+
+.tag { color: var(--muted); font-size: 14px; margin-top: 6px; }
+
+.langswitch { margin-left: auto; display: flex; gap: 6px; }
+
+.langswitch a {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 9px;
+    text-decoration: none;
+    color: var(--text);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 7px 8px;
+    background: var(--card);
+}
+
+.langswitch a.on { background: var(--accent); color: #fff; }
+
+nav { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+
+nav a {
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--card);
+    border: 2px solid var(--outline);
+    border-radius: 6px;
+    padding: 8px 14px;
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition: transform .08s ease-out, box-shadow .08s ease-out;
+}
+
+nav a:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--shadow); }
+nav a.current { background: var(--accent); color: #fff; }
+
+/* ---- type ---- */
+
+h1 {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 23px;
+    line-height: 1.55;
+    margin: 0 0 18px;
+}
+
+h2 {
+    font-size: 21px;
+    margin: 52px 0 14px;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent);
+}
+
+h3 { font-size: 17px; margin: 26px 0 8px; }
+
+.lede { font-size: 19px; line-height: 1.6; color: var(--text); margin-bottom: 26px; }
+
+.updated {
+    display: inline-block;
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 9px;
+    color: var(--muted);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 6px 9px;
+    margin-bottom: 30px;
+}
+
+p { margin: 0 0 16px; }
+ul { margin: 0 0 16px; padding-left: 22px; }
+li { margin-bottom: 9px; }
+a { color: var(--accent); }
+
+/* ---- App Store button ---- */
+
+.getwrap { margin: 30px 0 8px; }
+
+.get {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    background: var(--accent);
+    color: #fff;
+    border: 2px solid var(--outline);
+    border-radius: 8px;
+    padding: 14px 22px;
+    box-shadow: 5px 5px 0 var(--outline);
+    transition: transform .08s ease-out, box-shadow .08s ease-out;
+}
+
+.get:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--outline); }
+.get .apple { display: block; }
+.get .small { font-size: 11px; opacity: .9; line-height: 1.2; }
+.get .big { font-family: "PressStart2P", ui-monospace, monospace; font-size: 12px; margin-top: 5px; }
+
+.soon {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--celebrate);
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    padding: 4px 9px;
+    margin-left: 12px;
+    vertical-align: middle;
+}
+
+.getnote { color: var(--muted); font-size: 14px; margin-top: 14px; }
+
+/* ---- sticker card ---- */
+
+.card {
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin: 26px 0;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.card p:last-child, .card ul:last-child, .card .feature:last-child { margin-bottom: 0; }
+.card h3:first-child { margin-top: 0; }
+
+/* ---- numbered steps ---- */
+
+.steps { display: grid; gap: 16px; margin: 26px 0; }
+
+.step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.step .n {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 13px;
+    color: #fff;
+    background: var(--accent);
+    border: 2px solid var(--outline);
+    border-radius: 7px;
+}
+
+.step h3 { margin: 2px 0 6px; font-size: 17px; }
+.step p { margin: 0; color: var(--muted); font-size: 16px; }
+
+/* ---- phone mock: a push and the widget ---- */
+
+.mock { display: grid; gap: 14px; margin: 26px 0; }
+
+.push {
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.push .head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.push .head b { color: var(--text); font-size: 13px; }
+.push .word { font-size: 19px; font-weight: 700; }
+.push .tr { color: var(--muted); font-size: 16px; }
+
+.chip {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-right: 7px;
+}
+
+.chip.der { background: var(--der); }
+.chip.die { background: var(--die); }
+.chip.das { background: var(--das); }
+
+/* ---- feature ticks ---- */
+
+.feature { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 15px; }
+.feature:last-child { margin-bottom: 0; }
+
+.tick {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    border: 2px solid var(--outline);
+    border-radius: 5px;
+    background: var(--success);
+    position: relative;
+}
+
+.tick::before, .tick::after { content: ""; position: absolute; background: #fff; }
+.tick::before { width: 3px; height: 7px;  left: 5px;  top: 7px;  }
+.tick::after  { width: 3px; height: 11px; left: 11px; top: 3px; }
+
+.tick.no { background: var(--muted); }
+.tick.no::before { width: 12px; height: 3px; left: 3px; top: 7px; }
+.tick.no::after { display: none; }
+
+/* ---- pricing ---- */
+
+.plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 26px 0; }
+
+.plan {
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.plan.best { border: 2.5px solid var(--accent); }
+
+.plan .ptitle {
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.plan .price { font-size: 27px; font-weight: 800; margin-bottom: 4px; }
+.plan .per { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+.plan .feature { font-size: 15px; margin-bottom: 11px; }
+.plan .tick { width: 19px; height: 19px; }
+.plan .tick::before { width: 3px; height: 6px; left: 4px; top: 6px; }
+.plan .tick::after { width: 3px; height: 9px; left: 9px; top: 3px; }
+.plan .tick.no::before { width: 10px; height: 3px; left: 3px; top: 6px; }
+
+/* ---- languages ---- */
+
+.langs { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.lang {
+    font-size: 13px;
+    font-weight: 600;
+    border: 2px solid var(--outline);
+    border-radius: 6px;
+    padding: 6px 11px;
+    background: var(--mint);
+    color: #1a1a19;
+}
+
+/* ---- callout ---- */
+
+.note {
+    border-left: 4px solid var(--celebrate);
+    background: var(--card);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    margin: 24px 0;
+}
+
+.note p:last-child { margin-bottom: 0; }
+
+/* ---- footer ---- */
+
+footer {
+    margin-top: 68px;
+    padding-top: 26px;
+    border-top: 2px dashed var(--outline);
+    color: var(--muted);
+    font-size: 14px;
+}
+
+footer a { color: var(--muted); }
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 15px;
+    background: var(--card);
+    border: 1px solid var(--outline);
+    border-radius: 5px;
+    padding: 1px 6px;
+}
+
+@media (max-width: 560px) {
+    .name { font-size: 15px; }
+    h1 { font-size: 17px; line-height: 1.6; }
+    h2 { font-size: 19px; }
+    .lede { font-size: 17px; }
+    .plans { grid-template-columns: 1fr; }
+    .topbar img { width: 48px; height: 48px; }
+    .langswitch { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+    <img src="/assets/LU_Avatar.png" alt="LU, the LexiUp mascot">
+    <div>
+        <div class="name">LexiUp</div>
+        <div class="tag">Слова, які знаходять тебе</div>
+    </div>
+    <div class="langswitch"><a class="on" href="/ua/index.html">UK</a><a href="/index.html">EN</a></div>
+</div>
+
+<nav>
+    <a href="/ua/index.html" class="current">Головна</a>
+    <a href="/ua/privacy.html">Приватність</a>
+    <a href="/ua/support.html">Підтримка</a>
+</nav>
+
+
+<h1>Німецькі слова<br>ростуть у фоні</h1>
+
+<p class="lede">Кілька слів на день приходять сповіщеннями й лишаються на віджеті. Увечері короткий тест перевіряє, що справді запам&rsquo;яталося. Оце й уся рутина &mdash; без пів години щодня й без почуття провини за втрачений «стрік».</p>
+
+<div class="getwrap">
+    <a class="get" href="#" aria-disabled="true"><svg class="apple" viewBox="0 0 24 26" width="24" height="26" fill="#fff" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="0" width="2" height="2"/><rect x="14" y="0" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="10" y="4" width="2" height="2"/><rect x="4" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="8" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="12" y="6" width="2" height="2"/><rect x="14" y="6" width="2" height="2"/><rect x="16" y="6" width="2" height="2"/><rect x="2" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="6" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="10" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/><rect x="16" y="8" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="0" y="10" width="2" height="2"/><rect x="2" y="10" width="2" height="2"/><rect x="4" y="10" width="2" height="2"/><rect x="6" y="10" width="2" height="2"/><rect x="8" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="12" y="10" width="2" height="2"/><rect x="14" y="10" width="2" height="2"/><rect x="16" y="10" width="2" height="2"/><rect x="18" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="0" y="12" width="2" height="2"/><rect x="2" y="12" width="2" height="2"/><rect x="4" y="12" width="2" height="2"/><rect x="6" y="12" width="2" height="2"/><rect x="8" y="12" width="2" height="2"/><rect x="10" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/><rect x="14" y="12" width="2" height="2"/><rect x="16" y="12" width="2" height="2"/><rect x="18" y="12" width="2" height="2"/><rect x="20" y="12" width="2" height="2"/><rect x="0" y="14" width="2" height="2"/><rect x="2" y="14" width="2" height="2"/><rect x="4" y="14" width="2" height="2"/><rect x="6" y="14" width="2" height="2"/><rect x="8" y="14" width="2" height="2"/><rect x="10" y="14" width="2" height="2"/><rect x="12" y="14" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/><rect x="16" y="14" width="2" height="2"/><rect x="18" y="14" width="2" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="0" y="16" width="2" height="2"/><rect x="2" y="16" width="2" height="2"/><rect x="4" y="16" width="2" height="2"/><rect x="6" y="16" width="2" height="2"/><rect x="8" y="16" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="12" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/><rect x="16" y="16" width="2" height="2"/><rect x="18" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/><rect x="0" y="18" width="2" height="2"/><rect x="2" y="18" width="2" height="2"/><rect x="4" y="18" width="2" height="2"/><rect x="6" y="18" width="2" height="2"/><rect x="8" y="18" width="2" height="2"/><rect x="10" y="18" width="2" height="2"/><rect x="12" y="18" width="2" height="2"/><rect x="14" y="18" width="2" height="2"/><rect x="16" y="18" width="2" height="2"/><rect x="18" y="18" width="2" height="2"/><rect x="20" y="18" width="2" height="2"/><rect x="2" y="20" width="2" height="2"/><rect x="4" y="20" width="2" height="2"/><rect x="6" y="20" width="2" height="2"/><rect x="8" y="20" width="2" height="2"/><rect x="10" y="20" width="2" height="2"/><rect x="12" y="20" width="2" height="2"/><rect x="14" y="20" width="2" height="2"/><rect x="16" y="20" width="2" height="2"/><rect x="18" y="20" width="2" height="2"/><rect x="2" y="22" width="2" height="2"/><rect x="4" y="22" width="2" height="2"/><rect x="6" y="22" width="2" height="2"/><rect x="14" y="22" width="2" height="2"/><rect x="16" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="2"/><rect x="20" y="22" width="2" height="2"/><rect x="4" y="24" width="2" height="2"/><rect x="6" y="24" width="2" height="2"/><rect x="16" y="24" width="2" height="2"/><rect x="18" y="24" width="2" height="2"/></svg><span><span class="small">Незабаром у</span><span class="big">App Store</span></span></a><span class="soon">У розробці</span>
+    <p class="getnote">LexiUp зараз доводимо до релізу. Кнопка запрацює в день виходу.</p>
+</div>
+
+<h2>Навіщо ще один застосунок для слів?</h2>
+
+<p>Це не він. У тебе, найпевніше, вже є курс, викладач або місто, яке щодня говорить до тебе німецькою. Бракує саме <strong>слів</strong> &mdash; і аж ніяк не ще одного застосунку, який вимагає тридцяти хвилин, яких немає.</p>
+
+<p>LexiUp робить ставку на протилежне: <strong>його можна взагалі не відкривати</strong>. Слова приходять самі, у ті проміжки, які ти й так проводиш у телефоні.</p>
+
+<h2>Як це працює</h2>
+
+<div class="steps">
+    <div class="step">
+        <div class="n">1</div>
+        <div>
+            <h3>Обираєш темп</h3>
+            <p>Шість, дев&rsquo;ять або дванадцять слів на день &mdash; і години, коли вони можуть тебе турбувати. Для кожного дня тижня можна задати свій проміжок.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="n">2</div>
+        <div>
+            <h3>Слова знаходять тебе протягом дня</h3>
+            <p>Кожне приходить сповіщенням і лишається на віджеті &mdash; з артиклем, перекладом і прикладом речення. Ти зустрічаєш його кілька разів, нічого для цього не роблячи.</p>
+        </div>
+    </div>
+    <div class="step">
+        <div class="n">3</div>
+        <div>
+            <h3>Вечірній тест на дві хвилини</h3>
+            <p>Він перевіряє, що засвоїлося. Відоме йде далі, забуте повертається згодом. Тоді планується завтрашній набір &mdash; і застосунок можна закрити.</p>
+        </div>
+    </div>
+</div>
+
+<h2>Як це виглядає</h2>
+
+<div class="mock">
+    <div class="push">
+        <div class="head"><b>LexiUp</b><span>&middot; щойно</span></div>
+        <div class="word"><span class="chip die">die</span>Erfahrung</div>
+        <div class="tr">досвід &middot; <em>Das war eine gute Erfahrung.</em></div>
+    </div>
+    <div class="push">
+        <div class="head"><b>LexiUp</b><span>&middot; 2 год тому</span></div>
+        <div class="word"><span class="chip der">der</span>Vorschlag</div>
+        <div class="tr">пропозиція &middot; <em>Ich habe einen Vorschlag.</em></div>
+    </div>
+</div>
+
+<p>Іменники завжди йдуть з артиклем і кольором, до якого звикли всі, хто вчить німецьку &mdash; <span class="chip der">der</span> <span class="chip die">die</span> <span class="chip das">das</span>. Рід запам&rsquo;ятовується разом зі словом, а не окремо й пізніше.</p>
+
+<h2>Що вивчаємо</h2>
+
+<div class="card">
+    <h3>Основи</h3>
+    <p>Абетка та її пастки читання, <strong>der/die/das</strong>, особові займенники в трьох відмінках, прийменники, числа, час на годиннику, дні й місяці. Спочатку коротке правило, далі слова, які його використовують.</p>
+</div>
+
+<div class="card">
+    <h3>A1 &middot; A2 &middot; B1</h3>
+    <p>Курси за рівнями на основі найуживанішої лексики. Дієслова розподілені за реальною частотністю, а не за порядком з підручника. Дорогою &mdash; правила про <em>ein/kein</em> та артиклі в знахідному й давальному.</p>
+</div>
+
+<div class="card">
+    <h3>Повторення, яке не краде час</h3>
+    <p>Вивчені слова повертаються на коротке повторення, коли настає час. Помилка &mdash; не покарання: слово просто прийде раніше.</p>
+</div>
+
+<h2>Ціна</h2>
+
+<div class="plans">
+    <div class="plan">
+        <div class="ptitle">FREE</div>
+        <div class="price">$0</div>
+        <div class="per">назавжди</div>
+        <div class="feature"><span class="tick"></span><div>Усі курси та уроки</div></div>
+        <div class="feature"><span class="tick"></span><div>Сповіщення й віджет</div></div>
+        <div class="feature"><span class="tick"></span><div>Одне повторення на день</div></div>
+        <div class="feature"><span class="tick no"></span><div>Коротка реклама перед тестом</div></div>
+    </div>
+    <div class="plan best">
+        <div class="ptitle">LIFETIME</div>
+        <div class="price">$9.99</div>
+        <div class="per">разово, не підписка</div>
+        <div class="feature"><span class="tick"></span><div>Усе, що є в безкоштовній</div></div>
+        <div class="feature"><span class="tick"></span><div>Жодної реклами</div></div>
+        <div class="feature"><span class="tick"></span><div>Необмежені повторення</div></div>
+        <div class="feature"><span class="tick"></span><div>Підтримка інді-розробника</div></div>
+    </div>
+</div>
+
+<p>Увесь курс безкоштовний, бо його оплачує реклама. Якщо реклама дратує &mdash; один платіж прибирає її назавжди. Ні місячної підписки, ні пробного періоду, який тихо поновлюється.</p>
+
+<h2>Дрібний шрифт, який варто прочитати</h2>
+
+<div class="card">
+    <div class="feature"><span class="tick"></span><div><strong>Працює офлайн.</strong> Прогрес живе на пристрої. У хмарі лежить резервна копія, щоб новий телефон не коштував тобі всієї історії.</div></div>
+    <div class="feature"><span class="tick"></span><div><strong>Жодного стеження.</strong> Немає аналітики, немає профілювання по інших застосунках, ми нічого нікому не продаємо.</div></div>
+    <div class="feature"><span class="tick"></span><div><strong>Сповіщення локальні.</strong> Вони плануються на твоєму телефоні, тож ми навіть не знаємо, коли ти вчишся.</div></div>
+    <div class="feature"><span class="tick"></span><div><strong>Видалити все в один дотик.</strong> Профіль &rarr; Видалити акаунт &mdash; і по всьому.</div></div>
+</div>
+
+<h2>Мови інтерфейсу</h2>
+<div class="langs">
+    <span class="lang">Українська</span>
+    <span class="lang">Русский</span>
+    <span class="lang">English</span>
+    <span class="lang">Deutsch</span>
+    <span class="lang">Français</span>
+    <span class="lang">Polski</span>
+</div>
+<p style="margin-top:14px">Вчи німецьку тією мовою, якою справді думаєш.</p>
+
+<div class="getwrap">
+    <a class="get" href="#" aria-disabled="true"><svg class="apple" viewBox="0 0 24 26" width="24" height="26" fill="#fff" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="0" width="2" height="2"/><rect x="14" y="0" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="10" y="4" width="2" height="2"/><rect x="4" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="8" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="12" y="6" width="2" height="2"/><rect x="14" y="6" width="2" height="2"/><rect x="16" y="6" width="2" height="2"/><rect x="2" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="6" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="10" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/><rect x="16" y="8" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="0" y="10" width="2" height="2"/><rect x="2" y="10" width="2" height="2"/><rect x="4" y="10" width="2" height="2"/><rect x="6" y="10" width="2" height="2"/><rect x="8" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="12" y="10" width="2" height="2"/><rect x="14" y="10" width="2" height="2"/><rect x="16" y="10" width="2" height="2"/><rect x="18" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="0" y="12" width="2" height="2"/><rect x="2" y="12" width="2" height="2"/><rect x="4" y="12" width="2" height="2"/><rect x="6" y="12" width="2" height="2"/><rect x="8" y="12" width="2" height="2"/><rect x="10" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/><rect x="14" y="12" width="2" height="2"/><rect x="16" y="12" width="2" height="2"/><rect x="18" y="12" width="2" height="2"/><rect x="20" y="12" width="2" height="2"/><rect x="0" y="14" width="2" height="2"/><rect x="2" y="14" width="2" height="2"/><rect x="4" y="14" width="2" height="2"/><rect x="6" y="14" width="2" height="2"/><rect x="8" y="14" width="2" height="2"/><rect x="10" y="14" width="2" height="2"/><rect x="12" y="14" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/><rect x="16" y="14" width="2" height="2"/><rect x="18" y="14" width="2" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="0" y="16" width="2" height="2"/><rect x="2" y="16" width="2" height="2"/><rect x="4" y="16" width="2" height="2"/><rect x="6" y="16" width="2" height="2"/><rect x="8" y="16" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="12" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/><rect x="16" y="16" width="2" height="2"/><rect x="18" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/><rect x="0" y="18" width="2" height="2"/><rect x="2" y="18" width="2" height="2"/><rect x="4" y="18" width="2" height="2"/><rect x="6" y="18" width="2" height="2"/><rect x="8" y="18" width="2" height="2"/><rect x="10" y="18" width="2" height="2"/><rect x="12" y="18" width="2" height="2"/><rect x="14" y="18" width="2" height="2"/><rect x="16" y="18" width="2" height="2"/><rect x="18" y="18" width="2" height="2"/><rect x="20" y="18" width="2" height="2"/><rect x="2" y="20" width="2" height="2"/><rect x="4" y="20" width="2" height="2"/><rect x="6" y="20" width="2" height="2"/><rect x="8" y="20" width="2" height="2"/><rect x="10" y="20" width="2" height="2"/><rect x="12" y="20" width="2" height="2"/><rect x="14" y="20" width="2" height="2"/><rect x="16" y="20" width="2" height="2"/><rect x="18" y="20" width="2" height="2"/><rect x="2" y="22" width="2" height="2"/><rect x="4" y="22" width="2" height="2"/><rect x="6" y="22" width="2" height="2"/><rect x="14" y="22" width="2" height="2"/><rect x="16" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="2"/><rect x="20" y="22" width="2" height="2"/><rect x="4" y="24" width="2" height="2"/><rect x="6" y="24" width="2" height="2"/><rect x="16" y="24" width="2" height="2"/><rect x="18" y="24" width="2" height="2"/></svg><span><span class="small">Незабаром у</span><span class="big">App Store</span></span></a><span class="soon">У розробці</span>
+    <p class="getnote">LexiUp зараз доводимо до релізу. Кнопка запрацює в день виходу.</p>
+</div>
+
+
+<footer>
+    &copy; 2026 LexiUp &middot;
+    <a href="/ua/privacy.html">Приватність</a> &middot;
+    <a href="/ua/support.html">Підтримка</a> &middot;
+    <a href="mailto:inikita86@ukr.net">Написати нам</a>
+</footer>
+
+</div>
+</body>
+</html>
