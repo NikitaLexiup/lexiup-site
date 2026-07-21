@@ -396,7 +396,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
     right: -26px;
     bottom: -24px;
     width: 168px;
-    z-index: 5;
+    z-index: 0;
     transform-origin: bottom center;
     animation: lu-sway 4.5s ease-in-out infinite;
 }
@@ -417,6 +417,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 .lusay {
     position: fixed;
+    z-index: 6;
     right: 118px;
     bottom: 92px;
     max-width: 210px;
@@ -643,6 +644,10 @@ body { padding-bottom: 90px; }
 
 .thread { display: flex; flex-direction: column; gap: 22px; margin-top: 26px; }
 
+/* Messages ride above LU: he stays in the corner and they slide over him,
+   so he never covers what you are reading. */
+.turn { position: relative; z-index: 1; }
+
 /* A question sits close to the answer it belongs to, not evenly spaced
    between neighbours. */
 .turn.q { margin-bottom: -12px; }
@@ -725,6 +730,16 @@ body { padding-bottom: 90px; }
 }
 
 .turn.typing-now .typing { display: flex; }
+
+/* The visitor's own line types too - in his colours, and on his side. */
+.me-typing {
+    margin-left: auto;
+    background: var(--accent);
+    border-width: 2px;
+    border-radius: 16px 16px 4px 16px;
+}
+
+.me-typing span { background: rgba(255,255,255,.85); }
 .turn.typing-now .bubble { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -906,7 +921,10 @@ body { padding-bottom: 90px; }
 
 <div class="thread">
 <div class="turn q">
-    <div class="me"><div class="bubble">What is LexiUp?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">What is LexiUp?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -919,7 +937,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">Which language can I learn with you?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">Which language can I learn with you?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -932,7 +953,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">I already use another app for German.</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">I already use another app for German.</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -950,7 +974,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">So how does the learning actually work?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">So how does the learning actually work?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -963,7 +990,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">How many words a day?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">How many words a day?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -976,7 +1006,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">Will that not get annoying?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">Will that not get annoying?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -994,7 +1027,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">What happens in the evening?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">What happens in the evening?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -1012,7 +1048,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">What can I actually learn?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">What can I actually learn?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -1025,7 +1064,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">What does it cost?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">What does it cost?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -1038,7 +1080,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">Do I need internet for this?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">Do I need internet for this?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -1051,7 +1096,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">Which languages do you speak?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">Which languages do you speak?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -1069,7 +1117,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">And between the words - what does the widget show?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">And between the words - what does the widget show?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
@@ -1082,7 +1133,10 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">How do I start?</div></div>
+    <div class="me">
+        <div class="typing me-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="bubble">How do I start?</div>
+    </div>
 </div>
 <div class="turn a">
     <div class="lu">
