@@ -285,13 +285,13 @@ a { color: var(--accent); }
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--muted);
     margin-bottom: 7px;
 }
 
 .push .head b { color: var(--text); font-size: 13px; }
-.push .word { font-size: 19px; font-weight: 700; }
+.push .word { font-size: 18px; font-weight: 700; }
 .push .tr { color: var(--muted); font-size: 16px; }
 
 .chip {
@@ -339,13 +339,13 @@ a { color: var(--accent); }
 
 .plan .ptitle {
     font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 12px;
+    font-size: 10px;
     margin-bottom: 12px;
 }
 
-.plan .price { font-size: 27px; font-weight: 800; margin-bottom: 4px; }
-.plan .per { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
-.plan .feature { font-size: 15px; margin-bottom: 11px; }
+.plan .price { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+.plan .per { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+.plan .feature { font-size: 16px; margin-bottom: 11px; }
 .plan .gtick { margin-top: 2px; }
 
 /* ---- languages ---- */
@@ -474,29 +474,113 @@ code {
 
 /* ---- the app's header card ---- */
 
+/* Fixed, not sticky: out of the document flow, so shrinking it cannot
+   change the page height and cannot move the scroll position. That is the
+   whole reason the collapse is safe now. */
 .stickyhead {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 40;
+    left: 0;
+    right: 0;
+    z-index: 100;
     background: var(--bg);
-    padding: 10px 0 0;
+    padding: 10px 20px 0;
 }
 
-/* The nav rides inside the pinned block, otherwise it slides under the card
-   and shows as a row of half-cut buttons. */
-.stickyhead .bar { margin-bottom: 0; padding: 10px 0; }
-.scrolled .bar { display: none; }
+.stickyhead > .appcard { max-width: 760px; margin: 0 auto; }
+
+/* Space is reserved once, for the EXPANDED height, and never changes. The
+   collapsed header simply leaves a band of page background behind it, which
+   is invisible because it is the same colour. */
+/* display:none cannot be animated, so everything that disappears collapses
+   through max-height and opacity instead. The header is fixed, so none of
+   this moves the page. */
+.appcard { transition: padding .22s ease; }
+
+.appcard .bar,
+.who-goal,
+.srow .cap,
+.segs {
+    overflow: hidden;
+    transition: max-height .24s ease, max-width .24s ease, opacity .18s ease,
+                margin .24s ease, padding .24s ease, border-width .24s ease;
+}
+
+.appcard .bar { max-height: 70px; opacity: 1; }
+.who-goal { max-height: 30px; opacity: 1; }
+.srow .cap { max-height: 24px; max-width: 220px; opacity: 1; }
+.segs { max-height: 16px; opacity: 1; }
+
+#head.collapsed .appcard { padding-top: 10px; padding-bottom: 10px; }
+#head.collapsed .bar { max-height: 0; opacity: 0; margin-top: 0; padding-top: 0; border-top-width: 0; }
+#head.collapsed .who-goal { max-height: 0; opacity: 0; margin-top: 0; }
+/* The app passes caption: nil in compact - the label does not exist, so it
+   takes no width either. Collapsing only the height left the row stretched
+   with a gap on the right. */
+#head.collapsed .srow .cap { max-height: 0; max-width: 0; opacity: 0; margin: 0; }
+#head.collapsed .segs { max-height: 0; opacity: 0; margin-top: 0; }
+
+/* The two stats sit side by side once their captions are gone, otherwise
+   the card stays as tall as it was and the collapse buys nothing. */
+.appstats { transition: gap .24s ease; }
+#head.collapsed .appstats { flex-direction: row; align-items: center; gap: 12px; }
+#head.collapsed .srow { gap: 7px; }
+#head.collapsed .who-name { font-size: 13px; }
+#head.collapsed .appcard { padding-top: 9px; padding-bottom: 9px; }
+#head.collapsed .cardtop { gap: 12px; }
+
+/* The nav is the header's bottom section, the way the cheat sheets are in
+   the app: a divider, then one flat row - not a second deck of buttons. */
+.appcard .bar {
+    margin: 11px 0 0;
+    padding: 11px 0 0;
+    border-top: 1.5px solid var(--outline);
+    border-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.appcard nav { gap: 18px; }
+
+.appcard nav a {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    font-family: "PressStart2P", ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.appcard nav a:hover { transform: none; box-shadow: none; color: var(--text); }
+.appcard nav a.current { background: none; color: var(--accent); }
+
+.appcard .langswitch { gap: 4px; }
+
+.appcard .langswitch a {
+    background: none;
+    border: 1.5px solid var(--outline);
+    opacity: .5;
+    padding: 4px 6px;
+    font-size: 8px;
+}
+
+.appcard .langswitch a.on { background: var(--accent); border-color: var(--accent); color: #fff; opacity: 1; }
+
 
 .appcard {
     display: flex;
-    align-items: center;
-    gap: 14px;
+    flex-direction: column;
+    gap: 0;
     background: var(--card);
     border: 2px solid var(--outline);
     border-radius: 22px;
-    padding: 14px 16px;
+    padding: 13px 16px;
     box-shadow: 5px 5px 0 var(--shadow);
 }
+
+.cardtop { display: flex; align-items: center; gap: 14px; }
 
 .appcard .ava {
     flex: none;
@@ -520,7 +604,6 @@ code {
 
 .srow { display: flex; align-items: center; gap: 9px; }
 .srow .g { flex: none; display: block; }
-.scrolled .srow .g { transform: scale(.85); transform-origin: left center; }
 .srow .num { font-family: "PressStart2P", ui-monospace, monospace; font-size: 15px; line-height: 1; }
 .srow .cap { font-size: 13px; color: var(--muted); white-space: nowrap; }
 
@@ -529,20 +612,15 @@ code {
 .seg { width: 9px; height: 5px; background: var(--outline); opacity: .18; }
 .seg.on { background: var(--celebrate); opacity: 1; }
 
-/* collapsed state while scrolling - the app does the same */
-.scrolled .appcard { padding: 9px 14px; }
-.scrolled .ava { width: 34px; height: 34px; }
-.scrolled .who-goal,
-.scrolled .srow .cap,
-.scrolled .segs { display: none; }
-.scrolled .appstats { flex-direction: row; gap: 16px; align-items: center; }
-
 @media (max-width: 560px) {
     .who-name { font-size: 12px; }
     .who-goal { font-size: 12px; }
     .srow .cap { font-size: 11px; }
     .srow .num { font-size: 13px; }
-    .appcard { gap: 10px; padding: 12px; border-radius: 18px; }
+    /* gap must stay 0: the card is a column, and a flex gap survives even
+       when the collapsed nav has zero height - that was the empty band
+       under the row. */
+    .appcard { gap: 0; padding: 12px; border-radius: 18px; }
     .appcard .ava { width: 44px; height: 44px; }
 }
 
@@ -557,6 +635,7 @@ code {
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="gcheck" viewBox="0 0 20 20"><rect x="0" y="0" width="20" height="2" fill="#BFDE96"/><rect x="0" y="2" width="20" height="2" fill="#BFDE96"/><rect x="0" y="4" width="14" height="2" fill="#BFDE96"/><rect x="14" y="4" width="4" height="2" fill="#3B6E12"/><rect x="18" y="4" width="2" height="2" fill="#BFDE96"/><rect x="0" y="6" width="12" height="2" fill="#BFDE96"/><rect x="12" y="6" width="4" height="2" fill="#3B6E12"/><rect x="16" y="6" width="4" height="2" fill="#BFDE96"/><rect x="0" y="8" width="10" height="2" fill="#BFDE96"/><rect x="10" y="8" width="4" height="2" fill="#3B6E12"/><rect x="14" y="8" width="6" height="2" fill="#BFDE96"/><rect x="0" y="10" width="2" height="2" fill="#BFDE96"/><rect x="2" y="10" width="2" height="2" fill="#3B6E12"/><rect x="4" y="10" width="4" height="2" fill="#BFDE96"/><rect x="8" y="10" width="4" height="2" fill="#3B6E12"/><rect x="12" y="10" width="8" height="2" fill="#BFDE96"/><rect x="0" y="12" width="2" height="2" fill="#BFDE96"/><rect x="2" y="12" width="8" height="2" fill="#3B6E12"/><rect x="10" y="12" width="10" height="2" fill="#BFDE96"/><rect x="0" y="14" width="4" height="2" fill="#BFDE96"/><rect x="4" y="14" width="4" height="2" fill="#3B6E12"/><rect x="8" y="14" width="12" height="2" fill="#BFDE96"/><rect x="0" y="16" width="20" height="2" fill="#BFDE96"/><rect x="0" y="18" width="20" height="2" fill="#BFDE96"/></symbol><symbol id="gcross" viewBox="0 0 20 20"><rect x="0" y="0" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="2" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="4" y="4" width="4" height="2" fill="#A32E2E"/><rect x="8" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="12" y="4" width="4" height="2" fill="#A32E2E"/><rect x="16" y="4" width="4" height="2" fill="#F7C2C2"/><rect x="0" y="6" width="6" height="2" fill="#F7C2C2"/><rect x="6" y="6" width="8" height="2" fill="#A32E2E"/><rect x="14" y="6" width="6" height="2" fill="#F7C2C2"/><rect x="0" y="8" width="8" height="2" fill="#F7C2C2"/><rect x="8" y="8" width="4" height="2" fill="#A32E2E"/><rect x="12" y="8" width="8" height="2" fill="#F7C2C2"/><rect x="0" y="10" width="6" height="2" fill="#F7C2C2"/><rect x="6" y="10" width="8" height="2" fill="#A32E2E"/><rect x="14" y="10" width="6" height="2" fill="#F7C2C2"/><rect x="0" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="4" y="12" width="4" height="2" fill="#A32E2E"/><rect x="8" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="12" y="12" width="4" height="2" fill="#A32E2E"/><rect x="16" y="12" width="4" height="2" fill="#F7C2C2"/><rect x="0" y="14" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="16" width="20" height="2" fill="#F7C2C2"/><rect x="0" y="18" width="20" height="2" fill="#F7C2C2"/></symbol></svg>
 <div class="stickyhead" id="head">
     <div class="appcard">
+      <div class="cardtop">
         <div>
             <div class="who-name">LexiUp</div>
             <div class="who-goal">Vocabulary that finds you</div>
@@ -576,8 +655,8 @@ code {
                 <span class="cap">words learned</span>
             </div>
         </div>
-    </div>
-    <div class="bar">
+      </div>
+      <div class="bar">
     <nav>
         <a href="/index.html">Home</a>
     <a href="/privacy.html" class="current">Privacy</a>
@@ -585,6 +664,7 @@ code {
     </nav>
     <div class="langswitch"><a class="on" href="/privacy.html">EN</a><a href="/ua/privacy.html">UK</a></div>
 </div>
+    </div>
 </div>
 
 <h1>Privacy Policy</h1>
@@ -680,6 +760,10 @@ code {
 
 </div>
 <script>
+// Only the counters follow scroll. The header deliberately never changes
+// height: it sits in the flow, so shrinking it changed the page height,
+// which moved the scroll position, which fired another scroll event - a
+// feedback loop that made it shiver on its own.
 // The counters follow scroll progress: 0 to 50 words, and the streak ticks
 // over from 0/7 to 1/7 once the bar fills. Decorative, and deliberately
 // driven by the reader rather than by a timer.
@@ -692,6 +776,14 @@ code {
 
     var ticking = false;
     var collapsed = false;
+    var lastY = window.scrollY;
+
+    // Reserve room for the header at its tallest, once. Re-measured only
+    // while expanded, so a collapsed header never shrinks the reserve.
+    function reserve() {
+        if (collapsed) return;
+        document.body.style.paddingTop = head.offsetHeight + 'px';
+    }
 
     function paint() {
         ticking = false;
@@ -703,16 +795,24 @@ code {
         segs.forEach(function (s, i) {
             s.classList.toggle('on', p * segs.length > i);
         });
-        // Hysteresis: one threshold makes the header flap open and shut
-        // while you scroll slowly past it, which reads as a hang.
+
+        // Direction, not just depth: scrolling back up should open it
+        // immediately instead of waiting for the very top. Safe here because
+        // a fixed header changes no layout when it resizes.
         var y = window.scrollY;
-        if (!collapsed && y > 90) { collapsed = true; head.classList.add('scrolled'); }
-        else if (collapsed && y < 30) { collapsed = false; head.classList.remove('scrolled'); }
+        var dy = y - lastY;
+        if (y < 40) { collapsed = false; }
+        else if (dy > 3 && y > 120) { collapsed = true; }
+        else if (dy < -3) { collapsed = false; }
+        lastY = y;
+        head.classList.toggle('collapsed', collapsed);
     }
 
     window.addEventListener('scroll', function () {
         if (!ticking) { ticking = true; requestAnimationFrame(paint); }
     }, { passive: true });
+    window.addEventListener('resize', reserve);
+    reserve();
     paint();
 })();
 </script>
