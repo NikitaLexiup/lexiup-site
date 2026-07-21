@@ -528,14 +528,15 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 .lusay.on { opacity: 1; transform: none; }
 
 .lusay.left {
-    left: 118px;
+    left: 104px;
     right: auto;
+    bottom: 104px;
     border-radius: 14px 14px 14px 4px;
 }
 
 @media (max-width: 560px) {
     .lusay { right: 104px; bottom: 80px; max-width: 175px; font-size: 13px; }
-    .lusay.left { left: 94px; }
+    .lusay.left { left: 74px; bottom: 92px; }
 }
 
 @keyframes lu-sway {
@@ -951,7 +952,7 @@ code {
 (function () {
     var lu = document.getElementById('lupoke'), say = document.getElementById('lusay');
     if (!lu || !say) return;
-    var lines = ["Ой, лоскітно!", "Не балуємось, а вчимо слова.", "Привіт, я тут.", "Тицяй скільки хочеш - слова все одно прийдуть завтра.", "Я взагалі-то на роботі."], last = -1, timer, pokes = 0, running = false;
+    var lines = ["Ой, лоскітно!", "Не балуємось, а вчимо слова.", "Привіт, я тут.", "Тицяй скільки хочеш - слова все одно прийдуть завтра.", "Я взагалі-то на роботі."], bye = "Ой все...", last = -1, timer, pokes = 0, running = false;
 
     function speak() {
         var i = Math.floor(Math.random() * lines.length);
@@ -965,7 +966,13 @@ code {
 
     function escape() {
         running = true;
-        say.classList.remove('on');
+
+        // He announces the exit, then takes it.
+        say.textContent = bye;
+        say.classList.add('on');
+        clearTimeout(timer);
+        timer = setTimeout(function () { say.classList.remove('on'); }, 1500);
+
         lu.classList.add('escaping');
 
         setTimeout(function () {
