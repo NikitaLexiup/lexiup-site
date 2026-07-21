@@ -463,7 +463,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
     right: -26px;
     bottom: -24px;
     width: 168px;
-    z-index: 0;
+    z-index: 5;
     transform-origin: bottom center;
     animation: lu-sway 4.5s ease-in-out infinite;
 }
@@ -520,7 +520,10 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 @media (max-width: 560px) {
     footer { padding-right: 20px; }
-    .footsig { width: 124px; right: -20px; bottom: -18px; }
+
+    /* No negative offset here: the phone's bottom edge cut his legs off.
+       He stands fully visible, just smaller. */
+    .footsig { width: 118px; right: -14px; bottom: 10px; }
 }
 
 code {
