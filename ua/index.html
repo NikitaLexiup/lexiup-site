@@ -1338,6 +1338,19 @@ body { padding-bottom: 90px; }
 // Progressive enhancement: JS adds the class, so with JS off the bubbles are
 // simply visible from the start instead of stuck invisible.
 document.body.classList.add('js');
+
+// The typing is a first impression, not a feature. Come back to this page in
+// the same session - after Privacy, say - and the conversation is simply
+// there. Kept in sessionStorage: it dies with the tab, holds one character,
+// and never leaves the browser.
+var SEEN = 'lu.chat.seen', replay = true;
+try { replay = sessionStorage.getItem(SEEN) !== '1'; } catch (e) {}
+
+if (!replay) {
+    document.querySelectorAll('.turn').forEach(function (t) { t.classList.add('seen'); });
+} else {
+    try { sessionStorage.setItem(SEEN, '1'); } catch (e) {}
+}
 // One queue for the whole thread: a message starts typing only once the
 // previous one has arrived. Independent timers made everything in the first
 // screenful type at the same moment.
@@ -1417,7 +1430,9 @@ var io = new IntersectionObserver(function (entries) {
     pump();
 }, { rootMargin: '0px 0px -10% 0px' });
 
-document.querySelectorAll('.turn').forEach(function (t) { io.observe(t); });
+if (replay) {
+    document.querySelectorAll('.turn').forEach(function (t) { io.observe(t); });
+}
 </script>
 <script>
 // Poke LU: two pokes get a line each, the third sends him off through the
