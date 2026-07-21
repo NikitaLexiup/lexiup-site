@@ -451,32 +451,24 @@ footer {
 
 footer a { color: var(--muted); }
 
-/* LU signs the page. The sprite has no alpha channel - the robot itself is
-   white, so keying the background out would eat him - hence the white card
-   it stands on, which reads as deliberate. */
-.footsig { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+/* LU peeks out of the bottom-right corner, cropped by the page edge - the
+   footer clips him, so he reads as leaning in rather than as a pasted image.
+   Expects a sprite with an alpha channel. */
+footer { position: relative; overflow: hidden; padding-right: 130px; }
 
-.footsig img {
-    flex: none;
-    width: 92px;
-    height: 92px;
-    background: #fff;
-    border: 2px solid var(--outline);
-    border-radius: 14px;
-    box-shadow: 4px 4px 0 var(--shadow);
-    image-rendering: pixelated;
+.footsig {
+    position: absolute;
+    right: -26px;
+    bottom: -22px;
+    width: 168px;
+    pointer-events: none;
 }
 
-.footsig .said {
-    font-family: "PressStart2P", ui-monospace, monospace;
-    font-size: 10px;
-    line-height: 1.8;
-    color: var(--muted);
-}
+.footsig img { display: block; width: 100%; image-rendering: pixelated; }
 
 @media (max-width: 480px) {
-    .footsig img { width: 76px; height: 76px; }
-    .footsig .said { font-size: 9px; }
+    footer { padding-right: 100px; }
+    .footsig { width: 132px; right: -22px; bottom: -18px; }
 }
 
 code {
@@ -791,9 +783,8 @@ code {
 </div>
 
 <footer>
-    <div class="footsig">
-        <img src="/assets/LU_full.png" alt="LU, the LexiUp mascot">
-        <div class="said">До завтра</div>
+    <div class="footsig" aria-hidden="true">
+        <img src="/assets/LU_full.png" alt="">
     </div>
     &copy; 2026 LexiUp &middot;
     <a href="/ua/privacy.html">Приватність</a> &middot;
