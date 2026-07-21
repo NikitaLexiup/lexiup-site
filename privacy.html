@@ -451,27 +451,35 @@ footer {
 
 footer a { color: var(--muted); }
 
-/* LU leans in from the bottom-right corner of the screen itself, tilted and
-   partly beyond the edge - fixed to the viewport, not to the footer, so the
-   corner is the screen's corner. */
-footer { position: relative; padding-right: 120px; }
+/* LU stands in the footer's corner - part of the page, not fixed to the
+   window, where he floated over the conversation while scrolling. The slow
+   sway is the only motion on the page. */
+footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 .footsig {
-    position: fixed;
-    right: -34px;
-    bottom: -30px;
-    width: 178px;
-    transform: rotate(-14deg);
-    transform-origin: bottom right;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 148px;
+    transform-origin: bottom center;
+    animation: lu-sway 4.5s ease-in-out infinite;
     pointer-events: none;
-    z-index: 5;
 }
 
 .footsig img { display: block; width: 100%; image-rendering: pixelated; }
 
+@keyframes lu-sway {
+    0%, 100% { transform: rotate(-3.5deg); }
+    50%      { transform: rotate(3.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footsig { animation: none; }
+}
+
 @media (max-width: 560px) {
-    footer { padding-right: 90px; }
-    .footsig { width: 132px; right: -26px; bottom: -22px; }
+    footer { padding-right: 118px; }
+    .footsig { width: 116px; }
 }
 
 code {
