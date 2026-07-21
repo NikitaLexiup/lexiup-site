@@ -477,8 +477,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 /* Each pose sways on its own, mirrored, so the left one leans into the page
    the way the right one does. Stated per pose rather than on the shared
    selector - the later .footsig img rule made that ambiguous. */
-.footsig .lu-r { animation: lu-sway 4.5s ease-in-out infinite; }
-.footsig .lu-l { animation: lu-sway-l 4.5s ease-in-out infinite; }
+.footsig img { animation: lu-sway 4.5s ease-in-out infinite; }
 
 /* Two poses, one per side. Both ship in the markup so the swap has nothing
    to load at the moment he lands. */
@@ -499,25 +498,19 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 /* Smear on the way out: he crouches, then stretches along the direction of
    travel and blurs, the way a sprite reads as fast. */
-.footsig.escaping .lu-r,
-.footsig.escaping.left .lu-l { animation: lu-dash .44s cubic-bezier(.5, 0, .9, .6) both; }
 
-@keyframes lu-dash {
-    0%   { transform: scale(1, 1);        filter: none; }
-    22%  { transform: scale(.86, 1.12);   filter: none; }
+
+
     55%  { transform: scale(1.32, .84);   filter: blur(1.5px); }
     100% { transform: scale(1.55, .74);   filter: blur(3px); }
 }
 
 /* And settles on arrival instead of appearing rigid. */
-.footsig.arriving .lu-r,
-.footsig.arriving.left .lu-l { animation: lu-land .42s cubic-bezier(.2, 1.5, .4, 1); }
+
 
 /* Lands stretched, squashes on impact, then springs back - the same
    language as the poke, so arriving and being poked feel like one character. */
-@keyframes lu-land {
-    0%   { transform: scale(1.45, .78); filter: blur(2.5px); }
-    45%  { transform: scale(.86, 1.14); filter: none; }
+
     72%  { transform: scale(1.06, .95); }
     100% { transform: scale(1, 1); }
 }
@@ -529,12 +522,9 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 .footsig { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 /* Both poses, and specific enough to beat the per-pose sway: on the left
    that rule is three classes deep and was winning. */
-.footsig.poked .lu-r,
-.footsig.poked.left .lu-l { animation: lu-poke .32s ease-out; }
 
-@keyframes lu-poke {
-    0%   { transform: scale(1, 1); }
-    35%  { transform: scale(1.06, .92); }
+
+
     70%  { transform: scale(.97, 1.04); }
     100% { transform: scale(1, 1); }
 }
@@ -579,9 +569,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
     50%      { transform: rotate(3.5deg); }
 }
 
-@keyframes lu-sway-l {
-    0%, 100% { transform: rotate(3.5deg); }
-    50%      { transform: rotate(-3.5deg); }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1065,13 +1053,38 @@ code {
 })();
 </script>
 <script>
-// Poke LU: two pokes get a line each, the third sends him off through the
-// side of the screen and back in from the other one. Two posts only, so it
-// reads as a dash across rather than random hopping.
+// Poke LU: two pokes get a line each, the third sends him across the screen.
+// The squash, dash and landing are driven from here rather than by CSS
+// classes - class-based animation kept losing to whichever rule happened to
+// be heavier, and this has no cascade to lose to.
 (function () {
     var lu = document.getElementById('lupoke'), say = document.getElementById('lusay');
     if (!lu || !say) return;
+
     var lines = ["Ой, лоскітно!", "Не балуємось, а вчимо слова.", "Привіт, я тут.", "Тицяй скільки хочеш - слова все одно прийдуть завтра.", "Я взагалі-то на роботі."], bye = "Ой все...", last = -1, timer, pokes = 0, running = false;
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function pose() {
+        return lu.querySelector(lu.classList.contains('left') ? '.lu-l' : '.lu-r');
+    }
+
+    function play(frames, ms, easing, fill) {
+        if (calm || !pose().animate) return null;
+        return pose().animate(frames, {
+            duration: ms,
+            easing: easing || 'ease-out',
+            fill: fill || 'none'
+        });
+    }
+
+    function squash() {
+        play([
+            { transform: 'scale(1, 1)' },
+            { transform: 'scale(1.07, .91)', offset: .35 },
+            { transform: 'scale(.97, 1.05)', offset: .7 },
+            { transform: 'scale(1, 1)' }
+        ], 320);
+    }
 
     function speak() {
         var i = Math.floor(Math.random() * lines.length);
@@ -1085,9 +1098,6 @@ code {
 
     function escape() {
         running = true;
-
-        // He says it, the bubble goes out, and only then he runs - otherwise
-        // the line follows him across and greets him on the far side.
         say.textContent = bye;
         say.classList.add('on');
         clearTimeout(timer);
@@ -1096,11 +1106,18 @@ code {
             say.classList.remove('on');
 
             setTimeout(function () {
+                // Stretch along the direction of travel and blur: reads as speed.
+                var dash = play([
+                    { transform: 'scale(1, 1)', filter: 'blur(0px)' },
+                    { transform: 'scale(.86, 1.12)', filter: 'blur(0px)', offset: .22 },
+                    { transform: 'scale(1.5, .76)', filter: 'blur(3px)' }
+                ], 440, 'cubic-bezier(.5, 0, .9, .6)', 'forwards');
+
                 lu.classList.add('escaping');
 
                 setTimeout(function () {
-                    // Land on the far side before sliding in: no transition
-                    // for that instant, or he is seen crossing back.
+                    if (dash) dash.cancel();
+
                     lu.classList.add('no-anim');
                     lu.classList.remove('escaping');
                     lu.classList.toggle('left');
@@ -1111,16 +1128,17 @@ code {
                         requestAnimationFrame(function () {
                             lu.classList.remove('no-anim', 'entering');
 
-                            // The spring belongs to the landing, not the
-                            // flight: started here it would run out while he
-                            // is still crossing.
+                            // The spring belongs to the landing, so it waits
+                            // for the crossing to finish.
                             setTimeout(function () {
-                                lu.classList.add('arriving');
-                                setTimeout(function () {
-                                    lu.classList.remove('arriving');
-                                    running = false;
-                                }, 440);
-                            }, 440);
+                                play([
+                                    { transform: 'scale(1.42, .79)' },
+                                    { transform: 'scale(.86, 1.14)', offset: .45 },
+                                    { transform: 'scale(1.05, .96)', offset: .72 },
+                                    { transform: 'scale(1, 1)' }
+                                ], 430, 'cubic-bezier(.2, 1.2, .4, 1)');
+                                running = false;
+                            }, 450);
                         });
                     });
                 }, 440);
@@ -1131,12 +1149,7 @@ code {
     function poke() {
         if (running) return;
         pokes += 1;
-
-        // Every poke answers with the same squash, including the one that
-        // sends him off - otherwise the third tap feels like a dead press.
-        lu.classList.remove('poked');
-        void lu.offsetWidth;
-        lu.classList.add('poked');
+        squash();
 
         if (pokes % 3 === 0) {
             escape();
