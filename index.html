@@ -391,25 +391,27 @@ footer a { color: var(--muted); }
    sway is the only motion on the page. */
 footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
-/* Back to the screen's corner - it framed him better than the footer did.
-   Fixed, so he stays in the corner while the conversation scrolls past. */
+/* LU keeps the bottom-right corner of the window and floats above the
+   thread. The squash, the dash and the landing are played from script -
+   see the page's poke handler - so nothing here can outweigh them. */
 .footsig {
     position: fixed;
     right: -26px;
     bottom: -24px;
     width: 168px;
     z-index: 5;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition: transform .44s cubic-bezier(.45, 0, .55, 1);
 }
 
-/* The sway lives on the image so the wrapper's transform is free for the
-   escape - two animations on one element would fight. */
-.footsig img { transform-origin: bottom center; }
-
-/* Each pose sways on its own, mirrored, so the left one leans into the page
-   the way the right one does. Stated per pose rather than on the shared
-   selector - the later .footsig img rule made that ambiguous. */
-.footsig img { animation: lu-sway 4.5s ease-in-out infinite; }
+.footsig img {
+    display: block;
+    width: 100%;
+    image-rendering: pixelated;
+    transform-origin: bottom center;
+    animation: lu-sway 4.5s ease-in-out infinite;
+}
 
 /* Two poses, one per side. Both ship in the markup so the swap has nothing
    to load at the moment he lands. */
@@ -417,48 +419,19 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 .footsig.left .lu-r { display: none; }
 .footsig.left .lu-l { display: block; }
 
-/* Second post: the other bottom corner. Two only, so it reads as a dash
-   from one side to the other rather than random hopping. */
+/* The other post. Two only, so it reads as a dash across rather than
+   random hopping. */
 .footsig.left { left: -26px; right: auto; }
 
-/* Off through the side edge, then back in from the opposite one. Both
-   classes want the same offsets: leaving right and arriving from the right
-   are the same position. */
+/* Out through the side edge and in from the opposite one: leaving right and
+   arriving from the right are the same offset. */
 .footsig.escaping, .footsig.entering { transform: translateX(190%); }
 .footsig.left.escaping, .footsig.left.entering { transform: translateX(-190%); }
 .footsig.no-anim { transition: none; }
 
-/* Smear on the way out: he crouches, then stretches along the direction of
-   travel and blurs, the way a sprite reads as fast. */
-
-
-
-    55%  { transform: scale(1.32, .84);   filter: blur(1.5px); }
-    100% { transform: scale(1.55, .74);   filter: blur(3px); }
-}
-
-/* And settles on arrival instead of appearing rigid. */
-
-
-/* Lands stretched, squashes on impact, then springs back - the same
-   language as the poke, so arriving and being poked feel like one character. */
-
-    72%  { transform: scale(1.06, .95); }
-    100% { transform: scale(1, 1); }
-}
-
-.footsig img { display: block; width: 100%; image-rendering: pixelated; }
-
-/* Tap him and he says something. The bubble is a plain sibling, hidden until
-   JS shows it - with JS off he is simply a picture. */
-.footsig { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-/* Both poses, and specific enough to beat the per-pose sway: on the left
-   that rule is three classes deep and was winning. */
-
-
-
-    70%  { transform: scale(.97, 1.04); }
-    100% { transform: scale(1, 1); }
+@keyframes lu-sway {
+    0%, 100% { transform: rotate(-3.5deg); }
+    50%      { transform: rotate(3.5deg); }
 }
 
 .lusay {
@@ -501,11 +474,8 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
     50%      { transform: rotate(3.5deg); }
 }
 
-
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .footsig img { animation: none !important; filter: none !important; }
+    .footsig img { animation: none; }
     .footsig { transition: none; }
 }
 
