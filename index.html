@@ -1270,10 +1270,13 @@ function pump() {
     if (dots) {
         el.classList.add('seen', 'typing-now');
         setTimeout(function () {
-            el.classList.remove('typing-now');
-            busy = false;
-            setTimeout(pump, 240);
-        }, 640);
+            el.classList.add('typing-out');
+            setTimeout(function () {
+                el.classList.remove('typing-now', 'typing-out');
+                busy = false;
+                setTimeout(pump, 240);
+            }, 170);
+        }, 620);
     } else {
         el.classList.add('seen');
         busy = false;
