@@ -499,7 +499,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 /* Smear on the way out: he crouches, then stretches along the direction of
    travel and blurs, the way a sprite reads as fast. */
 .footsig.escaping .lu-r,
-.footsig.escaping .lu-l { animation: lu-dash .44s cubic-bezier(.5, 0, .9, .6) both; }
+.footsig.escaping.left .lu-l { animation: lu-dash .44s cubic-bezier(.5, 0, .9, .6) both; }
 
 @keyframes lu-dash {
     0%   { transform: scale(1, 1);        filter: none; }
@@ -510,12 +510,15 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 /* And settles on arrival instead of appearing rigid. */
 .footsig.arriving .lu-r,
-.footsig.arriving .lu-l { animation: lu-land .34s ease-out both; }
+.footsig.arriving.left .lu-l { animation: lu-land .42s cubic-bezier(.2, 1.5, .4, 1) both; }
 
+/* Lands stretched, squashes on impact, then springs back - the same
+   language as the poke, so arriving and being poked feel like one character. */
 @keyframes lu-land {
-    0%   { transform: scale(1.4, .8); filter: blur(2px); }
-    60%  { transform: scale(.94, 1.06); filter: none; }
-    100% { transform: scale(1, 1); filter: none; }
+    0%   { transform: scale(1.45, .78); filter: blur(2.5px); }
+    45%  { transform: scale(.86, 1.14); filter: none; }
+    72%  { transform: scale(1.06, .95); }
+    100% { transform: scale(1, 1); }
 }
 
 .footsig img { display: block; width: 100%; image-rendering: pixelated; }
@@ -1040,15 +1043,18 @@ code {
         if (running) return;
         pokes += 1;
 
+        // Every poke answers with the same squash, including the one that
+        // sends him off - otherwise the third tap feels like a dead press.
+        lu.classList.remove('poked');
+        void lu.offsetWidth;
+        lu.classList.add('poked');
+
         if (pokes % 3 === 0) {
             escape();
             return;
         }
 
         speak();
-        lu.classList.remove('poked');
-        void lu.offsetWidth;
-        lu.classList.add('poked');
     }
 
     lu.addEventListener('click', poke);
