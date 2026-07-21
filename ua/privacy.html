@@ -959,22 +959,30 @@ code {
         return lu.querySelector(lu.classList.contains('left') ? '.lu-l' : '.lu-r');
     }
 
+    // composite: 'add' layers these on top of the CSS sway instead of
+    // replacing it. Replacing meant the sway kept running underneath and the
+    // image snapped to its new phase the moment the squash ended.
     function play(frames, ms, easing, fill) {
         if (calm || !pose().animate) return null;
-        return pose().animate(frames, {
-            duration: ms,
-            easing: easing || 'ease-out',
-            fill: fill || 'none'
-        });
+        try {
+            return pose().animate(frames, {
+                duration: ms,
+                easing: easing || 'ease-out',
+                fill: fill || 'none',
+                composite: 'add'
+            });
+        } catch (e) {
+            return pose().animate(frames, { duration: ms, easing: easing || 'ease-out', fill: fill || 'none' });
+        }
     }
 
     function squash() {
         play([
             { transform: 'scale(1, 1)' },
-            { transform: 'scale(1.07, .91)', offset: .35 },
-            { transform: 'scale(.97, 1.05)', offset: .7 },
+            { transform: 'scale(1.08, .9)', offset: .35 },
+            { transform: 'scale(.96, 1.06)', offset: .7 },
             { transform: 'scale(1, 1)' }
-        ], 320);
+        ], 340);
     }
 
     function speak() {
