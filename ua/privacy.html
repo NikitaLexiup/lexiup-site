@@ -523,7 +523,10 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 /* Tap him and he says something. The bubble is a plain sibling, hidden until
    JS shows it - with JS off he is simply a picture. */
 .footsig { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.footsig.poked img { animation: lu-poke .32s ease-out; }
+/* Both poses, and specific enough to beat the per-pose sway: on the left
+   that rule is three classes deep and was winning. */
+.footsig.poked .lu-r,
+.footsig.poked.left .lu-l { animation: lu-poke .32s ease-out; }
 
 @keyframes lu-poke {
     0%   { transform: scale(1, 1); }
