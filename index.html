@@ -973,6 +973,7 @@ body { padding-bottom: 90px; }
 </div>
 <div class="turn">
     <div class="lu same">
+        <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="bubble shout"><p class="shout-lead">Learn while:</p><div class="whens"><div class="when"><span class="ic">&#127970;</span>you work</div><div class="when"><span class="ic">&#127796;</span>you rest</div><div class="when"><span class="ic">&#128104;&#8205;&#127859;</span>you do what you love</div></div></div>
     </div>
 </div>
@@ -1047,6 +1048,7 @@ body { padding-bottom: 90px; }
 </div>
 <div class="turn">
     <div class="lu same">
+        <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="bubble shout"><p class="shout-big">Learning should not require stepping away from your day.</p></div>
     </div>
 </div>
@@ -1116,6 +1118,7 @@ body { padding-bottom: 90px; }
 </div>
 <div class="turn">
     <div class="lu same">
+        <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="bubble shout"><p class="shout-big">Convenient. Simple. On your terms.</p></div>
     </div>
 </div>
@@ -1253,30 +1256,44 @@ body { padding-bottom: 90px; }
 // Progressive enhancement: JS adds the class, so with JS off the bubbles are
 // simply visible from the start instead of stuck invisible.
 document.body.classList.add('js');
-var io = new IntersectionObserver(function (entries) {
-    // Several bubbles usually cross the line in the same frame; without a
-    // stagger they pop in as one block instead of a conversation arriving.
-    var step = 0;
-    entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var el = e.target;
-        io.unobserve(el);
-        var wait = step * 130;
-        step += 1;
+// One queue for the whole thread: a message starts typing only once the
+// previous one has arrived. Independent timers made everything in the first
+// screenful type at the same moment.
+var queue = [], busy = false;
 
-        // LU's answers arrive after a beat of typing; the visitor's own
-        // lines appear at once, since nobody waits for themselves.
-        if (el.querySelector('.typing')) {
-            setTimeout(function () {
-                el.classList.add('seen', 'typing-now');
-                setTimeout(function () { el.classList.remove('typing-now'); }, 620);
-            }, wait);
-        } else {
-            el.style.transitionDelay = wait + 'ms';
-            el.classList.add('seen');
-        }
-    });
+function pump() {
+    if (busy || !queue.length) return;
+    busy = true;
+    var el = queue.shift();
+    var dots = el.querySelector('.typing');
+
+    if (dots) {
+        el.classList.add('seen', 'typing-now');
+        setTimeout(function () {
+            el.classList.remove('typing-now');
+            busy = false;
+            setTimeout(pump, 240);
+        }, 640);
+    } else {
+        el.classList.add('seen');
+        busy = false;
+        setTimeout(pump, 240);
+    }
+}
+
+var io = new IntersectionObserver(function (entries) {
+    entries
+        .filter(function (e) { return e.isIntersecting; })
+        .sort(function (a, b) {
+            return a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top;
+        })
+        .forEach(function (e) {
+            io.unobserve(e.target);
+            queue.push(e.target);
+        });
+    pump();
 }, { rootMargin: '0px 0px -10% 0px' });
+
 document.querySelectorAll('.turn').forEach(function (t) { io.observe(t); });
 </script>
 <script>
