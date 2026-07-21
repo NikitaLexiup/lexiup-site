@@ -410,7 +410,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
    the way the right one does. Stated per pose rather than on the shared
    selector - the later .footsig img rule made that ambiguous. */
 .footsig .lu-r { animation: lu-sway 4.5s ease-in-out infinite; }
-.footsig.left .lu-l { animation: lu-sway-l 4.5s ease-in-out infinite; }
+.footsig .lu-l { animation: lu-sway-l 4.5s ease-in-out infinite; }
 
 /* Two poses, one per side. Both ship in the markup so the swap has nothing
    to load at the moment he lands. */
@@ -443,7 +443,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 /* And settles on arrival instead of appearing rigid. */
 .footsig.arriving .lu-r,
-.footsig.arriving.left .lu-l { animation: lu-land .42s cubic-bezier(.2, 1.5, .4, 1) both; }
+.footsig.arriving.left .lu-l { animation: lu-land .42s cubic-bezier(.2, 1.5, .4, 1); }
 
 /* Lands stretched, squashes on impact, then springs back - the same
    language as the poke, so arriving and being poked feel like one character. */
@@ -1491,11 +1491,17 @@ if (replay) {
                     requestAnimationFrame(function () {
                         requestAnimationFrame(function () {
                             lu.classList.remove('no-anim', 'entering');
-                            lu.classList.add('arriving');
+
+                            // The spring belongs to the landing, not the
+                            // flight: started here it would run out while he
+                            // is still crossing.
                             setTimeout(function () {
-                                lu.classList.remove('arriving');
-                                running = false;
-                            }, 460);
+                                lu.classList.add('arriving');
+                                setTimeout(function () {
+                                    lu.classList.remove('arriving');
+                                    running = false;
+                                }, 440);
+                            }, 440);
                         });
                     });
                 }, 440);
