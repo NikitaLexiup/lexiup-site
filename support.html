@@ -471,6 +471,12 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
    escape - two animations on one element would fight. */
 .footsig img { animation: lu-sway 4.5s ease-in-out infinite; transform-origin: bottom center; }
 
+/* Two poses, one per side. Both ship in the markup so the swap has nothing
+   to load at the moment he lands. */
+.footsig .lu-l { display: none; }
+.footsig.left .lu-r { display: none; }
+.footsig.left .lu-l { display: block; }
+
 /* Second post: the other bottom corner. Two only, so it reads as a dash
    from one side to the other rather than random hopping. */
 .footsig.left { left: -26px; right: auto; }
@@ -813,7 +819,8 @@ code {
 <footer>
     <div class="lusay" id="lusay" aria-live="polite"></div>
     <div class="footsig" id="lupoke" role="button" tabindex="0" aria-label="Poke LU">
-        <img src="/assets/LU_full.png" alt="">
+        <img class="lu-r" src="/assets/LU_full.png" alt="">
+        <img class="lu-l" src="/assets/LU_full_2.png" alt="">
     </div>
     &copy; 2026 LexiUp &middot;
     <a href="/privacy.html">Privacy</a> &middot;
