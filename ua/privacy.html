@@ -471,7 +471,13 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 /* The sway lives on the image so the wrapper's transform is free for the
    escape - two animations on one element would fight. */
-.footsig img { animation: lu-sway 4.5s ease-in-out infinite; transform-origin: bottom center; }
+.footsig img { transform-origin: bottom center; }
+
+/* Each pose sways on its own, mirrored, so the left one leans into the page
+   the way the right one does. Stated per pose rather than on the shared
+   selector - the later .footsig img rule made that ambiguous. */
+.footsig .lu-r { animation: lu-sway 4.5s ease-in-out infinite; }
+.footsig.left .lu-l { animation: lu-sway-l 4.5s ease-in-out infinite; }
 
 /* Two poses, one per side. Both ship in the markup so the swap has nothing
    to load at the moment he lands. */
@@ -490,12 +496,26 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 .footsig.left.escaping, .footsig.left.entering { transform: translateX(-190%); }
 .footsig.no-anim { transition: none; }
 
-.footsig.escaping img { animation: lu-stretch .44s ease-in both; }
+/* Smear on the way out: he crouches, then stretches along the direction of
+   travel and blurs, the way a sprite reads as fast. */
+.footsig.escaping .lu-r,
+.footsig.escaping .lu-l { animation: lu-dash .44s cubic-bezier(.5, 0, .9, .6) both; }
 
-@keyframes lu-stretch {
-    0%   { transform: scale(1, 1); }
-    30%  { transform: scale(.82, 1.16); }
-    100% { transform: scale(1.1, .9); }
+@keyframes lu-dash {
+    0%   { transform: scale(1, 1);        filter: none; }
+    22%  { transform: scale(.86, 1.12);   filter: none; }
+    55%  { transform: scale(1.32, .84);   filter: blur(1.5px); }
+    100% { transform: scale(1.55, .74);   filter: blur(3px); }
+}
+
+/* And settles on arrival instead of appearing rigid. */
+.footsig.arriving .lu-r,
+.footsig.arriving .lu-l { animation: lu-land .34s ease-out both; }
+
+@keyframes lu-land {
+    0%   { transform: scale(1.4, .8); filter: blur(2px); }
+    60%  { transform: scale(.94, 1.06); filter: none; }
+    100% { transform: scale(1, 1); filter: none; }
 }
 
 .footsig img { display: block; width: 100%; image-rendering: pixelated; }
@@ -552,8 +572,13 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
     50%      { transform: rotate(3.5deg); }
 }
 
+@keyframes lu-sway-l {
+    0%, 100% { transform: rotate(3.5deg); }
+    50%      { transform: rotate(-3.5deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .footsig img { animation: none; }
+    .footsig img { animation: none !important; filter: none !important; }
     .footsig { transition: none; }
 }
 
@@ -1000,7 +1025,11 @@ code {
                     requestAnimationFrame(function () {
                         requestAnimationFrame(function () {
                             lu.classList.remove('no-anim', 'entering');
-                            setTimeout(function () { running = false; }, 460);
+                            lu.classList.add('arriving');
+                            setTimeout(function () {
+                                lu.classList.remove('arriving');
+                                running = false;
+                            }, 460);
                         });
                     });
                 }, 440);
