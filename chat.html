@@ -702,6 +702,17 @@ body { padding-bottom: 90px; }
     border-radius: 8px;
 }
 
+/* ---- widget showing the current word: the systemSmall/Medium layout ---- */
+
+.wcard { margin: 4px 0 2px; }
+.wcard .wtitle { font-size: 21px; font-weight: 700; line-height: 1.2; }
+.wcard .wtitle .art { margin-right: 6px; }
+.wcard .wmeta { display: flex; gap: 9px; align-items: baseline; margin-top: 6px; font-size: 15px; }
+.wcard .ipa { color: var(--muted); }
+.wcard .plural { color: var(--die); font-weight: 600; }
+.wcard .wtr { font-size: 17px; font-weight: 700; margin-top: 8px; }
+.wcard .wex { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
 /* ---- home screen widget, same layout as the onboarding mock ---- */
 
 .widget {
@@ -849,6 +860,11 @@ body { padding-bottom: 90px; }
         </div>
     </div>
 </div>
+<div class="turn">
+    <div class="lu same">
+        <div class="bubble"><p>And the same word sits in the widget - with its transcription, plural and an example:</p><div class="widget wcard"><div class="wtitle"><span class="art die">die</span>Schule</div><div class="wmeta"><span class="ipa">[&#712;&#643;u&#720;l&#601;]</span><span class="plural">die Schulen</span></div><div class="wtr">school</div><div class="wex">Die Schule beginnt um acht.</div></div></div>
+    </div>
+</div>
 <div class="turn q">
     <div class="me"><div class="bubble">What happens in the evening?</div></div>
 </div>
@@ -920,7 +936,7 @@ body { padding-bottom: 90px; }
     </div>
 </div>
 <div class="turn q">
-    <div class="me"><div class="bubble">What does the widget look like?</div></div>
+    <div class="me"><div class="bubble">And between the words - what does the widget show?</div></div>
 </div>
 <div class="turn a">
     <div class="lu">
