@@ -625,8 +625,15 @@ code {
     .appcard .ava { width: 44px; height: 44px; }
 }
 
+@media (max-width: 560px) {
+    .appcard nav { gap: 12px; }
+    .appcard nav a { font-size: 9px; }
+    .appcard .bar { gap: 10px; }
+}
+
 @media (max-width: 400px) {
     .srow .cap { display: none; }
+    .appcard nav a { font-size: 8px; }
 }
 </style>
 </head>
@@ -895,6 +902,13 @@ code {
         if (!ticking) { ticking = true; requestAnimationFrame(paint); }
     }, { passive: true });
     window.addEventListener('resize', reserve);
+
+    // The pixel font loads after this script runs and makes the nav wider,
+    // which can push it onto a second line - so the reserved space has to
+    // follow the header's real height, not a one-off measurement.
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(reserve); }
+    if (window.ResizeObserver) { new ResizeObserver(reserve).observe(head); }
+
     reserve();
     paint();
 })();
