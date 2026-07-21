@@ -451,24 +451,27 @@ footer {
 
 footer a { color: var(--muted); }
 
-/* LU peeks out of the bottom-right corner, cropped by the page edge - the
-   footer clips him, so he reads as leaning in rather than as a pasted image.
-   Expects a sprite with an alpha channel. */
-footer { position: relative; overflow: hidden; padding-right: 130px; }
+/* LU leans in from the bottom-right corner of the screen itself, tilted and
+   partly beyond the edge - fixed to the viewport, not to the footer, so the
+   corner is the screen's corner. */
+footer { position: relative; padding-right: 120px; }
 
 .footsig {
-    position: absolute;
-    right: -26px;
-    bottom: -22px;
-    width: 168px;
+    position: fixed;
+    right: -34px;
+    bottom: -30px;
+    width: 178px;
+    transform: rotate(-14deg);
+    transform-origin: bottom right;
     pointer-events: none;
+    z-index: 5;
 }
 
 .footsig img { display: block; width: 100%; image-rendering: pixelated; }
 
-@media (max-width: 480px) {
-    footer { padding-right: 100px; }
-    .footsig { width: 132px; right: -22px; bottom: -18px; }
+@media (max-width: 560px) {
+    footer { padding-right: 90px; }
+    .footsig { width: 132px; right: -26px; bottom: -22px; }
 }
 
 code {
