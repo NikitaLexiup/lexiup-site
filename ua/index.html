@@ -397,8 +397,30 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
     bottom: -24px;
     width: 168px;
     z-index: 5;
-    transform-origin: bottom center;
-    animation: lu-sway 4.5s ease-in-out infinite;
+    transition: transform .44s cubic-bezier(.45, 0, .55, 1);
+}
+
+/* The sway lives on the image so the wrapper's transform is free for the
+   escape - two animations on one element would fight. */
+.footsig img { animation: lu-sway 4.5s ease-in-out infinite; transform-origin: bottom center; }
+
+/* Second post: the other bottom corner. Two only, so it reads as a dash
+   from one side to the other rather than random hopping. */
+.footsig.left { left: -26px; right: auto; }
+
+/* Off through the side edge, then back in from the opposite one. Both
+   classes want the same offsets: leaving right and arriving from the right
+   are the same position. */
+.footsig.escaping, .footsig.entering { transform: translateX(190%); }
+.footsig.left.escaping, .footsig.left.entering { transform: translateX(-190%); }
+.footsig.no-anim { transition: none; }
+
+.footsig.escaping img { animation: lu-stretch .44s ease-in both; }
+
+@keyframes lu-stretch {
+    0%   { transform: scale(1, 1); }
+    30%  { transform: scale(.82, 1.16); }
+    100% { transform: scale(1.1, .9); }
 }
 
 .footsig img { display: block; width: 100%; image-rendering: pixelated; }
@@ -438,8 +460,15 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 .lusay.on { opacity: 1; transform: none; }
 
+.lusay.left {
+    left: 118px;
+    right: auto;
+    border-radius: 14px 14px 14px 4px;
+}
+
 @media (max-width: 560px) {
     .lusay { right: 104px; bottom: 80px; max-width: 175px; font-size: 13px; }
+    .lusay.left { left: 94px; }
 }
 
 @keyframes lu-sway {
@@ -448,7 +477,8 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .footsig { animation: none; }
+    .footsig img { animation: none; }
+    .footsig { transition: none; }
 }
 
 @media (max-width: 560px) {
@@ -1317,24 +1347,60 @@ var io = new IntersectionObserver(function (entries) {
 document.querySelectorAll('.turn').forEach(function (t) { io.observe(t); });
 </script>
 <script>
-// LU answers a poke. Phrases rotate without repeating the last one, and the
-// bubble hides itself, so there is no state to get stuck in.
+// Poke LU: two pokes get a line each, the third sends him off through the
+// side of the screen and back in from the other one. Two posts only, so it
+// reads as a dash across rather than random hopping.
 (function () {
     var lu = document.getElementById('lupoke'), say = document.getElementById('lusay');
     if (!lu || !say) return;
-    var lines = ["Ой, лоскітно!", "Не балуємось, а вчимо слова.", "Привіт, я тут.", "Тицяй скільки хочеш - слова все одно прийдуть завтра.", "Я взагалі-то на роботі."], last = -1, timer;
+    var lines = ["Ой, лоскітно!", "Не балуємось, а вчимо слова.", "Привіт, я тут.", "Тицяй скільки хочеш - слова все одно прийдуть завтра.", "Я взагалі-то на роботі."], last = -1, timer, pokes = 0, running = false;
 
-    function poke() {
+    function speak() {
         var i = Math.floor(Math.random() * lines.length);
         if (i === last && lines.length > 1) i = (i + 1) % lines.length;
         last = i;
         say.textContent = lines[i];
         say.classList.add('on');
+        clearTimeout(timer);
+        timer = setTimeout(function () { say.classList.remove('on'); }, 2600);
+    }
+
+    function escape() {
+        running = true;
+        say.classList.remove('on');
+        lu.classList.add('escaping');
+
+        setTimeout(function () {
+            // Land on the far side before sliding back in: no transition for
+            // that instant, or he would be seen crossing the whole screen.
+            lu.classList.add('no-anim');
+            lu.classList.remove('escaping');
+            lu.classList.toggle('left');
+            say.classList.toggle('left');
+            lu.classList.add('entering');
+
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    lu.classList.remove('no-anim', 'entering');
+                    setTimeout(function () { running = false; }, 440);
+                });
+            });
+        }, 440);
+    }
+
+    function poke() {
+        if (running) return;
+        pokes += 1;
+
+        if (pokes % 3 === 0) {
+            escape();
+            return;
+        }
+
+        speak();
         lu.classList.remove('poked');
         void lu.offsetWidth;
         lu.classList.add('poked');
-        clearTimeout(timer);
-        timer = setTimeout(function () { say.classList.remove('on'); }, 2600);
     }
 
     lu.addEventListener('click', poke);
