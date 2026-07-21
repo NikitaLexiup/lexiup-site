@@ -457,11 +457,14 @@ footer a { color: var(--muted); }
    sway is the only motion on the page. */
 footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
+/* Back to the screen's corner - it framed him better than the footer did.
+   Fixed, so he stays in the corner while the conversation scrolls past. */
 .footsig {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 148px;
+    position: fixed;
+    right: -26px;
+    bottom: -24px;
+    width: 168px;
+    z-index: 5;
     transform-origin: bottom center;
     animation: lu-sway 4.5s ease-in-out infinite;
     pointer-events: none;
@@ -482,7 +485,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 }
 
 .lusay {
-    position: absolute;
+    position: fixed;
     right: 118px;
     bottom: 92px;
     max-width: 210px;
@@ -504,7 +507,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 .lusay.on { opacity: 1; transform: none; }
 
 @media (max-width: 560px) {
-    .lusay { right: 96px; bottom: 74px; max-width: 175px; font-size: 13px; }
+    .lusay { right: 104px; bottom: 80px; max-width: 175px; font-size: 13px; }
 }
 
 @keyframes lu-sway {
@@ -517,8 +520,8 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 }
 
 @media (max-width: 560px) {
-    footer { padding-right: 118px; }
-    .footsig { width: 116px; }
+    footer { padding-right: 20px; }
+    .footsig { width: 124px; right: -20px; bottom: -18px; }
 }
 
 code {

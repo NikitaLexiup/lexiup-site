@@ -389,11 +389,14 @@ footer a { color: var(--muted); }
    sway is the only motion on the page. */
 footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
+/* Back to the screen's corner - it framed him better than the footer did.
+   Fixed, so he stays in the corner while the conversation scrolls past. */
 .footsig {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 148px;
+    position: fixed;
+    right: -26px;
+    bottom: -24px;
+    width: 168px;
+    z-index: 5;
     transform-origin: bottom center;
     animation: lu-sway 4.5s ease-in-out infinite;
     pointer-events: none;
@@ -414,7 +417,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 }
 
 .lusay {
-    position: absolute;
+    position: fixed;
     right: 118px;
     bottom: 92px;
     max-width: 210px;
@@ -436,7 +439,7 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 .lusay.on { opacity: 1; transform: none; }
 
 @media (max-width: 560px) {
-    .lusay { right: 96px; bottom: 74px; max-width: 175px; font-size: 13px; }
+    .lusay { right: 104px; bottom: 80px; max-width: 175px; font-size: 13px; }
 }
 
 @keyframes lu-sway {
@@ -449,8 +452,8 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 }
 
 @media (max-width: 560px) {
-    footer { padding-right: 118px; }
-    .footsig { width: 116px; }
+    footer { padding-right: 20px; }
+    .footsig { width: 124px; right: -20px; bottom: -18px; }
 }
 
 code {
@@ -692,6 +695,43 @@ body { padding-bottom: 90px; }
     margin-bottom: 6px;
 }
 
+/* "LU is typing" - three dots in a bubble, shown for a beat before the
+   answer replaces them. Same idea as the onboarding chat in the app. */
+.typing {
+    display: none;
+    gap: 5px;
+    align-items: center;
+    width: fit-content;
+    background: var(--card);
+    border: 1.5px solid var(--outline);
+    border-radius: 4px 16px 16px 16px;
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 15px 18px;
+}
+
+.typing span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--muted);
+    animation: lu-type 1.1s ease-in-out infinite;
+}
+
+.typing span:nth-child(2) { animation-delay: .18s; }
+.typing span:nth-child(3) { animation-delay: .36s; }
+
+@keyframes lu-type {
+    0%, 60%, 100% { opacity: .3; transform: translateY(0); }
+    30%           { opacity: 1;  transform: translateY(-4px); }
+}
+
+.turn.typing-now .typing { display: flex; }
+.turn.typing-now .bubble { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .typing span { animation: none; }
+}
+
 /* reveal on scroll - opt-in, never a blocker */
 @media (prefers-reduced-motion: no-preference) {
     .js .turn { opacity: 0; transform: translateY(14px); transition: opacity .45s ease-out, transform .45s ease-out; }
@@ -874,6 +914,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>LexiUp - це застосунок, який допомагає тобі збільшити словниковий запас мови, яку ти вивчаєш.</p><p>Кілька слів на день приходять сповіщеннями й лишаються на віджеті - <strong>для цього від тебе не треба нічого</strong>. Єдине, що потрібно від тебе, - відкрити застосунок на дві хвилини ввечері, щоб пройти маленький тест.</p><div class="getwrap"><a class="get" href="#" aria-disabled="true"><svg class="apple" viewBox="0 0 24 26" width="24" height="26" fill="#fff" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="0" width="2" height="2"/><rect x="14" y="0" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="10" y="4" width="2" height="2"/><rect x="4" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="8" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="12" y="6" width="2" height="2"/><rect x="14" y="6" width="2" height="2"/><rect x="16" y="6" width="2" height="2"/><rect x="2" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="6" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="10" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/><rect x="16" y="8" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="0" y="10" width="2" height="2"/><rect x="2" y="10" width="2" height="2"/><rect x="4" y="10" width="2" height="2"/><rect x="6" y="10" width="2" height="2"/><rect x="8" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="12" y="10" width="2" height="2"/><rect x="14" y="10" width="2" height="2"/><rect x="16" y="10" width="2" height="2"/><rect x="18" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="0" y="12" width="2" height="2"/><rect x="2" y="12" width="2" height="2"/><rect x="4" y="12" width="2" height="2"/><rect x="6" y="12" width="2" height="2"/><rect x="8" y="12" width="2" height="2"/><rect x="10" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/><rect x="14" y="12" width="2" height="2"/><rect x="16" y="12" width="2" height="2"/><rect x="18" y="12" width="2" height="2"/><rect x="20" y="12" width="2" height="2"/><rect x="0" y="14" width="2" height="2"/><rect x="2" y="14" width="2" height="2"/><rect x="4" y="14" width="2" height="2"/><rect x="6" y="14" width="2" height="2"/><rect x="8" y="14" width="2" height="2"/><rect x="10" y="14" width="2" height="2"/><rect x="12" y="14" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/><rect x="16" y="14" width="2" height="2"/><rect x="18" y="14" width="2" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="0" y="16" width="2" height="2"/><rect x="2" y="16" width="2" height="2"/><rect x="4" y="16" width="2" height="2"/><rect x="6" y="16" width="2" height="2"/><rect x="8" y="16" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="12" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/><rect x="16" y="16" width="2" height="2"/><rect x="18" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/><rect x="0" y="18" width="2" height="2"/><rect x="2" y="18" width="2" height="2"/><rect x="4" y="18" width="2" height="2"/><rect x="6" y="18" width="2" height="2"/><rect x="8" y="18" width="2" height="2"/><rect x="10" y="18" width="2" height="2"/><rect x="12" y="18" width="2" height="2"/><rect x="14" y="18" width="2" height="2"/><rect x="16" y="18" width="2" height="2"/><rect x="18" y="18" width="2" height="2"/><rect x="20" y="18" width="2" height="2"/><rect x="2" y="20" width="2" height="2"/><rect x="4" y="20" width="2" height="2"/><rect x="6" y="20" width="2" height="2"/><rect x="8" y="20" width="2" height="2"/><rect x="10" y="20" width="2" height="2"/><rect x="12" y="20" width="2" height="2"/><rect x="14" y="20" width="2" height="2"/><rect x="16" y="20" width="2" height="2"/><rect x="18" y="20" width="2" height="2"/><rect x="2" y="22" width="2" height="2"/><rect x="4" y="22" width="2" height="2"/><rect x="6" y="22" width="2" height="2"/><rect x="14" y="22" width="2" height="2"/><rect x="16" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="2"/><rect x="20" y="22" width="2" height="2"/><rect x="4" y="24" width="2" height="2"/><rect x="6" y="24" width="2" height="2"/><rect x="16" y="24" width="2" height="2"/><rect x="18" y="24" width="2" height="2"/></svg><span class="big">Завантажити</span></a></div></div>
         </div>
     </div>
@@ -886,6 +927,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>Поки що німецьку - від основ до B1.</p><p>Англійську плануємо додати наступною.</p></div>
         </div>
     </div>
@@ -898,6 +940,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>Добре. Не кидай його.</p><p>Я не змагаюся за твій вечір - я заповнюю проміжки, які ти й так проводиш у телефоні. Ти, напевно, вже ходиш на курси або займаєшся з викладачем - або просто живеш там, де говорять німецькою. Бракує саме словникового запасу.</p></div>
         </div>
     </div>
@@ -915,6 +958,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>З трьох частин, і для двох від тебе не потрібно нічого:</p><p><strong>Сповіщення</strong> протягом дня - слова приходять самі.<br><strong>Віджет</strong> на домашньому й заблокованому екрані - увесь набір перед очима.<br><strong>Маленький тест</strong> увечері - перевіряє, що засвоїлося.</p></div>
         </div>
     </div>
@@ -927,6 +971,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p><strong>6</strong>, <strong>9</strong> або <strong>12</strong> - обираєш ти. Ще ти обираєш години, коли я можу тебе турбувати, і для кожного дня тижня можна задати свій проміжок.</p></div>
         </div>
     </div>
@@ -939,6 +984,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>Години обираєш ти - поза ними тиша.</p><p>Кожне слово приходить тричі за день, з паузами. Забути й пригадати - це і є те, що закріплює.</p><div class="push" style="box-shadow:none;margin:10px 0 12px"><div class="head"><b>LexiUp</b><span>&middot; щойно</span></div><div class="word">die Erfahrung</div><div class="tr">досвід</div></div><p>Прочитав на екрані блокування - і все, це вже <strong>частина навчання</strong>.</p></div>
         </div>
     </div>
@@ -956,6 +1002,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>Тест по словах, які приходили протягом дня.</p><p>Слова, на які ти дав правильні відповіді, переходять у розділ «Вивчено». А ті, де помилився, повернуться до тебе пізніше, у наступних наборах.</p></div>
         </div>
     </div>
@@ -973,6 +1020,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p><strong>Основи:</strong> абетка та її пастки читання, артиклі та для чого вони, займенники в трьох відмінках, прийменники, числа, час на годиннику, дні й місяці.</p><p><strong>A1, A2, B1:</strong> найуживаніша лексика, дієслова відсортовані за реальною частотністю, а не за порядком з підручника.</p><p>Кожне правило - короткий урок, а далі слова, які його використовують.</p></div>
         </div>
     </div>
@@ -985,6 +1033,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>Ти можеш вчитися безкоштовно - але щоб це було можливо, нам доводиться показувати тобі рекламу.</p><p>Або один раз оплатити Lifetime, і реклами не буде взагалі.</p><div class="plans"><div class="plan"><div class="ptitle">FREE</div><div class="price">$0</div><div class="per">назавжди</div><div class="feature"><svg class="gtick" width="20" height="20" shape-rendering="crispEdges" aria-hidden="true"><use href="#gcheck"/></svg><div>Усі курси та уроки</div></div><div class="feature"><svg class="gtick" width="20" height="20" shape-rendering="crispEdges" aria-hidden="true"><use href="#gcheck"/></svg><div>Одне повторення на день</div></div><div class="feature"><svg class="gtick" width="20" height="20" shape-rendering="crispEdges" aria-hidden="true"><use href="#gcross"/></svg><div>Реклама перед тестом</div></div></div><div class="plan best"><div class="ptitle">LIFETIME</div><div class="price">$9.99</div><div class="per">разово, не підписка</div><div class="feature"><svg class="gtick" width="20" height="20" shape-rendering="crispEdges" aria-hidden="true"><use href="#gcheck"/></svg><div>Жодної реклами</div></div><div class="feature"><svg class="gtick" width="20" height="20" shape-rendering="crispEdges" aria-hidden="true"><use href="#gcheck"/></svg><div>Необмежені повторення</div></div><div class="feature"><svg class="gtick" width="20" height="20" shape-rendering="crispEdges" aria-hidden="true"><use href="#gcheck"/></svg><div>Підтримка інді-розробника</div></div></div></div></div>
         </div>
     </div>
@@ -997,6 +1046,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>Ні. Сповіщення плануються на твоєму телефоні, а не надсилаються з сервера - вони прийдуть у літаку, у метро, навіть без сімки.</p><p>Прогрес теж живе на пристрої. У хмарі лежить лише резервна копія, щоб новий телефон не коштував тобі всієї історії.</p></div>
         </div>
     </div>
@@ -1009,6 +1059,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><div class="langs"><span class="lang">Українська</span><span class="lang">English</span><span class="lang beta">Français<i>beta</i></span><span class="lang beta">Polski<i>beta</i></span></div><details class="more"><summary>ще</summary><div class="langs"><span class="lang">Русский</span></div></details><p>Вчи німецьку тією мовою, якою справді думаєш.</p></div>
         </div>
     </div>
@@ -1026,6 +1077,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>Ось так - на домашньому екрані. Відлік до наступної порції і слова, які прийдуть.</p><div class="widget"><div class="cd-cap">До навчання</div><div class="cd" id="wcd">7:40:12</div><div class="nx">Наступні слова:</div><div class="wcols"><div class="wcol"><div class="wword"><span class="art das">das</span>Haus</div><div class="wword"><span class="art die">die</span>Katze</div></div><div class="wcol"><div class="wword"><span class="art der">der</span>Hund</div><div class="wword">lernen</div></div></div></div><p>Ти побачиш його десяток разів на день, навіть не заходячи в застосунок. У цьому весь фокус.</p></div>
         </div>
     </div>
@@ -1038,6 +1090,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="bubble"><p>Легко. Просто встанови застосунок за цим посиланням.</p><div class="getwrap"><a class="get" href="#" aria-disabled="true"><svg class="apple" viewBox="0 0 24 26" width="24" height="26" fill="#fff" shape-rendering="crispEdges" aria-hidden="true"><rect x="12" y="0" width="2" height="2"/><rect x="14" y="0" width="2" height="2"/><rect x="10" y="2" width="2" height="2"/><rect x="12" y="2" width="2" height="2"/><rect x="8" y="4" width="2" height="2"/><rect x="10" y="4" width="2" height="2"/><rect x="4" y="6" width="2" height="2"/><rect x="6" y="6" width="2" height="2"/><rect x="8" y="6" width="2" height="2"/><rect x="10" y="6" width="2" height="2"/><rect x="12" y="6" width="2" height="2"/><rect x="14" y="6" width="2" height="2"/><rect x="16" y="6" width="2" height="2"/><rect x="2" y="8" width="2" height="2"/><rect x="4" y="8" width="2" height="2"/><rect x="6" y="8" width="2" height="2"/><rect x="8" y="8" width="2" height="2"/><rect x="10" y="8" width="2" height="2"/><rect x="12" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/><rect x="16" y="8" width="2" height="2"/><rect x="18" y="8" width="2" height="2"/><rect x="0" y="10" width="2" height="2"/><rect x="2" y="10" width="2" height="2"/><rect x="4" y="10" width="2" height="2"/><rect x="6" y="10" width="2" height="2"/><rect x="8" y="10" width="2" height="2"/><rect x="10" y="10" width="2" height="2"/><rect x="12" y="10" width="2" height="2"/><rect x="14" y="10" width="2" height="2"/><rect x="16" y="10" width="2" height="2"/><rect x="18" y="10" width="2" height="2"/><rect x="20" y="10" width="2" height="2"/><rect x="0" y="12" width="2" height="2"/><rect x="2" y="12" width="2" height="2"/><rect x="4" y="12" width="2" height="2"/><rect x="6" y="12" width="2" height="2"/><rect x="8" y="12" width="2" height="2"/><rect x="10" y="12" width="2" height="2"/><rect x="12" y="12" width="2" height="2"/><rect x="14" y="12" width="2" height="2"/><rect x="16" y="12" width="2" height="2"/><rect x="18" y="12" width="2" height="2"/><rect x="20" y="12" width="2" height="2"/><rect x="0" y="14" width="2" height="2"/><rect x="2" y="14" width="2" height="2"/><rect x="4" y="14" width="2" height="2"/><rect x="6" y="14" width="2" height="2"/><rect x="8" y="14" width="2" height="2"/><rect x="10" y="14" width="2" height="2"/><rect x="12" y="14" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/><rect x="16" y="14" width="2" height="2"/><rect x="18" y="14" width="2" height="2"/><rect x="20" y="14" width="2" height="2"/><rect x="0" y="16" width="2" height="2"/><rect x="2" y="16" width="2" height="2"/><rect x="4" y="16" width="2" height="2"/><rect x="6" y="16" width="2" height="2"/><rect x="8" y="16" width="2" height="2"/><rect x="10" y="16" width="2" height="2"/><rect x="12" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/><rect x="16" y="16" width="2" height="2"/><rect x="18" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/><rect x="0" y="18" width="2" height="2"/><rect x="2" y="18" width="2" height="2"/><rect x="4" y="18" width="2" height="2"/><rect x="6" y="18" width="2" height="2"/><rect x="8" y="18" width="2" height="2"/><rect x="10" y="18" width="2" height="2"/><rect x="12" y="18" width="2" height="2"/><rect x="14" y="18" width="2" height="2"/><rect x="16" y="18" width="2" height="2"/><rect x="18" y="18" width="2" height="2"/><rect x="20" y="18" width="2" height="2"/><rect x="2" y="20" width="2" height="2"/><rect x="4" y="20" width="2" height="2"/><rect x="6" y="20" width="2" height="2"/><rect x="8" y="20" width="2" height="2"/><rect x="10" y="20" width="2" height="2"/><rect x="12" y="20" width="2" height="2"/><rect x="14" y="20" width="2" height="2"/><rect x="16" y="20" width="2" height="2"/><rect x="18" y="20" width="2" height="2"/><rect x="2" y="22" width="2" height="2"/><rect x="4" y="22" width="2" height="2"/><rect x="6" y="22" width="2" height="2"/><rect x="14" y="22" width="2" height="2"/><rect x="16" y="22" width="2" height="2"/><rect x="18" y="22" width="2" height="2"/><rect x="20" y="22" width="2" height="2"/><rect x="4" y="24" width="2" height="2"/><rect x="6" y="24" width="2" height="2"/><rect x="16" y="24" width="2" height="2"/><rect x="18" y="24" width="2" height="2"/></svg><span class="big">Завантажити</span></a></div></div>
         </div>
     </div>
@@ -1150,10 +1203,22 @@ var io = new IntersectionObserver(function (entries) {
     var step = 0;
     entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        e.target.style.transitionDelay = (step * 130) + 'ms';
+        var el = e.target;
+        io.unobserve(el);
+        var wait = step * 130;
         step += 1;
-        e.target.classList.add('seen');
-        io.unobserve(e.target);
+
+        // LU's answers arrive after a beat of typing; the visitor's own
+        // lines appear at once, since nobody waits for themselves.
+        if (el.querySelector('.typing')) {
+            setTimeout(function () {
+                el.classList.add('seen', 'typing-now');
+                setTimeout(function () { el.classList.remove('typing-now'); }, 620);
+            }, wait);
+        } else {
+            el.style.transitionDelay = wait + 'ms';
+            el.classList.add('seen');
+        }
     });
 }, { rootMargin: '0px 0px -10% 0px' });
 document.querySelectorAll('.turn').forEach(function (t) { io.observe(t); });
