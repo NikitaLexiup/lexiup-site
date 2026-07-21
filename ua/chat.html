@@ -551,7 +551,10 @@ code {
     .who-goal { font-size: 12px; }
     .srow .cap { font-size: 11px; }
     .srow .num { font-size: 13px; }
-    .appcard { gap: 10px; padding: 12px; border-radius: 18px; }
+    /* gap must stay 0: the card is a column, and a flex gap survives even
+       when the collapsed nav has zero height - that was the empty band
+       under the row. */
+    .appcard { gap: 0; padding: 12px; border-radius: 18px; }
     .appcard .ava { width: 44px; height: 44px; }
 }
 
