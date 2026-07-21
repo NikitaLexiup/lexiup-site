@@ -468,6 +468,44 @@ footer { position: relative; padding-right: 150px; padding-bottom: 34px; }
 
 .footsig img { display: block; width: 100%; image-rendering: pixelated; }
 
+/* Tap him and he says something. The bubble is a plain sibling, hidden until
+   JS shows it - with JS off he is simply a picture. */
+.footsig { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.footsig.poked img { animation: lu-poke .32s ease-out; }
+
+@keyframes lu-poke {
+    0%   { transform: scale(1, 1); }
+    35%  { transform: scale(1.06, .92); }
+    70%  { transform: scale(.97, 1.04); }
+    100% { transform: scale(1, 1); }
+}
+
+.lusay {
+    position: absolute;
+    right: 118px;
+    bottom: 92px;
+    max-width: 210px;
+    background: var(--card);
+    border: 2px solid var(--outline);
+    border-radius: 14px 14px 4px 14px;
+    box-shadow: 4px 4px 0 var(--shadow);
+    padding: 10px 13px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .18s ease-out, transform .18s ease-out;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.lusay.on { opacity: 1; transform: none; }
+
+@media (max-width: 560px) {
+    .lusay { right: 96px; bottom: 74px; max-width: 175px; font-size: 13px; }
+}
+
 @keyframes lu-sway {
     0%, 100% { transform: rotate(-3.5deg); }
     50%      { transform: rotate(3.5deg); }
@@ -736,7 +774,8 @@ code {
 <p>Так - Профіль &rarr; Розклад навчання. Там же можна обрати, о котрій годині приходять слова, і задати окремий проміжок для кожного дня тижня.</p>
 
 <footer>
-    <div class="footsig" aria-hidden="true">
+    <div class="lusay" id="lusay" aria-live="polite"></div>
+    <div class="footsig" id="lupoke" role="button" tabindex="0" aria-label="Поторкати ЛУ">
         <img src="/assets/LU_full.png" alt="">
     </div>
     &copy; 2026 LexiUp &middot;
@@ -809,6 +848,33 @@ code {
 
     reserve();
     paint();
+})();
+</script>
+<script>
+// LU answers a poke. Phrases rotate without repeating the last one, and the
+// bubble hides itself, so there is no state to get stuck in.
+(function () {
+    var lu = document.getElementById('lupoke'), say = document.getElementById('lusay');
+    if (!lu || !say) return;
+    var lines = ["Ой, лоскітно!", "Не балуємось, а вчимо слова.", "Привіт, я тут.", "Тицяй скільки хочеш - слова все одно прийдуть завтра.", "Я взагалі-то на роботі."], last = -1, timer;
+
+    function poke() {
+        var i = Math.floor(Math.random() * lines.length);
+        if (i === last && lines.length > 1) i = (i + 1) % lines.length;
+        last = i;
+        say.textContent = lines[i];
+        say.classList.add('on');
+        lu.classList.remove('poked');
+        void lu.offsetWidth;
+        lu.classList.add('poked');
+        clearTimeout(timer);
+        timer = setTimeout(function () { say.classList.remove('on'); }, 2600);
+    }
+
+    lu.addEventListener('click', poke);
+    lu.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); poke(); }
+    });
 })();
 </script>
 </body>
