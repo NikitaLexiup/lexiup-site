@@ -1106,17 +1106,20 @@ code {
                         requestAnimationFrame(function () {
                             lu.classList.remove('no-anim', 'entering');
 
-                            // The spring belongs to the landing, so it waits
-                            // for the crossing to finish.
-                            setTimeout(function () {
-                                play([
-                                    { transform: 'scale(1.42, .79)' },
-                                    { transform: 'scale(.86, 1.14)', offset: .45 },
-                                    { transform: 'scale(1.05, .96)', offset: .72 },
-                                    { transform: 'scale(1, 1)' }
-                                ], 430, 'cubic-bezier(.2, 1.2, .4, 1)');
-                                running = false;
-                            }, 450);
+                            // One animation covers the flight and the landing:
+                            // he stays stretched while crossing, then squashes
+                            // and settles. Starting the spring separately on
+                            // arrival snapped him into the stretched pose after
+                            // he had already come to a stop.
+                            play([
+                                { transform: 'scale(1.4, .8)' },
+                                { transform: 'scale(1.4, .8)', offset: .5 },
+                                { transform: 'scale(.86, 1.14)', offset: .72 },
+                                { transform: 'scale(1.05, .96)', offset: .88 },
+                                { transform: 'scale(1, 1)' }
+                            ], 900, 'ease-out');
+
+                            setTimeout(function () { running = false; }, 900);
                         });
                     });
                 }, 440);
