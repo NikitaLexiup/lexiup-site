@@ -1316,47 +1316,68 @@ document.body.classList.add('js');
 // One queue for the whole thread: a message starts typing only once the
 // previous one has arrived. Independent timers made everything in the first
 // screenful type at the same moment.
-var queue = [], busy = false;
+var queue = [], busy = false, current = null;
+
+function reveal(el) {
+    el.classList.remove('typing-now', 'typing-out');
+    el.classList.add('seen');
+}
+
+// Anything already on screen must be readable NOW. Typing is for the message
+// arriving at the edge of the viewport, never for one the reader is looking
+// at - that is what left blank screens behind a fast scroll.
+function flush() {
+    var edge = window.innerHeight - 40;
+
+    if (current && current.getBoundingClientRect().top < edge) {
+        reveal(current);
+        current = null;
+    }
+
+    for (var i = queue.length - 1; i >= 0; i--) {
+        if (queue[i].getBoundingClientRect().top < edge) {
+            reveal(queue[i]);
+            queue.splice(i, 1);
+        }
+    }
+}
 
 function pump() {
     if (busy || !queue.length) return;
     busy = true;
     var el = queue.shift();
+    current = el;
     var dots = el.querySelector('.typing');
-    var rect = el.getBoundingClientRect();
 
-    // Scrolled past it already, or a pile has built up behind it: catch up.
-    // Typing out a queue the reader has overtaken leaves a blank screen.
-    var passed = rect.bottom < 0;
-    var behind = queue.length;
-
-    if (passed || behind > 3) {
-        el.classList.add('seen');
+    function done(gap) {
+        current = null;
         busy = false;
-        setTimeout(pump, 30);
-        return;
+        setTimeout(pump, gap);
     }
 
     if (!dots) {
-        el.classList.add('seen');
-        busy = false;
-        setTimeout(pump, behind ? 90 : 240);
+        reveal(el);
+        done(queue.length ? 90 : 200);
         return;
     }
 
-    // The more is waiting, the shorter he types.
-    var type = behind > 1 ? 260 : (behind ? 420 : 620);
+    // The more is waiting behind, the shorter he types.
+    var type = queue.length > 1 ? 260 : (queue.length ? 420 : 600);
 
     el.classList.add('seen', 'typing-now');
     setTimeout(function () {
+        if (!current) return;          // flushed while typing
         el.classList.add('typing-out');
         setTimeout(function () {
-            el.classList.remove('typing-now', 'typing-out');
-            busy = false;
-            setTimeout(pump, behind > 1 ? 70 : 200);
+            reveal(el);
+            done(queue.length > 1 ? 70 : 190);
         }, 170);
     }, type);
 }
+
+window.addEventListener('scroll', function () {
+    if (current || queue.length) flush();
+}, { passive: true });
 
 var io = new IntersectionObserver(function (entries) {
     entries
