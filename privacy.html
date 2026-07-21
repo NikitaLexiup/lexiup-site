@@ -972,30 +972,36 @@ code {
     function escape() {
         running = true;
 
-        // He announces the exit, then takes it.
+        // He says it, the bubble goes out, and only then he runs - otherwise
+        // the line follows him across and greets him on the far side.
         say.textContent = bye;
         say.classList.add('on');
         clearTimeout(timer);
-        timer = setTimeout(function () { say.classList.remove('on'); }, 1500);
-
-        lu.classList.add('escaping');
 
         setTimeout(function () {
-            // Land on the far side before sliding back in: no transition for
-            // that instant, or he would be seen crossing the whole screen.
-            lu.classList.add('no-anim');
-            lu.classList.remove('escaping');
-            lu.classList.toggle('left');
-            say.classList.toggle('left');
-            lu.classList.add('entering');
+            say.classList.remove('on');
 
-            requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                    lu.classList.remove('no-anim', 'entering');
-                    setTimeout(function () { running = false; }, 440);
-                });
-            });
-        }, 440);
+            setTimeout(function () {
+                lu.classList.add('escaping');
+
+                setTimeout(function () {
+                    // Land on the far side before sliding in: no transition
+                    // for that instant, or he is seen crossing back.
+                    lu.classList.add('no-anim');
+                    lu.classList.remove('escaping');
+                    lu.classList.toggle('left');
+                    say.classList.toggle('left');
+                    lu.classList.add('entering');
+
+                    requestAnimationFrame(function () {
+                        requestAnimationFrame(function () {
+                            lu.classList.remove('no-anim', 'entering');
+                            setTimeout(function () { running = false; }, 460);
+                        });
+                    });
+                }, 440);
+            }, 240);
+        }, 950);
     }
 
     function poke() {
