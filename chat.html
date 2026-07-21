@@ -713,6 +713,9 @@ body { padding-bottom: 90px; }
     margin: 4px 0 2px;
 }
 
+/* An iOS notification is a bold title and a plain body - nothing else. */
+.push .tr { color: var(--text); font-style: normal; }
+
 .widget .cd-cap { font-size: 13px; color: var(--muted); }
 .widget .cd { font-family: "PressStart2P", ui-monospace, monospace; font-size: 16px; margin: 5px 0 10px; }
 .widget .nx { font-size: 13px; color: var(--muted); margin-bottom: 7px; }
@@ -818,7 +821,7 @@ body { padding-bottom: 90px; }
         <img src="/assets/LU_Avatar.png" alt="">
         <div>
             <div class="who">LU</div>
-            <div class="bubble"><p>Three times per word, spread across the window you chose - and never twice in a row.</p><p>That gap is the point: you see a word, forget it, and meet it again a few hours later. Forgetting and recovering is what makes it stay.</p><div class="push" style="box-shadow:none;margin:10px 0 12px"><div class="head"><b>LexiUp</b><span>&middot; now</span></div><div class="word"><span class="chip die">die</span>Erfahrung</div><div class="tr">experience &middot; <em>Das war eine gute Erfahrung.</em></div></div><p>And a notification is not a nudge to go and study - it <strong>is</strong> the lesson. Article, translation, an example: reading it on the lock screen is the whole task.</p></div>
+            <div class="bubble"><p>Three times per word, spread across the window you chose - and never twice in a row.</p><p>That gap is the point: you see a word, forget it, and meet it again a few hours later. Forgetting and recovering is what makes it stay.</p><div class="push" style="box-shadow:none;margin:10px 0 12px"><div class="head"><b>LexiUp</b><span>&middot; now</span></div><div class="word">die Erfahrung</div><div class="tr">experience</div></div><p>And a notification is not a nudge to go and study - it <strong>is</strong> the lesson. The word with its article, and the translation - reading it on the lock screen is the whole task.</p></div>
         </div>
     </div>
 </div>
